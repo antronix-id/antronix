@@ -14,25 +14,64 @@ import {
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { BorderGlow } from "@/components/ui/border-glow";
 import { SectionHeader } from "@/components/shared/section-header";
 import { ServiceCard } from "@/components/features/service-card";
 import { PortfolioCard } from "@/components/features/portfolio-card";
 import { TestimonialCard } from "@/components/features/testimonial-card";
+import { TestimonialsSection } from "@/components/ui/testimonial-v2";
 import { PricingCalculator } from "@/components/features/pricing-calculator";
 import { ContactForm } from "@/components/features/contact-form";
+import { LocationMap } from "@/components/ui/location-map";
 import { SplitText, GradientText } from "@/components/react-bits/animated-text";
 import { SERVICES, PORTFOLIO, TESTIMONIALS, WHY_CHOOSE_US, AGENCY, PortfolioItem } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
-// Icon mapping for Why Choose Us
-const whyUsIcons: Record<string, React.ElementType> = {
-  zap: Zap,
-  shield: Shield,
-  clock: Clock,
-  headphones: Headphones,
-  "trending-up": TrendingUp,
-  users: Users,
-};
+const whyUsConfigs = [
+  {
+    icon: Zap,
+    gradient: "from-blue-500 via-cyan-500 to-teal-400",
+    glow: "shadow-cyan-500/25",
+    glowBg: "from-blue-500/10 to-cyan-500/10",
+    number: "01",
+  },
+  {
+    icon: Shield,
+    gradient: "from-purple-500 via-indigo-500 to-blue-500",
+    glow: "shadow-purple-500/25",
+    glowBg: "from-purple-500/10 to-indigo-500/10",
+    number: "02",
+  },
+  {
+    icon: Clock,
+    gradient: "from-amber-500 via-orange-500 to-yellow-400",
+    glow: "shadow-amber-500/25",
+    glowBg: "from-amber-500/10 to-orange-500/10",
+    number: "03",
+  },
+  {
+    icon: Headphones,
+    gradient: "from-emerald-500 via-teal-500 to-green-400",
+    glow: "shadow-emerald-500/25",
+    glowBg: "from-emerald-500/10 to-teal-500/10",
+    number: "04",
+  },
+  {
+    icon: TrendingUp,
+    gradient: "from-rose-500 via-pink-500 to-purple-500",
+    glow: "shadow-rose-500/25",
+    glowBg: "from-rose-500/10 to-pink-500/10",
+    number: "05",
+  },
+  {
+    icon: Users,
+    gradient: "from-fuchsia-500 via-purple-500 to-violet-500",
+    glow: "shadow-fuchsia-500/25",
+    glowBg: "from-fuchsia-500/10 to-purple-500/10",
+    number: "06",
+  },
+];
 
 export default function HomePage() {
   const [lightboxItem, setLightboxItem] = useState<PortfolioItem | null>(null);
@@ -79,27 +118,18 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 1.0 }}
               className="mt-10 flex flex-wrap items-center justify-center gap-4"
             >
-              <Button
-                asChild
-                size="lg"
-                className="brand-gradient-btn px-8"
-              >
-                <Link href={AGENCY.socials.whatsapp} target="_blank">
-                  <MessageCircle className="mr-2 h-5 w-5" />
-                  Mulai Proyek
-                </Link>
-              </Button>
+              <Link href={AGENCY.socials.whatsapp} target="_blank">
+                <LiquidMetalButton variant="default">
+                  <MessageCircle className="h-4 w-4 text-emerald-400" />
+                  <span>Mulai Proyek</span>
+                </LiquidMetalButton>
+              </Link>
 
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="px-8"
-              >
-                <Link href="/portfolio">
-                  Lihat Portofolio
-                </Link>
-              </Button>
+              <Link href="/portfolio">
+                <LiquidMetalButton variant="default">
+                  <span>Lihat Portofolio</span>
+                </LiquidMetalButton>
+              </Link>
             </motion.div>
           </div>
         </div>
@@ -151,12 +181,12 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="mt-12 text-center"
           >
-            <Button asChild variant="outline" size="lg" className="group">
-              <Link href="/portfolio">
-                Lihat Semua Portofolio
-                <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
+            <Link href="/portfolio">
+              <LiquidMetalButton>
+                <span>Lihat Semua Portofolio</span>
+                <ChevronRight className="h-4 w-4" />
+              </LiquidMetalButton>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -164,8 +194,12 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* WHY CHOOSE US SECTION */}
       {/* ============================================ */}
-      <section className="relative py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <section className="relative py-24 sm:py-32 overflow-hidden">
+        {/* Ambient Background Glow Orbs */}
+        <div className="pointer-events-none absolute -left-40 top-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-blue-600/10 blur-[130px]" />
+        <div className="pointer-events-none absolute -right-40 top-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-purple-600/10 blur-[130px]" />
+
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeader
             badge="Keunggulan Kami"
             title="Mengapa Memilih"
@@ -174,23 +208,53 @@ export default function HomePage() {
           />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {WHY_CHOOSE_US.map((item, index) => {
-              const Icon = whyUsIcons[item.icon] || Zap;
+              const config = whyUsConfigs[index % whyUsConfigs.length];
+              const Icon = config.icon;
+
               return (
                 <motion.div
                   key={item.title}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-30px" }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.08 }}
                   className="h-full"
                 >
-                  <BorderGlow className="group h-full transition-all duration-300">
-                    <div className="p-6 h-full flex flex-col justify-between">
-                      <div>
-                        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
-                          <Icon className="h-6 w-6 text-primary" />
+                  <BorderGlow className="group h-full transition-all duration-300 overflow-hidden">
+                    <div className="relative p-7 h-full flex flex-col justify-between overflow-hidden rounded-[24px] bg-slate-950/50 backdrop-blur-xl border border-white/10 transition-all duration-300 group-hover:border-white/20 group-hover:shadow-2xl">
+                      {/* Background gradient overlay on hover */}
+                      <div
+                        className={cn(
+                          "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100",
+                          config.glowBg
+                        )}
+                      />
+
+                      {/* Number Watermark */}
+                      <span className="absolute top-5 right-6 text-3xl font-black tracking-tight text-white/10 group-hover:text-white/25 transition-colors select-none">
+                        {config.number}
+                      </span>
+
+                      <div className="relative z-10">
+                        {/* Glowing Icon Badge */}
+                        <div className="mb-6 relative flex items-center">
+                          <div
+                            className={cn(
+                              "flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg transition-transform duration-300 group-hover:scale-110",
+                              config.gradient,
+                              config.glow
+                            )}
+                          >
+                            <Icon className="h-6 w-6 text-white filter drop-shadow" />
+                          </div>
                         </div>
-                        <h3 className="mb-2 font-bold">{item.title}</h3>
+
+                        {/* Title */}
+                        <h3 className="mb-2.5 text-lg font-bold tracking-tight text-white transition-colors group-hover:text-cyan-200">
+                          {item.title}
+                        </h3>
+
+                        {/* Description */}
                         <p className="text-sm leading-relaxed text-muted-foreground">
                           {item.description}
                         </p>
@@ -207,31 +271,13 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* TESTIMONIALS SECTION */}
       {/* ============================================ */}
-      <section className="relative py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <SectionHeader
-            badge="Testimoni Klien"
-            title="Kata Mereka Tentang"
-            titleHighlight="Layanan Kami"
-            description="Kepercayaan dan kepuasan klien adalah pencapaian terbesar bagi perusahaan kami."
-          />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {TESTIMONIALS.slice(0, 6).map((testimonial, index) => (
-              <TestimonialCard
-                key={testimonial.id}
-                testimonial={testimonial}
-                index={index}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <TestimonialsSection />
 
       {/* ============================================ */}
       {/* PRICING CALCULATOR SECTION */}
       {/* ============================================ */}
       <section id="pricing" className="relative py-24 sm:py-32">
-        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           <SectionHeader
             badge="Paket Harga"
             title="Estimasi Paket"
@@ -253,55 +299,51 @@ export default function HomePage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
-            {/* Left: CTA Text */}
+          {/* Centered Section Header */}
+          <SectionHeader
+            badge="Hubungi Kami"
+            title="Siap Memulai Proyek"
+            titleHighlight="Digital Anda?"
+            description="Diskusikan kebutuhan proyek Anda dengan tim spesialis kami. Kami siap memberikan solusi teknologi terbaik untuk akselerasi pertumbuhan bisnis Anda."
+          />
+
+          {/* 2-Column Grid: Contact Form & Location Map */}
+          <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-2 max-w-7xl mx-auto items-stretch">
+            {/* Contact Form Card */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col h-full"
             >
-              <SectionHeader
-                badge="Hubungi Kami"
-                title="Siap Memulai Proyek"
-                titleHighlight="Digital Anda?"
-                description="Diskusikan kebutuhan proyek Anda dengan tim spesialis kami. Kami siap memberikan solusi teknologi terbaik untuk akselerasi pertumbuhan bisnis Anda."
-                align="left"
-              />
-
-              <div className="mt-8 space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
-                    <MessageCircle className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">
-                      Konsultasi Cepat Via WhatsApp
-                    </p>
-                    <p className="text-lg font-bold">{AGENCY.phone}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10">
-                    <Zap className="h-6 w-6 text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">
-                      Email Resmi Perusahaan
-                    </p>
-                    <p className="text-lg font-bold">{AGENCY.email}</p>
-                  </div>
-                </div>
-              </div>
+              <ContactForm />
             </motion.div>
 
-            {/* Right: Contact Form */}
+            {/* Location Map Card (Full Bleed Reference Design) */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="relative flex flex-col h-full min-h-[480px] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl"
             >
-              <ContactForm />
+              <LocationMap
+                center={[104.7565, -2.9845]}
+                zoom={12.8}
+                pitch={0}
+                bearing={0}
+                markers={[
+                  {
+                    lng: 104.7565,
+                    lat: -2.9845,
+                    label: "Artificial Ripe",
+                    popupTitle: "Artificial Ripe",
+                    icon: "hq",
+                  },
+                ]}
+                className="min-h-[480px]"
+              />
             </motion.div>
           </div>
         </div>

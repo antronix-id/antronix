@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { SectionHeader } from "@/components/shared/section-header";
 import { PortfolioCard } from "@/components/features/portfolio-card";
 import { VideoLightbox } from "@/components/features/video-lightbox";
@@ -19,38 +20,34 @@ const FILTERS = [
 ] as const;
 
 export default function PortfolioPage() {
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [activeFilter, setActiveFilter] = useState<string>("all");
   const [lightboxItem, setLightboxItem] = useState<PortfolioItem | null>(null);
 
   const filteredPortfolio =
     activeFilter === "all"
       ? PORTFOLIO
-      : PORTFOLIO.filter((p) => p.category === activeFilter);
+      : PORTFOLIO.filter((item) => item.category === activeFilter);
 
   return (
     <>
       {/* Hero */}
-      <section className="relative flex items-center overflow-hidden py-32 lg:py-40">
-
-        <div className="relative mx-auto max-w-7xl px-6 text-center lg:px-8">
-          <motion.h1
+      <section className="relative pt-32 pb-16 overflow-hidden">
+        <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
+            transition={{ duration: 0.6 }}
           >
-            Karya Digital{" "}
-            <span className="gradient-text">Terbaik Kami</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground"
-          >
-            Jelajahi koleksi proyek yang telah kami bangun untuk berbagai klien
-            di seluruh Indonesia.
-          </motion.p>
+            <span className="text-xs font-semibold uppercase tracking-widest text-primary">
+              Hasil Karya & Case Studies
+            </span>
+            <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-6xl text-foreground">
+              Portofolio <span className="gradient-text">Artificial Ripe</span>
+            </h1>
+            <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Jelajahi koleksi proyek yang telah kami bangun untuk berbagai klien di seluruh Indonesia.
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -62,22 +59,15 @@ export default function PortfolioPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-12 flex flex-wrap items-center justify-center gap-2"
+            className="mb-12 flex flex-wrap items-center justify-center gap-3"
           >
             {FILTERS.map((filter) => (
-              <Button
+              <LiquidMetalButton
                 key={filter.id}
-                variant={activeFilter === filter.id ? "default" : "outline"}
-                size="sm"
                 onClick={() => setActiveFilter(filter.id)}
-                className={cn(
-                  "rounded-full transition-all",
-                  activeFilter === filter.id &&
-                    "brand-gradient-btn text-white border-0 shadow-lg"
-                )}
               >
-                {filter.label}
-              </Button>
+                <span>{filter.label}</span>
+              </LiquidMetalButton>
             ))}
           </motion.div>
 

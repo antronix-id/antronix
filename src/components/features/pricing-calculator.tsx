@@ -1,285 +1,166 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import NumberFlow from "@number-flow/react";
 import { Button } from "@/components/ui/button";
+import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { Badge } from "@/components/ui/badge";
 import { BorderGlow } from "@/components/ui/border-glow";
-import { VerticalCutReveal } from "@/components/ui/vertical-cut-reveal";
-import { Check, ArrowRight, ArrowLeft, MessageCircle, Sparkles } from "lucide-react";
+import { Check, MessageCircle, Zap } from "lucide-react";
 import { SERVICES, AGENCY } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const PricingSwitch = ({ onSwitch }: { onSwitch: (isYearly: boolean) => void }) => {
-  const [selected, setSelected] = useState<"monthly" | "yearly">("monthly");
-
-  const handleSwitch = (type: "monthly" | "yearly") => {
-    setSelected(type);
-    onSwitch(type === "yearly");
-  };
-
-  return (
-    <div className="flex justify-center my-6">
-      <div className="relative z-10 mx-auto flex w-fit rounded-full bg-neutral-900/90 border border-primary/30 p-1.5 backdrop-blur-md shadow-xl">
-        <button
-          onClick={() => handleSwitch("monthly")}
-          className={cn(
-            "relative z-10 w-fit h-9 rounded-full sm:px-6 px-4 font-semibold transition-colors text-xs sm:text-sm",
-            selected === "monthly" ? "text-white" : "text-muted-foreground"
-          )}
-        >
-          {selected === "monthly" && (
-            <motion.span
-              layoutId="pricing-switch"
-              className="absolute inset-0 h-full w-full rounded-full border border-primary/50 brand-gradient-btn shadow-lg shadow-primary/30"
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            />
-          )}
-          <span className="relative">Project Base</span>
-        </button>
-
-        <button
-          onClick={() => handleSwitch("yearly")}
-          className={cn(
-            "relative z-10 w-fit h-9 flex-shrink-0 rounded-full sm:px-6 px-4 font-semibold transition-colors text-xs sm:text-sm",
-            selected === "yearly" ? "text-white" : "text-muted-foreground"
-          )}
-        >
-          {selected === "yearly" && (
-            <motion.span
-              layoutId="pricing-switch"
-              className="absolute inset-0 h-full w-full rounded-full border border-primary/50 brand-gradient-btn shadow-lg shadow-primary/30"
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            />
-          )}
-          <span className="relative flex items-center gap-1.5">
-            Retainer (Hemat 20%)
-            <Sparkles className="h-3.5 w-3.5 text-yellow-300" />
-          </span>
-        </button>
-      </div>
-    </div>
-  );
+const divisionLogos: Record<string, string> = {
+  "web-studio": "/Web-Studio.png",
+  "ai-media-lab": "/Media-Lab.png",
+  "system-lab": "/System-Lab.png",
 };
 
-// Helper to parse price string to number for NumberFlow
-function parseNumericPrice(priceStr: string): number {
+function parsePriceToNumber(priceStr: string): number {
+  if (priceStr.includes("Juta")) {
+    const clean = priceStr.replace("Juta", "").replace("+", "").trim();
+    const val = parseFloat(clean);
+    return isNaN(val) ? 0 : Math.round(val * 1000000);
+  }
   const cleanStr = priceStr.replace(/[^0-9]/g, "");
   return parseInt(cleanStr, 10) || 0;
 }
 
 export function PricingCalculator() {
-  const [selectedService, setSelectedService] = useState<string | null>(null);
-  const [selectedTier, setSelectedTier] = useState<string | null>(null);
-  const [isYearly, setIsYearly] = useState(false);
+  const [selectedServiceId, setSelectedServiceId] = useState<string>("web-studio");
 
-  const activeService = SERVICES.find((s) => s.id === selectedService);
+  const activeService = SERVICES.find((s) => s.id === selectedServiceId) || SERVICES[0];
 
-  const handleWhatsApp = () => {
-    const service = activeService?.title || "Unknown";
-    const tier = selectedTier || "Unknown";
-    const billingType = isYearly ? "Retainer / Tahunan" : "Project Base / Bulanan";
+  const handleWhatsApp = (tierName: string) => {
+    const serviceName = activeService.title;
     const message = encodeURIComponent(
-      `Halo ${AGENCY.name}! 👋\n\nSaya tertarik dengan layanan *${service}* paket *${tier}* (${billingType}).\n\nBisa tolong berikan informasi estimasi dan prosedur pengerjaannya?`
+      `Halo ${AGENCY.name}! 👋\n\nSaya berminat dengan *${serviceName}* - Paket *${tierName}*.\n\nBisa dibantu untuk konsultasi detail dan alur pengerjaannya?`
     );
-    window.open(
-      `https://wa.me/${AGENCY.whatsapp}?text=${message}`,
-      "_blank"
-    );
+    window.open(`https://wa.me/${AGENCY.whatsapp}?text=${message}`, "_blank");
   };
 
   return (
-    <div className="space-y-8">
-      {/* Switch billing toggle */}
-      <PricingSwitch onSwitch={(yearly) => setIsYearly(yearly)} />
+    <div className="w-full space-y-10">
+      {/* Service Division Tabs Selector */}
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        {SERVICES.map((service) => {
+          const logoSrc = service.logo || divisionLogos[service.id] || "/Web-Studio.png";
+          const isSelected = selectedServiceId === service.id;
 
-      {/* Step 1 & 2 Container */}
-      <AnimatePresence mode="wait">
-        {!selectedService ? (
-          <motion.div
-            key="step1"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="grid grid-cols-1 gap-4 md:grid-cols-3"
-          >
-            {SERVICES.map((service, index) => (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="h-full"
-              >
-                <div onClick={() => setSelectedService(service.id)} className="h-full cursor-pointer">
-                  <BorderGlow className="group h-full transition-all duration-300">
-                    <div className="p-6 text-center h-full flex flex-col justify-between">
-                      <div>
-                        <div
-                          className={cn(
-                            "mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br transition-transform group-hover:scale-110 shadow-lg",
-                            service.gradient
-                          )}
-                        >
-                          <span className="text-2xl text-white">
-                            {service.icon === "globe"
-                              ? "🌐"
-                              : service.icon === "sparkles"
-                              ? "✨"
-                              : "⚙️"}
-                          </span>
-                        </div>
-                        <h3 className="mb-2 font-bold text-lg">{service.title}</h3>
-                        <p className="text-xs text-muted-foreground leading-relaxed">
-                          {service.shortDescription}
-                        </p>
-                      </div>
-                    </div>
-                  </BorderGlow>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        ) : (
-          <motion.div
-            key="step2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-          >
-            {/* Back button */}
-            <button
-              onClick={() => {
-                setSelectedService(null);
-                setSelectedTier(null);
-              }}
-              className="mb-6 flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          return (
+            <LiquidMetalButton
+              key={service.id}
+              onClick={() => setSelectedServiceId(service.id)}
             >
-              <ArrowLeft className="h-4 w-4" />
-              Pilih divisi layanan lain
-            </button>
+              <Image
+                src={logoSrc}
+                alt={service.title}
+                width={20}
+                height={20}
+                className="h-5 w-5 object-contain filter drop-shadow-sm"
+              />
+              <span>{service.shortTitle || service.title}</span>
+            </LiquidMetalButton>
+          );
+        })}
+      </div>
 
-            {/* Service info */}
-            <div className="mb-8 text-center">
-              <Badge
+      {/* Active Service Description */}
+      <motion.div
+        key={activeService.id}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="text-center max-w-2xl mx-auto"
+      >
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          {activeService.description}
+        </p>
+      </motion.div>
+
+      {/* Pricing Cards Grid */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeService.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.4 }}
+          className="grid grid-cols-1 gap-6 md:grid-cols-3"
+        >
+          {activeService.pricing.map((tier) => {
+            const finalPriceNumber = parsePriceToNumber(tier.price);
+
+            return (
+              <BorderGlow
+                key={tier.name}
                 className={cn(
-                  "mb-3 border-0 bg-gradient-to-r text-white rounded-full px-4 py-1",
-                  activeService?.gradient
+                  "relative h-full transition-all duration-300",
+                  tier.popular ? "border-cyan-500/50 shadow-2xl shadow-cyan-500/10" : ""
                 )}
               >
-                {activeService?.title}
-              </Badge>
-              <h3 className="text-3xl font-bold tracking-tight">
-                <VerticalCutReveal splitBy="words" staggerDuration={0.1}>
-                  Pilihan Paket Investasi
-                </VerticalCutReveal>
-              </h3>
-            </div>
-
-            {/* Pricing Tiers */}
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {activeService?.pricing.map((tier, index) => {
-                const numericBasePrice = parseNumericPrice(tier.price);
-                const finalPrice = isYearly
-                  ? Math.round(numericBasePrice * 0.8)
-                  : numericBasePrice;
-
-                return (
-                  <motion.div
-                    key={tier.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="h-full"
-                  >
-                    <div onClick={() => setSelectedTier(tier.name)} className="h-full cursor-pointer">
-                      <BorderGlow
-                        className={cn(
-                          "relative h-full transition-all duration-300",
-                          selectedTier === tier.name && "ring-2 ring-primary"
-                        )}
-                      >
-                        {tier.popular && (
-                          <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-                            <Badge className="border-0 brand-gradient-btn text-white text-xs rounded-full px-3 py-1 shadow-lg">
-                              Paling Populer
-                            </Badge>
-                          </div>
-                        )}
-                        <div className="p-6 lg:p-8 h-full flex flex-col justify-between">
-                          <div>
-                            <h4 className="mb-1 text-xl font-bold">{tier.name}</h4>
-                            <p className="mb-4 text-xs text-muted-foreground leading-relaxed">
-                              {tier.description}
-                            </p>
-
-                            {/* Price with NumberFlow */}
-                            <div className="mb-6 flex items-baseline gap-1">
-                              <span className="text-sm font-semibold text-muted-foreground">Rp</span>
-                              <span className="text-3xl font-bold gradient-text">
-                                <NumberFlow
-                                  value={finalPrice}
-                                  format={{
-                                    useGrouping: true,
-                                  }}
-                                />
-                              </span>
-                              <span className="text-xs text-muted-foreground ml-1 font-normal">
-                                {isYearly ? "/bln (ret.)" : "/proyek"}
-                              </span>
-                            </div>
-
-                            <ul className="space-y-3 pt-2 border-t border-border/40">
-                              {tier.features.map((feature) => (
-                                <li
-                                  key={feature}
-                                  className="flex items-start gap-2 text-sm"
-                                >
-                                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                                  <span className="text-muted-foreground text-xs leading-relaxed">
-                                    {feature}
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </BorderGlow>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            {/* CTA */}
-            <AnimatePresence>
-              {selectedTier && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="mt-8 text-center"
-                >
-                  <div className="flex items-center justify-center">
-                    <Button
-                      onClick={handleWhatsApp}
-                      size="lg"
-                      className="brand-gradient-btn px-8"
-                    >
-                      <MessageCircle className="mr-2 h-5 w-5" />
-                      Konsultasi Paket {selectedTier}
-                    </Button>
+                {tier.popular && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
+                    <Badge className="border-0 brand-gradient-btn text-white text-xs font-semibold rounded-full px-3.5 py-1 shadow-lg">
+                      Most Popular
+                    </Badge>
                   </div>
-                  <p className="mt-3 text-xs text-muted-foreground">
-                    Free konsultasi awal — tanpa komitmen
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        )}
+                )}
+
+                <div className="p-6 lg:p-8 flex flex-col justify-between h-full space-y-6">
+                  <div>
+                    {/* Tier Title & Description */}
+                    <h3 className="text-xl font-bold text-white mb-1.5">{tier.name}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-6">
+                      {tier.description}
+                    </p>
+
+                    {/* Price Header */}
+                    <div className="mb-6 pb-6 border-b border-white/10">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-sm font-semibold text-cyan-400">Rp</span>
+                        <span className="text-3xl font-extrabold bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
+                          <NumberFlow
+                            value={finalPriceNumber}
+                            format={{ useGrouping: true }}
+                          />
+                        </span>
+                      </div>
+                      <div className="mt-1 text-[11px] text-muted-foreground font-medium">
+                        Estimasi pengerjaan per proyek
+                      </div>
+                    </div>
+
+                    {/* Feature List */}
+                    <ul className="space-y-3">
+                      {tier.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2.5 text-xs text-slate-300">
+                          <Check className="h-4 w-4 shrink-0 text-cyan-400 mt-0.5" />
+                          <span className="leading-relaxed">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* CTA Button */}
+                  <div className="w-full flex justify-center pt-2">
+                    <LiquidMetalButton
+                      onClick={() => handleWhatsApp(tier.name)}
+                      className="w-full"
+                    >
+                      <MessageCircle className="h-4 w-4 text-emerald-400" />
+                      <span>Pilih Paket {tier.name}</span>
+                    </LiquidMetalButton>
+                  </div>
+                </div>
+              </BorderGlow>
+            );
+          })}
+        </motion.div>
       </AnimatePresence>
     </div>
   );
 }
+

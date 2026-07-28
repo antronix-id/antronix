@@ -1,7 +1,8 @@
 "use client";
 
 import type React from "react";
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LiquidMetalButtonProps
@@ -14,11 +15,11 @@ interface LiquidMetalButtonProps
 }
 
 export function LiquidMetalButton({
-  label,
+  label = "Get Started",
   children,
   onClick,
   viewMode = "text",
-  variant = "brand",
+  variant = "default",
   className = "",
   ...props
 }: LiquidMetalButtonProps) {
@@ -65,6 +66,7 @@ export function LiquidMetalButton({
     }
 
     let isMounted = true;
+    let resizeObserver: ResizeObserver | null = null;
 
     const loadShader = async () => {
       try {
@@ -82,20 +84,44 @@ export function LiquidMetalButton({
             liquidMetalFragmentShader,
             {
               u_repetition: 4,
-              u_softness: 0.5,
-              u_shiftRed: 0.3,
-              u_shiftBlue: 0.3,
-              u_distortion: 0,
-              u_contour: 0,
+              u_softness: 0.3,
+              u_shiftRed: 0.35,
+              u_shiftBlue: 0.35,
+              u_distortion: 0.15,
+              u_contour: 0.2,
               u_angle: 45,
-              u_scale: 8,
-              u_shape: 1,
+              u_scale: 3,
+              u_shape: 0,
               u_offsetX: 0.1,
               u_offsetY: -0.1,
             },
             undefined,
-            0.6
+            0.45
           );
+
+          const updateCanvasSize = () => {
+            if (shaderRef.current) {
+              const canvas = shaderRef.current.querySelector("canvas");
+              const rect = shaderRef.current.getBoundingClientRect();
+              if (canvas && rect.width > 0 && rect.height > 0) {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                canvas.width = Math.round(rect.width * dpr);
+                canvas.height = Math.round(rect.height * dpr);
+                canvas.style.width = "100%";
+                canvas.style.height = "100%";
+                if (typeof shaderMount.current?.resize === "function") {
+                  shaderMount.current.resize();
+                }
+              }
+            }
+          };
+
+          updateCanvasSize();
+
+          resizeObserver = new ResizeObserver(() => {
+            updateCanvasSize();
+          });
+          resizeObserver.observe(shaderRef.current);
         }
       } catch (error) {
         console.error("Failed to load shader:", error);
@@ -106,6 +132,9 @@ export function LiquidMetalButton({
 
     return () => {
       isMounted = false;
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
       if (shaderMount.current?.destroy) {
         shaderMount.current.destroy();
         shaderMount.current = null;
@@ -115,23 +144,23 @@ export function LiquidMetalButton({
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    shaderMount.current?.setSpeed?.(1);
+    shaderMount.current?.setSpeed?.(0.85);
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
     setIsPressed(false);
-    shaderMount.current?.setSpeed?.(0.6);
+    shaderMount.current?.setSpeed?.(0.45);
   };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (shaderMount.current?.setSpeed) {
-      shaderMount.current.setSpeed(2.4);
+      shaderMount.current.setSpeed(1.8);
       setTimeout(() => {
         if (isHovered) {
-          shaderMount.current?.setSpeed?.(1);
+          shaderMount.current?.setSpeed?.(0.85);
         } else {
-          shaderMount.current?.setSpeed?.(0.6);
+          shaderMount.current?.setSpeed?.(0.45);
         }
       }, 300);
     }
@@ -151,7 +180,7 @@ export function LiquidMetalButton({
     onClick?.(e);
   };
 
-  const content = children || label;
+  const content = children || (isIcon ? <Sparkles size={16} className="text-slate-300" /> : label);
 
   return (
     <div
@@ -178,13 +207,13 @@ export function LiquidMetalButton({
           {/* Label / Children Layer */}
           <div
             className={cn(
-              "relative z-30 flex items-center justify-center gap-2 font-semibold text-white pointer-events-none transition-all duration-300 px-6 py-2.5 min-h-[44px]",
+              "relative z-30 flex items-center justify-center gap-2 text-sm font-medium text-slate-200 pointer-events-none transition-all duration-300 px-6 py-2.5 min-h-[44px] whitespace-nowrap",
               isIcon && "p-2.5 min-w-[44px] min-h-[44px]"
             )}
             style={{
               transformStyle: "preserve-3d",
               transform: "translateZ(20px)",
-              textShadow: "0px 1px 4px rgba(0, 0, 0, 0.8)",
+              textShadow: "0px 1px 3px rgba(0, 0, 0, 0.8)",
             }}
           >
             {content}
@@ -192,7 +221,7 @@ export function LiquidMetalButton({
 
           {/* Inner Metallic Pill Layer */}
           <div
-            className="absolute inset-0 z-20 rounded-full"
+            className="absolute inset-[2px] z-20 rounded-full"
             style={{
               transformStyle: "preserve-3d",
               transform: `translateZ(10px) ${
@@ -204,15 +233,15 @@ export function LiquidMetalButton({
           >
             <div
               className={cn(
-                "h-full w-full rounded-full border border-white/20 transition-all duration-300",
+                "h-full w-full rounded-full transition-all duration-300",
                 variant === "brand"
                   ? "bg-gradient-to-r from-[oklch(0.68_0.25_340)] via-[oklch(0.68_0.22_230)] to-[oklch(0.72_0.22_135)] opacity-90 shadow-lg shadow-primary/20"
-                  : "bg-gradient-to-b from-neutral-800 to-neutral-950"
+                  : "bg-gradient-to-b from-[#222225] to-[#08080a]"
               )}
               style={{
                 boxShadow: isPressed
-                  ? "inset 0px 2px 4px rgba(0, 0, 0, 0.4), inset 0px 1px 2px rgba(0, 0, 0, 0.3)"
-                  : "0 0 20px rgba(255, 42, 133, 0.2)",
+                  ? "inset 0px 2px 4px rgba(0, 0, 0, 0.6), inset 0px 1px 2px rgba(0, 0, 0, 0.5)"
+                  : "none",
               }}
             />
           </div>
@@ -226,10 +255,10 @@ export function LiquidMetalButton({
                 isPressed ? "translateY(1px) scale(0.98)" : "translateY(0) scale(1)"
               }`,
               boxShadow: isPressed
-                ? "0px 0px 0px 1px rgba(0, 0, 0, 0.5)"
+                ? "0px 0px 0px 1px rgba(255, 255, 255, 0.2)"
                 : isHovered
-                ? "0px 0px 0px 1px rgba(255, 255, 255, 0.4), 0px 12px 24px rgba(0, 0, 0, 0.3)"
-                : "0px 0px 0px 1px rgba(255, 255, 255, 0.2), 0px 8px 16px rgba(0, 0, 0, 0.2)",
+                ? "0px 0px 0px 1.5px rgba(255, 255, 255, 0.5), 0px 0px 16px rgba(255, 255, 255, 0.2)"
+                : "0px 0px 0px 1.5px rgba(255, 255, 255, 0.35), 0px 0px 10px rgba(255, 255, 255, 0.1)",
             }}
           >
             <div

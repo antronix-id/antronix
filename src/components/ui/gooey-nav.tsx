@@ -2,11 +2,18 @@
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import { Globe, Sparkles, Cpu, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import "./gooey-nav.css";
+
+const logoMap: Record<string, string> = {
+  globe: "/Web-Studio.png",
+  sparkles: "/Media-Lab.png",
+  cpu: "/System-Lab.png",
+};
 
 export interface GooeyNavItem {
   label: string;
@@ -35,77 +42,32 @@ export function GooeyNav({
   timeVariance = 300,
   colors = [1, 2, 3, 1, 2, 3, 1, 4],
   initialActiveIndex = 0,
-  className = "",
+  className,
 }: GooeyNavProps) {
-  const pathname = usePathname();
-  const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-
   const containerRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLUListElement>(null);
   const filterRef = useRef<HTMLSpanElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
 
-  // Helper to determine active index
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // Determine initial active index based on route (deterministic on SSR & client)
   const getActiveIndex = useCallback(() => {
-    if (typeof window === "undefined") return initialActiveIndex;
-    const hash = window.location.hash;
-
-    if (hash) {
-      const hIdx = items.findIndex((item) => item.href === hash);
-      if (hIdx !== -1) return hIdx;
-    }
-
     const idx = items.findIndex((item) => {
-      if (item.href === "/" && pathname === "/" && !hash) return true;
-      if (item.href !== "/" && !item.href.startsWith("#") && pathname.startsWith(item.href)) return true;
+      if (item.href === "/" && pathname === "/") return true;
+      if (item.href !== "/" && !item.href.includes("#") && pathname.startsWith(item.href)) return true;
       if (item.children) {
         return item.children.some((c) => pathname.startsWith(c.href));
       }
       return false;
     });
 
-    return idx !== -1 ? idx : 0;
+    return idx !== -1 ? idx : initialActiveIndex;
   }, [items, pathname, initialActiveIndex]);
 
-  // Sync active index when pathname or hash changes
-  useEffect(() => {
-    const sync = () => {
-      const idx = getActiveIndex();
-      setActiveIndex(idx);
-    };
-
-    sync();
-    window.addEventListener("hashchange", sync);
-    window.addEventListener("popstate", sync);
-
-    return () => {
-      window.removeEventListener("hashchange", sync);
-      window.removeEventListener("popstate", sync);
-    };
-  }, [pathname, getActiveIndex]);
-
-  const updateEffectPosition = useCallback((element: HTMLElement) => {
-    if (!containerRef.current || !filterRef.current) return;
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const pos = element.getBoundingClientRect();
-
-    const styles = {
-      left: `${pos.x - containerRect.x}px`,
-      top: `${pos.y - containerRect.y}px`,
-      width: `${pos.width}px`,
-      height: `${pos.height}px`,
-    };
-    Object.assign(filterRef.current.style, styles);
-  }, []);
-
-  useEffect(() => {
-    if (!navRef.current || !containerRef.current) return;
-    const activeLi = navRef.current.querySelectorAll("li")[activeIndex];
-    if (activeLi) {
-      updateEffectPosition(activeLi as HTMLElement);
-    }
-  }, [activeIndex, updateEffectPosition]);
+  const [activeIndex, setActiveIndex] = useState(getActiveIndex());
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const noise = (n = 1) => n / 2 - Math.random() * n;
 
@@ -167,7 +129,23 @@ export function GooeyNav({
     }
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>, index: number) => {
+  const updateEffectPosition = useCallback((element: HTMLElement) => {
+    if (!containerRef.current || !filterRef.current || !textRef.current) return;
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const pos = element.getBoundingClientRect();
+
+    const styles = {
+      left: `${pos.x - containerRect.x}px`,
+      top: `${pos.y - containerRect.y}px`,
+      width: `${pos.width}px`,
+      height: `${pos.height}px`,
+    };
+    Object.assign(filterRef.current.style, styles);
+    Object.assign(textRef.current.style, styles);
+    textRef.current.innerText = element.innerText;
+  }, []);
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>, index: number, href?: string) => {
     const liEl = e.currentTarget.closest("li");
     if (!liEl) return;
 
@@ -176,23 +154,84 @@ export function GooeyNav({
 
     if (filterRef.current) {
       const particles = filterRef.current.querySelectorAll(".particle");
-      particles.forEach((p) => {
-        try {
-          filterRef.current?.removeChild(p);
-        } catch {
-          // Do nothing
-        }
-      });
+      particles.forEach((p) => filterRef.current?.removeChild(p));
+    }
+
+    if (textRef.current) {
+      textRef.current.classList.remove("active");
+      void textRef.current.offsetWidth;
+      textRef.current.classList.add("active");
+    }
+
+    if (filterRef.current) {
       makeParticles(filterRef.current);
     }
+
+    if (href && href.includes("#")) {
+      const rawHash = href.split("#")[1];
+      const targetHash = `#${rawHash}`;
+
+      if (pathname === "/") {
+        e.preventDefault();
+        window.history.pushState(null, "", targetHash);
+        const target = document.querySelector(targetHash);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
+      } else {
+        e.preventDefault();
+        router.push(`/${targetHash}`);
+      }
+    }
   };
+
+  // Sync activeIndex on pathname or hash change post-mount
+  useEffect(() => {
+    const newIdx = getActiveIndex();
+    const rawHash = typeof window !== "undefined" ? window.location.hash : "";
+
+    if (rawHash) {
+      const cleanHash = rawHash.includes("#") ? `#${rawHash.split("#")[1]}` : rawHash;
+      const hIdx = items.findIndex(
+        (item) => item.href === cleanHash || item.href === `/${cleanHash}` || item.href.endsWith(cleanHash)
+      );
+      if (hIdx !== -1) {
+        setActiveIndex(hIdx);
+        return;
+      }
+    }
+
+    setActiveIndex(newIdx);
+  }, [pathname, items, getActiveIndex]);
+
+  useEffect(() => {
+    if (!navRef.current || !containerRef.current) return;
+    const activeLi = navRef.current.querySelectorAll("li")[activeIndex];
+    if (activeLi) {
+      updateEffectPosition(activeLi as HTMLElement);
+      textRef.current?.classList.add("active");
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      const currentActiveLi = navRef.current?.querySelectorAll("li")[activeIndex];
+      if (currentActiveLi) {
+        updateEffectPosition(currentActiveLi as HTMLElement);
+      }
+    });
+
+    resizeObserver.observe(containerRef.current);
+    return () => resizeObserver.disconnect();
+  }, [activeIndex, updateEffectPosition]);
 
   return (
     <div className={cn("gooey-nav-container", className)} ref={containerRef}>
       <nav>
         <ul ref={navRef}>
           {items.map((item, index) => {
-            const isActive = activeIndex === index;
+            const isParentActive = item.children
+              ? item.children.some((c) => pathname.startsWith(c.href))
+              : false;
+            const isActive = activeIndex === index || isParentActive;
 
             return (
               <li
@@ -206,30 +245,18 @@ export function GooeyNav({
                 {item.children ? (
                   <button
                     type="button"
-                    style={{
-                      color: isActive ? "#000000" : "#ffffff",
-                      fontWeight: isActive ? 700 : 500,
-                      zIndex: 20,
-                      position: "relative",
-                    }}
-                    className={cn(
-                      "relative z-20 transition-colors flex items-center gap-1 px-4 py-2 text-sm font-semibold",
-                      isActive ? "!text-black font-bold" : "text-white hover:text-white/80"
-                    )}
+                    className="relative z-30 transition-colors flex items-center gap-1.5 px-4 py-2 text-sm font-semibold"
                     onClick={(e) => {
-                      handleClick(e, index);
-                      setActiveDropdown(
-                        activeDropdown === item.label ? null : item.label
-                      );
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setActiveDropdown((prev) => (prev === item.label ? null : item.label));
+                      handleClick(e, index, item.href);
                     }}
                   >
-                    <span style={{ color: isActive ? "#000000" : "#ffffff", position: "relative", zIndex: 20 }}>
-                      {item.label}
-                    </span>
+                    <span className="font-semibold relative z-30">{item.label}</span>
                     <ChevronDown
-                      style={{ color: isActive ? "#000000" : "#ffffff", position: "relative", zIndex: 20 }}
                       className={cn(
-                        "h-3.5 w-3.5 transition-transform duration-200",
+                        "h-3.5 w-3.5 transition-transform duration-200 relative z-30",
                         activeDropdown === item.label && "rotate-180"
                       )}
                     />
@@ -237,21 +264,10 @@ export function GooeyNav({
                 ) : (
                   <Link
                     href={item.href}
-                    style={{
-                      color: isActive ? "#000000" : "#ffffff",
-                      fontWeight: isActive ? 700 : 500,
-                      zIndex: 20,
-                      position: "relative",
-                    }}
-                    className={cn(
-                      "relative z-20 transition-colors inline-block px-4 py-2 text-sm font-semibold",
-                      isActive ? "!text-black font-bold" : "text-white hover:text-white/80"
-                    )}
-                    onClick={(e) => handleClick(e, index)}
+                    className="relative z-30 transition-colors inline-block px-4 py-2 text-sm font-semibold"
+                    onClick={(e) => handleClick(e, index, item.href)}
                   >
-                    <span style={{ color: isActive ? "#000000" : "#ffffff", position: "relative", zIndex: 20 }}>
-                      {item.label}
-                    </span>
+                    <span>{item.label}</span>
                   </Link>
                 )}
 
@@ -259,28 +275,41 @@ export function GooeyNav({
                 <AnimatePresence>
                   {item.children && activeDropdown === item.label && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
-                      className="absolute left-0 top-full mt-2 w-56 overflow-hidden rounded-2xl glass-strong shadow-2xl border border-white/10 z-50"
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      transition={{ duration: 0.15, ease: "easeOut" }}
+                      className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-64 overflow-hidden rounded-2xl gooey-dropdown-menu backdrop-blur-2xl p-2 z-[100] shadow-2xl"
                     >
-                      <div className="p-2 flex flex-col gap-1">
-                        {item.children.map((child) => {
+                      <div className="flex flex-col gap-1">
+                        {item.children.map((child, childIdx) => {
                           const isChildActive = pathname === child.href;
+                          const logoSrc = (child as any).logo || (child.icon ? logoMap[child.icon] : null);
 
                           return (
                             <Link
-                              key={child.label}
+                              key={child.href}
                               href={child.href}
                               className={cn(
-                                "flex items-center rounded-xl px-4 py-2.5 transition-all text-sm font-medium",
+                                "gooey-dropdown-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all duration-150 text-sm font-medium",
                                 isChildActive
-                                  ? "bg-white/20 text-white font-bold"
-                                  : "text-neutral-300 hover:bg-white/10 hover:text-white"
+                                  ? "bg-white/20 text-white font-semibold shadow-inner"
+                                  : "text-zinc-300 hover:text-white hover:bg-white/10"
                               )}
+                              onClick={() => setActiveDropdown(null)}
                             >
-                              <span>{child.label}</span>
+                              <div className="flex h-7 w-7 shrink-0 items-center justify-center relative">
+                                {logoSrc && (
+                                  <Image
+                                    src={logoSrc}
+                                    alt={child.label}
+                                    width={28}
+                                    height={28}
+                                    className="h-full w-full object-contain filter drop-shadow-sm"
+                                  />
+                                )}
+                              </div>
+                              <span className="text-white">{child.label}</span>
                             </Link>
                           );
                         })}

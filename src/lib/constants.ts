@@ -36,6 +36,7 @@ export interface Service {
   title: string;
   shortTitle: string;
   icon: string;
+  logo?: string;
   description: string;
   shortDescription: string;
   color: string;

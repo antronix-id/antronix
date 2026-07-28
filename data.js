@@ -21,9 +21,12 @@ export const AGENCY = {
   whatsapp: "6281234567890",
   address: "Jakarta, Indonesia",
   socials: {
-    instagram: "https://instagram.com/artificialripe",
-    linkedin: "https://linkedin.com/company/artificialripe",
     whatsapp: "https://wa.me/6281234567890",
+    instagram: "https://instagram.com/artificialripe",
+    tiktok: "https://tiktok.com/@artificialripe",
+    linkedin: "https://linkedin.com/company/artificialripe",
+    x: "https://x.com/artificialripe",
+    youtube: "https://youtube.com/@artificialripe",
   },
 };
 
@@ -34,15 +37,15 @@ export const NAV_LINKS = [
   { label: "Beranda", href: "/" },
   {
     label: "Layanan",
-    href: "#services",
+    href: "/#services",
     children: [
-      { label: "Web Studio", href: "/services/web-studio", icon: "globe" },
-      { label: "AI Media Lab", href: "/services/ai-media-lab", icon: "sparkles" },
-      { label: "System Lab", href: "/services/system-lab", icon: "cpu" },
+      { label: "Web Studio", href: "/services/web-studio", icon: "globe", logo: "/Web-Studio.png" },
+      { label: "AI Media Lab", href: "/services/ai-media-lab", icon: "sparkles", logo: "/Media-Lab.png" },
+      { label: "System Lab", href: "/services/system-lab", icon: "cpu", logo: "/System-Lab.png" },
     ],
   },
   { label: "Portofolio", href: "/portfolio" },
-  { label: "Kontak", href: "#contact" },
+  { label: "Kontak", href: "/#contact" },
 ];
 
 // ==============================================================================
@@ -65,9 +68,10 @@ export const SERVICES = [
   {
     id: "web-studio",
     slug: "web-studio",
-    title: "Artificial Ripe Web Studio",
+    title: "Web Studio",
     shortTitle: "Web Studio",
     icon: "globe",
+    logo: "/Web-Studio.png",
     description:
       "Kami membangun website modern, SEO-optimized, dan landing page berkinerja tinggi yang dirancang khusus untuk meningkatkan konversi dan citra brand Anda.",
     shortDescription: "Custom Web, SEO, & Landing Pages",
@@ -160,9 +164,10 @@ export const SERVICES = [
   {
     id: "ai-media-lab",
     slug: "ai-media-lab",
-    title: "Artificial Ripe AI Media Lab",
+    title: "AI Media Lab",
     shortTitle: "AI Media Lab",
     icon: "sparkles",
+    logo: "/Media-Lab.png",
     description:
       "Manfaatkan teknologi AI terkini untuk memproduksi iklan video, visual branding, dan konten pemasaran berkualitas sinematik yang menghemat biaya produksi.",
     shortDescription: "AI Video Ads, Visual Branding, & Marketing Content",
@@ -254,9 +259,10 @@ export const SERVICES = [
   {
     id: "system-lab",
     slug: "system-lab",
-    title: "Artificial Ripe System Lab",
+    title: "System Lab",
     shortTitle: "System Lab",
     icon: "cpu",
+    logo: "/System-Lab.png",
     description:
       "Kami membangun sistem kasir POS, platform SaaS khusus, dan infrastruktur DevOps teruji untuk mengotomatisasi operasional bisnis Anda.",
     shortDescription: "POS, Custom SaaS, & DevOps Infrastructure",
@@ -523,7 +529,7 @@ export const WHY_CHOOSE_US = [
   },
   {
     icon: "trending-up",
-    title: "Fokus Pada Hasil & Hasil Hasil",
+    title: "Fokus Pada Hasil & ROI Nyata",
     description:
       "Setiap solusi dirancang khusus untuk memberikan hasil pertumbuhan bisnis yang nyata dan terukur.",
   },

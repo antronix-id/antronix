@@ -40,22 +40,26 @@
 
 .gooey-nav-container nav ul {
   display: flex;
-  gap: 1.25em;
+  gap: 1.5em;
   list-style: none;
   padding: 0 0.5em;
   margin: 0;
   position: relative;
-  z-index: 10;
+  z-index: 3;
   color: white;
   align-items: center;
 }
 
 .gooey-nav-container nav ul li {
-  border-radius: 9999px;
+  border-radius: 100vw;
   position: relative;
   cursor: pointer;
-  transition: all 0.3s ease;
-  color: rgba(255, 255, 255, 0.85);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 0 0.5px 1.5px transparent;
+  color: white;
 }
 
 .gooey-nav-container nav ul li a,
@@ -63,7 +67,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.5em 1em;
+  padding: 0.6em 1em;
   font-size: 0.875rem;
   font-weight: 500;
   text-decoration: none;
@@ -73,8 +77,10 @@
   cursor: pointer;
   outline: none;
   white-space: nowrap;
-  position: relative;
-  z-index: 20;
+}
+
+.gooey-nav-container nav ul li:focus-within:has(:focus-visible) {
+  box-shadow: 0 0 0.5px 1.5px white;
 }
 
 .gooey-nav-container nav ul li::after {
@@ -82,41 +88,34 @@
   position: absolute;
   inset: 0;
   border-radius: 9999px;
-  background: #ffffff;
+  background: white;
   opacity: 0;
   transform: scale(0);
   transition: all 0.3s ease;
-  z-index: 1;
+  z-index: -1;
 }
 
 .gooey-nav-container nav ul li.active {
-  color: #000000 !important;
-  font-weight: 700 !important;
+  color: black;
+  font-weight: 700;
+}
+
+.gooey-nav-container nav ul li.active::after {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .gooey-nav-container nav ul li.active a,
 .gooey-nav-container nav ul li.active button,
-.gooey-nav-container nav ul li.active a span,
-.gooey-nav-container nav ul li.active button span {
+.gooey-nav-container nav ul li.active span {
   color: #000000 !important;
-  fill: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
   font-weight: 700 !important;
-  z-index: 20 !important;
-  position: relative !important;
 }
 
-.gooey-nav-container nav ul li.active button svg {
+.gooey-nav-container nav ul li.active svg {
   color: #000000 !important;
   stroke: #000000 !important;
-  z-index: 20 !important;
-  position: relative !important;
-}
-
-.gooey-nav-container nav ul li.active::after {
-  opacity: 1 !important;
-  transform: scale(1) !important;
-  background: #ffffff !important;
-  z-index: 1 !important;
 }
 
 .gooey-nav-container .effect {
@@ -129,15 +128,29 @@
   pointer-events: none;
   display: grid;
   place-items: center;
-  z-index: 0;
+  z-index: 1;
 }
 
 .gooey-nav-container .effect.text {
-  display: none;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.gooey-nav-container .effect.text.active {
+  color: black;
 }
 
 .gooey-nav-container .effect.filter {
-  opacity: 0.9;
+  filter: blur(7px) contrast(100) blur(0);
+  mix-blend-mode: lighten;
+}
+
+.gooey-nav-container .effect.filter::before {
+  content: '';
+  position: absolute;
+  inset: -75px;
+  z-index: -2;
+  background: transparent;
 }
 
 .gooey-nav-container .effect.filter::after {
@@ -166,8 +179,8 @@
 .gooey-nav-container .point {
   display: block;
   opacity: 0;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border-radius: 100%;
   transform-origin: center;
 }
@@ -175,13 +188,13 @@
 .gooey-nav-container .particle {
   --time: 5s;
   position: absolute;
-  top: calc(50% - 8px);
-  left: calc(50% - 8px);
+  top: calc(50% - 10px);
+  left: calc(50% - 10px);
   animation: particle calc(var(--time)) ease 1 -350ms;
 }
 
 .gooey-nav-container .point {
-  background: var(--color);
+  background: var(--color, white);
   opacity: 1;
   animation: point calc(var(--time)) ease 1 -350ms;
 }
@@ -240,4 +253,53 @@
     transform: scale(0);
     opacity: 0;
   }
+}
+
+/* ===== DROPDOWN MENU SPECIFICITY OVERRIDES ===== */
+.gooey-dropdown-menu span,
+.gooey-dropdown-item span,
+.gooey-nav-container nav ul li.active .gooey-dropdown-menu span,
+.gooey-nav-container nav ul li.active .gooey-dropdown-item span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.gooey-dropdown-menu svg,
+.gooey-dropdown-item svg,
+.gooey-nav-container nav ul li.active .gooey-dropdown-menu svg,
+.gooey-nav-container nav ul li.active .gooey-dropdown-item svg {
+  fill: none !important;
+  opacity: 1 !important;
+  position: static !important;
+}
+
+.gooey-dropdown-item svg.text-blue-400,
+.gooey-nav-container nav ul li.active .gooey-dropdown-item svg.text-blue-400 {
+  color: #60a5fa !important;
+  stroke: #60a5fa !important;
+}
+
+.gooey-dropdown-item svg.text-purple-400,
+.gooey-nav-container nav ul li.active .gooey-dropdown-item svg.text-purple-400 {
+  color: #c084fc !important;
+  stroke: #c084fc !important;
+}
+
+.gooey-dropdown-item svg.text-emerald-400,
+.gooey-nav-container nav ul li.active .gooey-dropdown-item svg.text-emerald-400 {
+  color: #34d399 !important;
+  stroke: #34d399 !important;
+}
+
+.gooey-nav-container nav ul li .gooey-dropdown-menu {
+  background: #0f0f14 !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 255, 255, 0.08) !important;
+  z-index: 100 !important;
+}
+
+.gooey-nav-container nav ul li .gooey-dropdown-item:hover,
+.gooey-nav-container nav ul li.active .gooey-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
 }
