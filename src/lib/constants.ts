@@ -14,7 +14,7 @@ import {
 export interface NavLink {
   label: string;
   href: string;
-  children?: { label: string; href: string; icon: string }[];
+  children?: { label: string; href: string; icon?: string; logo?: string }[];
 }
 
 export interface ServiceFeature {

@@ -141,7 +141,7 @@ export function Header() {
                         sparkles: "/Media-Lab.png",
                         cpu: "/System-Lab.png",
                       };
-                      const logoSrc = (child as any).logo || (child.icon ? logoMap[child.icon] : null);
+                      const logoSrc = child.logo || (child.icon ? logoMap[child.icon] : null);
                       return (
                         <Link
                           key={child.label}

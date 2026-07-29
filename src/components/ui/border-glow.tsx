@@ -103,7 +103,6 @@ function animateValue({
 }: AnimateOptions) {
   let startTime: number | null = null;
   let rafId: number;
-  let delayTimeout: ReturnType<typeof setTimeout>;
 
   const step = (now: number) => {
     if (!startTime) startTime = now;
@@ -118,7 +117,7 @@ function animateValue({
     }
   };
 
-  delayTimeout = setTimeout(() => {
+  const delayTimeout = setTimeout(() => {
     rafId = requestAnimationFrame(step);
   }, delay);
 

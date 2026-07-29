@@ -250,7 +250,9 @@ export const Map = forwardRef<MapRef, MapProps>(function Map(
   const isControlled = viewport !== undefined && onViewportChange !== undefined;
 
   const onViewportChangeRef = useRef(onViewportChange);
-  onViewportChangeRef.current = onViewportChange;
+  useEffect(() => {
+    onViewportChangeRef.current = onViewportChange;
+  }, [onViewportChange]);
 
   const mapStyles = useMemo(
     () => ({
@@ -462,55 +464,63 @@ export function MapMarker({
     onDrag,
     onDragEnd,
   });
-  callbacksRef.current = {
-    onClick,
-    onMouseEnter,
-    onMouseLeave,
-    onDragStart,
-    onDrag,
-    onDragEnd,
-  };
+  useEffect(() => {
+    callbacksRef.current = {
+      onClick,
+      onMouseEnter,
+      onMouseLeave,
+      onDragStart,
+      onDrag,
+      onDragEnd,
+    };
+  });
 
   const marker = useMemo(() => {
-    const markerInstance = new MapLibreMarker({
+    return new MapLibreMarker({
       ...markerOptions,
       element: document.createElement("div"),
       draggable,
     }).setLngLat([longitude, latitude]);
+  }, []);
 
+  useEffect(() => {
     const handleClick = (e: MouseEvent) => callbacksRef.current.onClick?.(e);
     const handleMouseEnter = (e: MouseEvent) =>
       callbacksRef.current.onMouseEnter?.(e);
     const handleMouseLeave = (e: MouseEvent) =>
       callbacksRef.current.onMouseLeave?.(e);
 
-    markerInstance.getElement()?.addEventListener("click", handleClick);
-    markerInstance
-      .getElement()
-      ?.addEventListener("mouseenter", handleMouseEnter);
-    markerInstance
-      .getElement()
-      ?.addEventListener("mouseleave", handleMouseLeave);
+    const el = marker.getElement();
+    el?.addEventListener("click", handleClick);
+    el?.addEventListener("mouseenter", handleMouseEnter);
+    el?.addEventListener("mouseleave", handleMouseLeave);
 
     const handleDragStart = () => {
-      const lngLat = markerInstance.getLngLat();
+      const lngLat = marker.getLngLat();
       callbacksRef.current.onDragStart?.({ lng: lngLat.lng, lat: lngLat.lat });
     };
     const handleDrag = () => {
-      const lngLat = markerInstance.getLngLat();
+      const lngLat = marker.getLngLat();
       callbacksRef.current.onDrag?.({ lng: lngLat.lng, lat: lngLat.lat });
     };
     const handleDragEnd = () => {
-      const lngLat = markerInstance.getLngLat();
+      const lngLat = marker.getLngLat();
       callbacksRef.current.onDragEnd?.({ lng: lngLat.lng, lat: lngLat.lat });
     };
 
-    markerInstance.on("dragstart", handleDragStart);
-    markerInstance.on("drag", handleDrag);
-    markerInstance.on("dragend", handleDragEnd);
+    marker.on("dragstart", handleDragStart);
+    marker.on("drag", handleDrag);
+    marker.on("dragend", handleDragEnd);
 
-    return markerInstance;
-  }, []);
+    return () => {
+      el?.removeEventListener("click", handleClick);
+      el?.removeEventListener("mouseenter", handleMouseEnter);
+      el?.removeEventListener("mouseleave", handleMouseLeave);
+      marker.off("dragstart", handleDragStart);
+      marker.off("drag", handleDrag);
+      marker.off("dragend", handleDragEnd);
+    };
+  }, [marker]);
 
   useEffect(() => {
     if (!map) return;
@@ -518,36 +528,46 @@ export function MapMarker({
     return () => {
       marker.remove();
     };
-  }, [map]);
+  }, [map, marker]);
 
-  if (
-    marker.getLngLat().lng !== longitude ||
-    marker.getLngLat().lat !== latitude
-  ) {
-    marker.setLngLat([longitude, latitude]);
-  }
-  if (marker.isDraggable() !== draggable) {
-    marker.setDraggable(draggable);
-  }
+  useEffect(() => {
+    if (
+      marker.getLngLat().lng !== longitude ||
+      marker.getLngLat().lat !== latitude
+    ) {
+      marker.setLngLat([longitude, latitude]);
+    }
+    if (marker.isDraggable() !== draggable) {
+      marker.setDraggable(draggable);
+    }
 
-  const currentOffset = marker.getOffset();
-  const newOffset = markerOptions.offset ?? [0, 0];
-  const [newOffsetX, newOffsetY] = Array.isArray(newOffset)
-    ? newOffset
-    : [newOffset.x, newOffset.y];
-  if (currentOffset.x !== newOffsetX || currentOffset.y !== newOffsetY) {
-    marker.setOffset(newOffset);
-  }
-
-  if (marker.getRotation() !== markerOptions.rotation) {
-    marker.setRotation(markerOptions.rotation ?? 0);
-  }
-  if (marker.getRotationAlignment() !== markerOptions.rotationAlignment) {
-    marker.setRotationAlignment(markerOptions.rotationAlignment ?? "auto");
-  }
-  if (marker.getPitchAlignment() !== markerOptions.pitchAlignment) {
-    marker.setPitchAlignment(markerOptions.pitchAlignment ?? "auto");
-  }
+    const currentOffset = marker.getOffset();
+    const newOffset = markerOptions.offset ?? [0, 0];
+    const [newOffsetX, newOffsetY] = Array.isArray(newOffset)
+      ? newOffset
+      : [newOffset.x, newOffset.y];
+    if (currentOffset.x !== newOffsetX || currentOffset.y !== newOffsetY) {
+      marker.setOffset(newOffset);
+    }
+    if (marker.getRotation() !== markerOptions.rotation) {
+      marker.setRotation(markerOptions.rotation ?? 0);
+    }
+    if (marker.getRotationAlignment() !== markerOptions.rotationAlignment) {
+      marker.setRotationAlignment(markerOptions.rotationAlignment ?? "auto");
+    }
+    if (marker.getPitchAlignment() !== markerOptions.pitchAlignment) {
+      marker.setPitchAlignment(markerOptions.pitchAlignment ?? "auto");
+    }
+  }, [
+    marker,
+    longitude,
+    latitude,
+    draggable,
+    markerOptions.offset,
+    markerOptions.rotation,
+    markerOptions.rotationAlignment,
+    markerOptions.pitchAlignment,
+  ]);
 
   return (
     <MarkerContext.Provider value={{ marker, map }}>
@@ -629,16 +649,18 @@ export function MarkerPopup({
     };
   }, [map]);
 
-  if (popup.isOpen()) {
-    const prev = prevPopupOptions.current;
-    if (prev.offset !== popupOptions.offset) {
-      popup.setOffset(popupOptions.offset ?? 16);
+  useEffect(() => {
+    if (popup.isOpen()) {
+      const prev = prevPopupOptions.current;
+      if (prev.offset !== popupOptions.offset) {
+        popup.setOffset(popupOptions.offset ?? 16);
+      }
+      if (prev.maxWidth !== popupOptions.maxWidth && popupOptions.maxWidth) {
+        popup.setMaxWidth(popupOptions.maxWidth ?? "none");
+      }
+      prevPopupOptions.current = popupOptions;
     }
-    if (prev.maxWidth !== popupOptions.maxWidth && popupOptions.maxWidth) {
-      popup.setMaxWidth(popupOptions.maxWidth ?? "none");
-    }
-    prevPopupOptions.current = popupOptions;
-  }
+  }, [popup, popupOptions]);
 
   const handleClose = () => popup.remove();
 
@@ -702,16 +724,18 @@ export function MarkerTooltip({
     };
   }, [map]);
 
-  if (tooltip.isOpen()) {
-    const prev = prevTooltipOptions.current;
-    if (prev.offset !== popupOptions.offset) {
-      tooltip.setOffset(popupOptions.offset ?? 16);
+  useEffect(() => {
+    if (tooltip.isOpen()) {
+      const prev = prevTooltipOptions.current;
+      if (prev.offset !== popupOptions.offset) {
+        tooltip.setOffset(popupOptions.offset ?? 16);
+      }
+      if (prev.maxWidth !== popupOptions.maxWidth && popupOptions.maxWidth) {
+        tooltip.setMaxWidth(popupOptions.maxWidth ?? "none");
+      }
+      prevTooltipOptions.current = popupOptions;
     }
-    if (prev.maxWidth !== popupOptions.maxWidth && popupOptions.maxWidth) {
-      tooltip.setMaxWidth(popupOptions.maxWidth ?? "none");
-    }
-    prevTooltipOptions.current = popupOptions;
-  }
+  }, [tooltip, popupOptions]);
 
   return createPortal(
     <div
@@ -980,7 +1004,9 @@ export function MapPopup({
   const { map } = useMap();
   const popupOptionsRef = useRef(popupOptions);
   const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
   const container = useMemo(() => document.createElement("div"), []);
 
   const popup = useMemo(() => {
@@ -1013,24 +1039,26 @@ export function MapPopup({
     };
   }, [map]);
 
-  if (popup.isOpen()) {
-    const prev = popupOptionsRef.current;
+  useEffect(() => {
+    if (popup.isOpen()) {
+      const prev = popupOptionsRef.current;
 
-    if (
-      popup.getLngLat().lng !== longitude ||
-      popup.getLngLat().lat !== latitude
-    ) {
-      popup.setLngLat([longitude, latitude]);
-    }
+      if (
+        popup.getLngLat().lng !== longitude ||
+        popup.getLngLat().lat !== latitude
+      ) {
+        popup.setLngLat([longitude, latitude]);
+      }
 
-    if (prev.offset !== popupOptions.offset) {
-      popup.setOffset(popupOptions.offset ?? 16);
+      if (prev.offset !== popupOptions.offset) {
+        popup.setOffset(popupOptions.offset ?? 16);
+      }
+      if (prev.maxWidth !== popupOptions.maxWidth && popupOptions.maxWidth) {
+        popup.setMaxWidth(popupOptions.maxWidth ?? "none");
+      }
+      popupOptionsRef.current = popupOptions;
     }
-    if (prev.maxWidth !== popupOptions.maxWidth && popupOptions.maxWidth) {
-      popup.setMaxWidth(popupOptions.maxWidth ?? "none");
-    }
-    popupOptionsRef.current = popupOptions;
-  }
+  }, [popup, longitude, latitude, popupOptions]);
 
   const handleClose = () => {
     popup.remove();
@@ -1120,9 +1148,9 @@ export function MapRoute({
   useEffect(() => {
     if (!isLoaded || !map || coordinates.length < 2) return;
 
-    const source = map.getSource(sourceId) as MapLibreMapType extends { getSource(id: string): infer S } ? S : any;
+    const source = map.getSource(sourceId) as unknown as { setData: (d: unknown) => void };
     if (source && 'setData' in source) {
-      (source as any).setData({
+      source.setData({
         type: "Feature",
         properties: {},
         geometry: { type: "LineString", coordinates },
@@ -1188,7 +1216,7 @@ export type MapArcEvent<T extends MapArcDatum = MapArcDatum> = {
   arc: T;
   longitude: number;
   latitude: number;
-  originalEvent: any;
+  originalEvent: unknown;
 };
 
 export type MapArcLinePaint = NonNullable<import("maplibre-gl").LineLayerSpecification["paint"]>;
@@ -1317,7 +1345,7 @@ export function MapArc<T extends MapArcDatum = MapArcDatum>({
     return Math.max(base + ARC_HIT_PADDING, ARC_HIT_MIN_WIDTH);
   }, [paint]);
 
-  const geoJSON = useMemo<any>(
+  const geoJSON = useMemo<unknown>(
     () => ({
       type: "FeatureCollection",
       features: data.map((arc) => {
@@ -1336,15 +1364,16 @@ export function MapArc<T extends MapArcDatum = MapArcDatum>({
   );
 
   const latestRef = useRef({ data, onClick, onHover });
-  latestRef.current = { data, onClick, onHover };
+  useEffect(() => {
+    latestRef.current = { data, onClick, onHover };
+  });
 
   useEffect(() => {
     if (!isLoaded || !map) return;
 
     map.addSource(sourceId, {
       type: "geojson",
-      data: geoJSON,
-      promoteId: "id",
+      data: geoJSON as never,
     });
 
     map.addLayer(
@@ -1386,7 +1415,7 @@ export function MapArc<T extends MapArcDatum = MapArcDatum>({
 
   useEffect(() => {
     if (!isLoaded || !map) return;
-    const source = map.getSource(sourceId) as any;
+    const source = map.getSource(sourceId) as unknown as { setData: (d: unknown) => void };
     source?.setData(geoJSON);
   }, [isLoaded, map, geoJSON, sourceId]);
 
@@ -1438,38 +1467,43 @@ export function MapArc<T extends MapArcDatum = MapArcDatum>({
             (arc) => String(arc.id) === String(featureId),
           );
 
-    const handleMouseMove = (e: any) => {
-      const featureId = e.features?.[0]?.id as string | number | undefined;
-      if (featureId == null || featureId === hoveredId) return;
+    const handleMouseMove = (e: { point: { x: number; y: number }; lngLat: { lng: number; lat: number }; originalEvent: MouseEvent; features?: Array<{ id?: string | number }> }) => {
+      const feature = e.features?.[0];
+      const arc = findArc(feature?.id);
 
-      setHover(featureId);
-      map.getCanvas().style.cursor = "pointer";
-
-      const arc = findArc(featureId);
-      if (arc) {
-        latestRef.current.onHover?.({
-          arc: arc as T,
-          longitude: e.lngLat.lng,
-          latitude: e.lngLat.lat,
-          originalEvent: e,
-        });
+      if (!arc) {
+        map.getCanvas().style.cursor = "";
+        setHover(null);
+        return;
       }
+
+      map.getCanvas().style.cursor = "pointer";
+      setHover(arc.id);
+
+      latestRef.current.onHover?.({
+        arc,
+        longitude: e.lngLat.lng,
+        latitude: e.lngLat.lat,
+        originalEvent: e.originalEvent,
+      });
     };
 
     const handleMouseLeave = () => {
-      setHover(null);
       map.getCanvas().style.cursor = "";
+      setHover(null);
       latestRef.current.onHover?.(null);
     };
 
-    const handleClick = (e: any) => {
-      const arc = findArc(e.features?.[0]?.id as string | number | undefined);
+    const handleClick = (e: { point: { x: number; y: number }; lngLat: { lng: number; lat: number }; originalEvent: MouseEvent; features?: Array<{ id?: string | number }> }) => {
+      const feature = e.features?.[0];
+      const arc = findArc(feature?.id);
       if (!arc) return;
+
       latestRef.current.onClick?.({
-        arc: arc as T,
+        arc,
         longitude: e.lngLat.lng,
         latitude: e.lngLat.lat,
-        originalEvent: e,
+        originalEvent: e.originalEvent,
       });
     };
 
@@ -1489,15 +1523,15 @@ export function MapArc<T extends MapArcDatum = MapArcDatum>({
   return null;
 }
 
-export type MapClusterLayerProps<P = any> = {
-  data: string | any;
+export type MapClusterLayerProps<P = Record<string, unknown>> = {
+  data: string | Record<string, unknown>;
   clusterMaxZoom?: number;
   clusterRadius?: number;
   clusterColors?: [string, string, string];
   clusterThresholds?: [number, number];
   pointColor?: string;
   onPointClick?: (
-    feature: any,
+    feature: unknown,
     coordinates: [number, number],
   ) => void;
   onClusterClick?: (
@@ -1507,7 +1541,7 @@ export type MapClusterLayerProps<P = any> = {
   ) => void;
 };
 
-export function MapClusterLayer<P = any>({
+export function MapClusterLayer<P = Record<string, unknown>>({
   data,
   clusterMaxZoom = 14,
   clusterRadius = 50,
@@ -1524,22 +1558,20 @@ export function MapClusterLayer<P = any>({
   const clusterCountLayerId = `cluster-count-${id}`;
   const unclusteredLayerId = `unclustered-point-${id}`;
 
-  const stylePropsRef = useRef({
-    clusterColors,
-    clusterThresholds,
-    pointColor,
-  });
+  const stylePropsRef = useRef({ clusterColors, clusterThresholds, pointColor });
 
   useEffect(() => {
     if (!isLoaded || !map) return;
 
-    map.addSource(sourceId, {
-      type: "geojson",
-      data,
-      cluster: true,
-      clusterMaxZoom,
-      clusterRadius,
-    });
+    const sourceOptions =
+      typeof data === "string"
+        ? { type: "geojson" as const, data, cluster: true, clusterMaxZoom, clusterRadius }
+        : { type: "geojson" as const, data, cluster: true, clusterMaxZoom, clusterRadius };
+
+    map.addSource(sourceId, sourceOptions as never);
+
+    const [c1, c2, c3] = clusterColors;
+    const [t1, t2] = clusterThresholds;
 
     map.addLayer({
       id: clusterLayerId,
@@ -1550,24 +1582,21 @@ export function MapClusterLayer<P = any>({
         "circle-color": [
           "step",
           ["get", "point_count"],
-          clusterColors[0],
-          clusterThresholds[0],
-          clusterColors[1],
-          clusterThresholds[1],
-          clusterColors[2],
+          c1,
+          t1,
+          c2,
+          t2,
+          c3,
         ],
         "circle-radius": [
           "step",
           ["get", "point_count"],
           20,
-          clusterThresholds[0],
+          100,
           30,
-          clusterThresholds[1],
+          750,
           40,
         ],
-        "circle-stroke-width": 1,
-        "circle-stroke-color": "#fff",
-        "circle-opacity": 0.85,
       },
     });
 
@@ -1578,11 +1607,7 @@ export function MapClusterLayer<P = any>({
       filter: ["has", "point_count"],
       layout: {
         "text-field": "{point_count_abbreviated}",
-        "text-font": ["Open Sans"],
         "text-size": 12,
-      },
-      paint: {
-        "text-color": "#fff",
       },
     });
 
@@ -1593,19 +1618,17 @@ export function MapClusterLayer<P = any>({
       filter: ["!", ["has", "point_count"]],
       paint: {
         "circle-color": pointColor,
-        "circle-radius": 5,
-        "circle-stroke-width": 2,
+        "circle-radius": 6,
+        "circle-stroke-width": 1,
         "circle-stroke-color": "#fff",
       },
     });
 
     return () => {
       try {
-        if (map.getLayer(clusterCountLayerId))
-          map.removeLayer(clusterCountLayerId);
-        if (map.getLayer(unclusteredLayerId))
-          map.removeLayer(unclusteredLayerId);
+        if (map.getLayer(clusterCountLayerId)) map.removeLayer(clusterCountLayerId);
         if (map.getLayer(clusterLayerId)) map.removeLayer(clusterLayerId);
+        if (map.getLayer(unclusteredLayerId)) map.removeLayer(unclusteredLayerId);
         if (map.getSource(sourceId)) map.removeSource(sourceId);
       } catch {
         // ignore
@@ -1616,7 +1639,7 @@ export function MapClusterLayer<P = any>({
   useEffect(() => {
     if (!isLoaded || !map || typeof data === "string") return;
 
-    const source = map.getSource(sourceId) as any;
+    const source = map.getSource(sourceId) as unknown as { setData: (d: unknown) => void };
     if (source) {
       source.setData(data);
     }

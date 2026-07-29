@@ -19,7 +19,7 @@ const logoMap: Record<string, string> = {
 export interface GooeyNavItem {
   label: string;
   href: string;
-  children?: { label: string; href: string; icon: string }[];
+  children?: { label: string; href: string; icon?: string; logo?: string }[];
 }
 
 interface GooeyNavProps {
@@ -53,20 +53,14 @@ export function GooeyNav({
   const pathname = usePathname();
   const router = useRouter();
 
-  // Determine initial active index based on route (deterministic on SSR & client)
   const getActiveIndex = useCallback(() => {
-    const rawHash = typeof window !== "undefined" ? window.location.hash : "";
-    const cleanHashParts = rawHash ? rawHash.split("#").filter(Boolean) : [];
-    const cleanHash = cleanHashParts.length > 0 ? `#${cleanHashParts[cleanHashParts.length - 1]}` : "";
+    const currentHash = typeof window !== "undefined" ? window.location.hash : "";
+    const currentFull = currentHash ? `${pathname}${currentHash}` : pathname;
 
     const idx = items.findIndex((item) => {
-      if (cleanHash && (item.href === cleanHash || item.href === `/${cleanHash}` || item.href.endsWith(cleanHash))) {
-        return true;
-      }
-      if (item.href === "/" && pathname === "/" && !cleanHash) return true;
-      if (item.href !== "/" && !item.href.includes("#") && pathname.startsWith(item.href)) return true;
+      if (item.href === currentFull || item.href === pathname) return true;
       if (item.children) {
-        return item.children.some((c) => pathname.startsWith(c.href));
+        return item.children.some((child) => child.href === currentFull || child.href === pathname);
       }
       return false;
     });
@@ -76,27 +70,33 @@ export function GooeyNav({
 
   const [activeIndex, setActiveIndex] = useState(getActiveIndex());
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
-  const noise = (n = 1) => n / 2 - Math.random() * n;
-
-  const getXY = (distance: number, pointIndex: number, totalPoints: number) => {
-    const angle = ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
-    return [distance * Math.cos(angle), distance * Math.sin(angle)];
-  };
-
-  const createParticle = (i: number, t: number, d: [number, number], r: number) => {
-    const rotate = noise(r / 10);
-    return {
-      start: getXY(d[0], particleCount - i, particleCount),
-      end: getXY(d[1] + noise(7), particleCount - i, particleCount),
-      time: t,
-      scale: 1 + noise(0.2),
-      color: colors[Math.floor(Math.random() * colors.length)],
-      rotate: rotate > 0 ? (rotate + r / 20) * 10 : (rotate - r / 20) * 10,
-    };
-  };
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setActiveIndex(getActiveIndex());
+  }
 
   const makeParticles = (element: HTMLElement) => {
+    const noise = (n = 1) => n / 2 - Math.random() * n;
+
+    const getXY = (distance: number, pointIndex: number, totalPoints: number) => {
+      const angle = ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
+      return [distance * Math.cos(angle), distance * Math.sin(angle)];
+    };
+
+    const createParticle = (i: number, t: number, d: [number, number], r: number) => {
+      const rotate = noise(r / 10);
+      return {
+        start: getXY(d[0], particleCount - i, particleCount),
+        end: getXY(d[1] + noise(7), particleCount - i, particleCount),
+        time: t,
+        scale: 1 + noise(0.2),
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotate: rotate > 0 ? (rotate + r / 20) * 10 : (rotate - r / 20) * 10,
+      };
+    };
+
     const d = particleDistances;
     const r = particleR;
     const bubbleTime = animationTime * 2 + timeVariance;
@@ -118,22 +118,21 @@ export function GooeyNav({
         particle.style.setProperty("--time", `${p.time}ms`);
         particle.style.setProperty("--scale", `${p.scale}`);
         particle.style.setProperty("--color", `var(--color-${p.color}, white)`);
-        particle.style.setProperty("--rotate", `${p.rotate}deg`);
 
         point.classList.add("point");
+        point.style.setProperty("--rotate", `${p.rotate}deg`);
+
         particle.appendChild(point);
         element.appendChild(particle);
-        requestAnimationFrame(() => {
+
+        if (i === particleCount - 1) {
           element.classList.add("active");
-        });
+        }
+
         setTimeout(() => {
-          try {
-            element.removeChild(particle);
-          } catch {
-            // Do nothing
-          }
-        }, t);
-      }, 30);
+          particle.remove();
+        }, p.time);
+      }, i * 20);
     }
   };
 
@@ -179,12 +178,6 @@ export function GooeyNav({
       handleSectionNavigation(e, href, pathname, router);
     }
   };
-
-  // Sync activeIndex on pathname or hash change post-mount
-  useEffect(() => {
-    const newIdx = getActiveIndex();
-    setActiveIndex(newIdx);
-  }, [pathname, items, getActiveIndex]);
 
   useEffect(() => {
     if (!navRef.current || !containerRef.current) return;
@@ -266,7 +259,7 @@ export function GooeyNav({
                       <div className="flex flex-col gap-1">
                         {item.children.map((child, childIdx) => {
                           const isChildActive = pathname === child.href;
-                          const logoSrc = (child as any).logo || (child.icon ? logoMap[child.icon] : null);
+                          const logoSrc = child.logo || (child.icon ? logoMap[child.icon] : null);
 
                           return (
                             <Link
