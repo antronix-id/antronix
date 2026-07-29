@@ -169,6 +169,7 @@ const TestimonialsColumn = (props: {
 export function TestimonialsSection() {
   return (
     <section 
+      id="testimonials"
       aria-labelledby="testimonials-heading"
       className="bg-transparent py-20 relative overflow-hidden w-full"
     >
@@ -183,7 +184,7 @@ export function TestimonialsSection() {
         className="max-w-7xl px-6 sm:px-8 lg:px-12 z-10 mx-auto w-full"
       >
         <div className="flex flex-col items-center justify-center max-w-[640px] mx-auto mb-14 text-center">
-          <h2 id="testimonials-heading" className="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+          <h2 id="testimonials-heading" className="text-3xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-b from-white via-slate-200 to-slate-400 bg-clip-text text-transparent leading-tight">
             Kata Mereka Tentang <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-300 bg-clip-text text-transparent">Layanan Kami</span>
           </h2>
           <p className="text-center mt-4 text-slate-400 text-base md:text-lg leading-relaxed max-w-lg">

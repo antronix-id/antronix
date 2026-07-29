@@ -1,14 +1,26 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import { Mail, MapPin, Phone, MessageCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { AGENCY, SERVICES } from "@/lib/constants";
+import { Marquee } from "@/components/ui/marquee";
+import { handleSectionNavigation } from "@/hooks/use-hash-scroll";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+  const router = useRouter();
 
   return (
-    <footer className="relative border-t border-border bg-[oklch(0.08_0.005_270)]">
+    <footer className="relative border-t border-border bg-[oklch(0.08_0.005_270)] overflow-hidden">
+      {/* Moving Marquee Banner in Footer */}
+      <div className="py-6 border-b border-white/5">
+        <Marquee text="Web Studio & System Lab & AI Media Lab" fontSize="xl" />
+      </div>
+
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* About */}
@@ -125,22 +137,38 @@ export function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                <Link
+                  href="/"
+                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  onClick={(e) => handleSectionNavigation(e, "/", pathname, router)}
+                >
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/portfolio" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                <Link
+                  href="/portfolio"
+                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  onClick={(e) => handleSectionNavigation(e, "/portfolio", pathname, router)}
+                >
                   Portfolio
                 </Link>
               </li>
               <li>
-                <Link href="/#pricing" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                <Link
+                  href="/#pricing"
+                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  onClick={(e) => handleSectionNavigation(e, "/#pricing", pathname, router)}
+                >
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link href="/#contact" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                <Link
+                  href="/#contact"
+                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  onClick={(e) => handleSectionNavigation(e, "/#contact", pathname, router)}
+                >
                   Contact
                 </Link>
               </li>

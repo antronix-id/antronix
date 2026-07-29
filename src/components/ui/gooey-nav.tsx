@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Globe, Sparkles, Cpu, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { handleSectionNavigation } from "@/hooks/use-hash-scroll";
 import "./gooey-nav.css";
 
 const logoMap: Record<string, string> = {
@@ -54,8 +55,15 @@ export function GooeyNav({
 
   // Determine initial active index based on route (deterministic on SSR & client)
   const getActiveIndex = useCallback(() => {
+    const rawHash = typeof window !== "undefined" ? window.location.hash : "";
+    const cleanHashParts = rawHash ? rawHash.split("#").filter(Boolean) : [];
+    const cleanHash = cleanHashParts.length > 0 ? `#${cleanHashParts[cleanHashParts.length - 1]}` : "";
+
     const idx = items.findIndex((item) => {
-      if (item.href === "/" && pathname === "/") return true;
+      if (cleanHash && (item.href === cleanHash || item.href === `/${cleanHash}` || item.href.endsWith(cleanHash))) {
+        return true;
+      }
+      if (item.href === "/" && pathname === "/" && !cleanHash) return true;
       if (item.href !== "/" && !item.href.includes("#") && pathname.startsWith(item.href)) return true;
       if (item.children) {
         return item.children.some((c) => pathname.startsWith(c.href));
@@ -167,40 +175,14 @@ export function GooeyNav({
       makeParticles(filterRef.current);
     }
 
-    if (href && href.includes("#")) {
-      const rawHash = href.split("#")[1];
-      const targetHash = `#${rawHash}`;
-
-      if (pathname === "/") {
-        e.preventDefault();
-        window.history.pushState(null, "", targetHash);
-        const target = document.querySelector(targetHash);
-        if (target) {
-          target.scrollIntoView({ behavior: "smooth" });
-        }
-      } else {
-        e.preventDefault();
-        router.push(`/${targetHash}`);
-      }
+    if (href) {
+      handleSectionNavigation(e, href, pathname, router);
     }
   };
 
   // Sync activeIndex on pathname or hash change post-mount
   useEffect(() => {
     const newIdx = getActiveIndex();
-    const rawHash = typeof window !== "undefined" ? window.location.hash : "";
-
-    if (rawHash) {
-      const cleanHash = rawHash.includes("#") ? `#${rawHash.split("#")[1]}` : rawHash;
-      const hIdx = items.findIndex(
-        (item) => item.href === cleanHash || item.href === `/${cleanHash}` || item.href.endsWith(cleanHash)
-      );
-      if (hIdx !== -1) {
-        setActiveIndex(hIdx);
-        return;
-      }
-    }
-
     setActiveIndex(newIdx);
   }, [pathname, items, getActiveIndex]);
 

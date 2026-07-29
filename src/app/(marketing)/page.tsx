@@ -82,7 +82,7 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* HERO SECTION */}
       {/* ============================================ */}
-      <section className="relative flex min-h-screen items-center overflow-hidden">
+      <section id="hero" className="relative flex min-h-screen items-center overflow-hidden">
         {/* Decorative orbs */}
         <div className="pointer-events-none absolute -left-40 top-1/4 h-80 w-80 rounded-full bg-[oklch(0.5_0.18_270)] opacity-10 blur-[100px]" />
         <div className="pointer-events-none absolute -right-40 bottom-1/4 h-80 w-80 rounded-full bg-[oklch(0.5_0.2_310)] opacity-10 blur-[100px]" />
@@ -138,10 +138,9 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* SERVICES SECTION */}
       {/* ============================================ */}
-      <section id="services" className="relative py-24 sm:py-32">
+      <section id="services" className="relative py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeader
-            badge="Layanan Kami"
             title="Solusi Digital"
             titleHighlight="Terintegrasi"
             description="Tiga pilar layanan utama yang dirancang saling melengkapi untuk membawa bisnis Anda ke tingkat digital berikutnya."
@@ -157,10 +156,9 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* FEATURED PORTFOLIO SECTION */}
       {/* ============================================ */}
-      <section className="relative py-24 sm:py-32">
+      <section id="portfolio" className="relative py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeader
-            badge="Portofolio"
             title="Hasil Karya"
             titleHighlight="Terbaik Kami"
             description="Lihat bagaimana kami membantu berbagai pemilik bisnis dan perusahaan bertransformasi secara digital."
@@ -179,7 +177,7 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-12 text-center"
+            className="mt-10 text-center"
           >
             <Link href="/portfolio">
               <LiquidMetalButton>
@@ -194,14 +192,13 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* WHY CHOOSE US SECTION */}
       {/* ============================================ */}
-      <section className="relative py-24 sm:py-32 overflow-hidden">
+      <section id="why-us" className="relative py-16 sm:py-24 overflow-hidden">
         {/* Ambient Background Glow Orbs */}
         <div className="pointer-events-none absolute -left-40 top-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-blue-600/10 blur-[130px]" />
         <div className="pointer-events-none absolute -right-40 top-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-purple-600/10 blur-[130px]" />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeader
-            badge="Keunggulan Kami"
             title="Mengapa Memilih"
             titleHighlight="Artificial Ripe?"
             description="Kami bukan sekadar penyedia jasa — kami adalah mitra teknologi terpercaya yang berkomitmen penuh pada kesuksesan bisnis Anda."
@@ -276,10 +273,9 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* PRICING CALCULATOR SECTION */}
       {/* ============================================ */}
-      <section id="pricing" className="relative py-24 sm:py-32">
+      <section id="pricing" className="relative py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           <SectionHeader
-            badge="Paket Harga"
             title="Estimasi Paket"
             titleHighlight="Investasi Digital"
             description="Pilih pilar layanan dan paket yang paling sesuai dengan kebutuhan dan anggaran bisnis Anda."
@@ -291,7 +287,7 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* CONTACT / CTA SECTION */}
       {/* ============================================ */}
-      <section id="contact" className="relative py-24 sm:py-32">
+      <section id="contact" className="relative py-16 sm:py-24">
         {/* Background effect */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute left-1/4 top-0 h-96 w-96 rounded-full bg-[oklch(0.5_0.18_270)] opacity-5 blur-[120px]" />
@@ -301,7 +297,6 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           {/* Centered Section Header */}
           <SectionHeader
-            badge="Hubungi Kami"
             title="Siap Memulai Proyek"
             titleHighlight="Digital Anda?"
             description="Diskusikan kebutuhan proyek Anda dengan tim spesialis kami. Kami siap memberikan solusi teknologi terbaik untuk akselerasi pertumbuhan bisnis Anda."

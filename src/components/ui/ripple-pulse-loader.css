@@ -1,0 +1,118 @@
+.loader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 270px;
+  height: 270px;
+  user-select: none;
+  transform: translateZ(0);
+}
+
+.loader .box {
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: smooth-wave-ripple 1.8s cubic-bezier(0.37, 0, 0.63, 1) infinite !important;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Innermost circle (Center 3D logo button) */
+.loader .box:nth-child(1) {
+  width: 56px;
+  height: 56px;
+  z-index: 5;
+  background: radial-gradient(circle at 50% 35%, #34343a 0%, #212126 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.85);
+  animation-delay: 0s !important;
+}
+
+/* Ring 2 */
+.loader .box:nth-child(2) {
+  width: 98px;
+  height: 98px;
+  z-index: 4;
+  background: radial-gradient(circle at 50% 35%, #27272c 0%, #19191d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75);
+  animation-delay: 0.12s !important;
+}
+
+/* Ring 3 */
+.loader .box:nth-child(3) {
+  width: 148px;
+  height: 148px;
+  z-index: 3;
+  background: radial-gradient(circle at 50% 35%, #1f1f23 0%, #131316 100%);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65);
+  animation-delay: 0.24s !important;
+}
+
+/* Ring 4 */
+.loader .box:nth-child(4) {
+  width: 200px;
+  height: 200px;
+  z-index: 2;
+  background: radial-gradient(circle at 50% 35%, #17171a 0%, #0e0e10 100%);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  animation-delay: 0.36s !important;
+}
+
+/* Ring 5 (Outermost) */
+.loader .box:nth-child(5) {
+  width: 256px;
+  height: 256px;
+  z-index: 1;
+  background: radial-gradient(circle at 50% 35%, #111113 0%, #080809 100%);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.45);
+  animation-delay: 0.48s !important;
+}
+
+.loader .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  animation: smooth-logo-wave 1.8s cubic-bezier(0.37, 0, 0.63, 1) infinite !important;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.loader .svg {
+  width: 26px;
+  height: 26px;
+}
+
+.loader .svg path {
+  fill: #f4f4f5;
+}
+
+/* GPU Hardware-Accelerated Keyframes */
+@keyframes smooth-wave-ripple {
+  0%, 100% {
+    transform: scale3d(1, 1, 1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale3d(1.08, 1.08, 1);
+    opacity: 1;
+  }
+}
+
+@keyframes smooth-logo-wave {
+  0%, 100% {
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    transform: scale3d(1.12, 1.12, 1);
+  }
+}

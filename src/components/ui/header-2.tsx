@@ -3,7 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MessageCircle, Globe, Sparkles, Cpu } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { MessageCircle, Globe, Sparkles, Cpu, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,7 @@ import { MenuToggleIcon } from "@/components/ui/menu-toggle-icon";
 import { useScroll } from "@/components/ui/use-scroll";
 import { GooeyNav } from "@/components/ui/gooey-nav";
 import { NAV_LINKS, AGENCY } from "@/lib/constants";
+import { useHashScroll, handleSectionNavigation } from "@/hooks/use-hash-scroll";
 
 const iconMap: Record<string, React.ElementType> = {
   globe: Globe,
@@ -21,6 +23,11 @@ const iconMap: Record<string, React.ElementType> = {
 export function Header() {
   const [open, setOpen] = React.useState(false);
   const scrolled = useScroll(10);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // Handle hash scrolling and clean duplicate hashes across all routes
+  useHashScroll();
 
   React.useEffect(() => {
     if (open) {
@@ -49,7 +56,11 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link
+            href="/"
+            className="flex items-center gap-3 group"
+            onClick={(e) => handleSectionNavigation(e, "/", pathname, router)}
+          >
             <div className="relative flex h-10 w-10 shrink-0 items-center justify-center transition-transform group-hover:scale-105">
               <Image
                 src="/logo-agency.png"
@@ -112,9 +123,18 @@ export function Header() {
               <div key={link.label}>
                 {link.children ? (
                   <div className="space-y-1 py-1">
-                    <p className="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      {link.label}
-                    </p>
+                    <Link
+                      href={link.href}
+                      className="flex items-center justify-between px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-white transition-colors"
+                      onClick={(e) =>
+                        handleSectionNavigation(e, link.href, pathname, router, () =>
+                          setOpen(false)
+                        )
+                      }
+                    >
+                      <span>{link.label}</span>
+                      <ChevronRight className="h-3.5 w-3.5" />
+                    </Link>
                     {link.children.map((child) => {
                       const logoMap: Record<string, string> = {
                         globe: "/Web-Studio.png",
@@ -127,7 +147,11 @@ export function Header() {
                           key={child.label}
                           href={child.href}
                           className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-white/10 text-sm font-medium text-neutral-200"
-                          onClick={() => setOpen(false)}
+                          onClick={(e) =>
+                            handleSectionNavigation(e, child.href, pathname, router, () =>
+                              setOpen(false)
+                            )
+                          }
                         >
                           {logoSrc ? (
                             <Image src={logoSrc} alt={child.label} width={20} height={20} className="h-5 w-5 object-contain" />
@@ -141,7 +165,11 @@ export function Header() {
                   <Link
                     href={link.href}
                     className="flex items-center rounded-xl px-3 py-2.5 transition-colors hover:bg-white/10 text-sm font-medium text-white block"
-                    onClick={() => setOpen(false)}
+                    onClick={(e) =>
+                      handleSectionNavigation(e, link.href, pathname, router, () =>
+                        setOpen(false)
+                      )
+                    }
                   >
                     {link.label}
                   </Link>
