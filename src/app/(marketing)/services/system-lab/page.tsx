@@ -11,7 +11,6 @@ import {
   Zap,
   Shield,
   Server,
-  Star,
   Terminal,
   Activity,
   CheckCircle2,
@@ -130,24 +129,6 @@ export default function SystemLabPage() {
                       <ArrowRight className="h-4 w-4" />
                     </LiquidMetalButton>
                   </Link>
-                </div>
-
-                {/* Social Proof / Mini Stats Bar */}
-                <div className="mt-10 flex items-center gap-6 border-t border-white/10 pt-6 text-xs text-muted-foreground">
-                  <div className="flex items-center gap-1 text-amber-400">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-3.5 w-3.5 fill-amber-400" />
-                    ))}
-                    <span className="ml-1.5 font-bold text-foreground">5.0</span>
-                  </div>
-                  <div className="h-3 w-px bg-white/20" />
-                  <div>
-                    <span className="font-semibold text-foreground">99.99%</span> Uptime SLA
-                  </div>
-                  <div className="h-3 w-px bg-white/20" />
-                  <div>
-                    <span className="font-semibold text-foreground">Bank-Grade</span> Security
-                  </div>
                 </div>
               </motion.div>
             </div>

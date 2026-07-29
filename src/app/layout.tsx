@@ -10,7 +10,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Artificial Ripe — Accelerating Growth with AI Creativity & Full-Stack Systems",
+    default: "Artificial Ripe Mempercepat Pertumbuhan melalui Kreativitas dan Sistem Full-Stack",
     template: "%s | Artificial Ripe",
   },
   description:
@@ -29,12 +29,17 @@ export const metadata: Metadata = {
     "Jakarta",
   ],
   authors: [{ name: "Artificial Ripe" }],
+  icons: {
+    icon: "/logo-agency.png",
+    shortcut: "/logo-agency.png",
+    apple: "/logo-agency.png",
+  },
   openGraph: {
     type: "website",
     locale: "id_ID",
     url: "https://artificialripe.com",
     siteName: "Artificial Ripe",
-    title: "Artificial Ripe — Accelerating Growth with AI Creativity & Full-Stack Systems",
+    title: "Artificial Ripe — Mempercepat Pertumbuhan melalui Kreativitas dan Sistem Full-Stack",
     description:
       "Agency digital terdepan yang mengakselerasi pertumbuhan bisnis Anda melalui kreativitas AI & sistem full-stack terintegrasi.",
   },

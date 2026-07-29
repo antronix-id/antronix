@@ -38,9 +38,6 @@ export default function PortfolioPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-              Hasil Karya & Case Studies
-            </span>
             <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-6xl text-foreground">
               Portofolio <span className="gradient-text">Artificial Ripe</span>
             </h1>
