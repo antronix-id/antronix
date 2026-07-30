@@ -21,7 +21,7 @@ export function Footer() {
         <Marquee text="Web Studio & System Lab & AI Media Lab" fontSize="xl" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-10 sm:py-16 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* About */}
           <div className="space-y-4">

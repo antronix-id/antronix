@@ -242,11 +242,10 @@ export function ContactForm() {
           </div>
 
           {/* Submit */}
-          <div className="w-full">
+          <div className="w-full flex justify-center">
             <LiquidMetalButton
               type="submit"
               disabled={status === "loading"}
-              className="w-full"
             >
               {status === "loading" ? (
                 <>

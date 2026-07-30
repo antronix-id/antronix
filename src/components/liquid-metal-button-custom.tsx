@@ -92,8 +92,8 @@ export function LiquidMetalButton({
         );
 
         if (shaderRef.current && isMounted) {
-          if (shaderMount.current?.destroy) {
-            shaderMount.current.destroy();
+          if (shaderMount.current?.dispose) {
+            shaderMount.current.dispose();
           }
 
           shaderMount.current = new ShaderMount(
@@ -125,8 +125,8 @@ export function LiquidMetalButton({
 
     return () => {
       isMounted = false;
-      if (shaderMount.current?.destroy) {
-        shaderMount.current.destroy();
+      if (shaderMount.current?.dispose) {
+        shaderMount.current.dispose();
         shaderMount.current = null;
       }
     };

@@ -21,7 +21,7 @@ export function SectionHeader({
   className,
 }: SectionHeaderProps) {
   return (
-    <div className="relative w-full mb-10 sm:mb-12">
+    <div className="relative w-full mb-8 sm:mb-12">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

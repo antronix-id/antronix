@@ -83,12 +83,10 @@ export function Header() {
 
           {/* Desktop Action CTA */}
           <div className="hidden items-center gap-2 md:flex">
-            <Link href={AGENCY.socials.whatsapp} target="_blank">
-              <LiquidMetalButton>
-                <MessageCircle className="h-4 w-4 text-emerald-400" />
-                <span>Hubungi Kami</span>
-              </LiquidMetalButton>
-            </Link>
+            <LiquidMetalButton href={AGENCY.socials.whatsapp} target="_blank">
+              <MessageCircle className="h-4 w-4 text-emerald-400" />
+              <span>Hubungi Kami</span>
+            </LiquidMetalButton>
           </div>
 
           {/* Mobile Toggle Button */}
@@ -107,7 +105,7 @@ export function Header() {
       {/* Mobile Drawer Menu */}
       <div
         className={cn(
-          "bg-background/95 backdrop-blur-xl fixed top-16 right-4 left-4 z-50 flex flex-col overflow-hidden rounded-2xl border border-white/10 md:hidden shadow-2xl",
+          "bg-background/95 backdrop-blur-xl fixed top-16 right-4 left-4 z-50 flex flex-col overflow-hidden rounded-2xl border border-white/10 md:hidden shadow-2xl max-h-[calc(100dvh-5rem)]",
           open ? "block" : "hidden"
         )}
       >
@@ -146,7 +144,7 @@ export function Header() {
                         <Link
                           key={child.label}
                           href={child.href}
-                          className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-white/10 text-sm font-medium text-neutral-200"
+                          className="flex items-center gap-3 rounded-xl px-3 py-3.5 transition-colors hover:bg-white/10 active:bg-white/15 text-sm font-medium text-neutral-200"
                           onClick={(e) =>
                             handleSectionNavigation(e, child.href, pathname, router, () =>
                               setOpen(false)
@@ -164,7 +162,7 @@ export function Header() {
                 ) : (
                   <Link
                     href={link.href}
-                    className="flex items-center rounded-xl px-3 py-2.5 transition-colors hover:bg-white/10 text-sm font-medium text-white block"
+                    className="flex items-center rounded-xl px-3 py-3.5 transition-colors hover:bg-white/10 active:bg-white/15 text-sm font-medium text-white block"
                     onClick={(e) =>
                       handleSectionNavigation(e, link.href, pathname, router, () =>
                         setOpen(false)
@@ -178,9 +176,9 @@ export function Header() {
             ))}
           </div>
 
-          <div className="flex justify-center pt-2 border-t border-white/10">
+          <div className="flex justify-center pt-3 pb-[env(safe-area-inset-bottom)] border-t border-white/10">
             <Link href={AGENCY.socials.whatsapp} target="_blank" onClick={() => setOpen(false)} className="w-full flex justify-center">
-              <LiquidMetalButton className="w-full">
+              <LiquidMetalButton>
                 <MessageCircle className="h-4 w-4 text-emerald-400" />
                 <span>Hubungi Kami via WhatsApp</span>
               </LiquidMetalButton>

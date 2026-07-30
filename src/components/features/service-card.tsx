@@ -43,15 +43,7 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
     >
       <Link href={`/services/${service.slug}`} className="block h-full">
         <BorderGlow className="group h-full cursor-pointer transition-all duration-300 overflow-hidden">
-          <div className="relative p-8 flex flex-col justify-between h-full overflow-hidden rounded-[24px]">
-            {/* Gradient top line accent - clipped within card bounds */}
-            <div
-              className={cn(
-                "absolute inset-x-6 top-0 h-1 rounded-b-full bg-gradient-to-r opacity-70 transition-all duration-500 group-hover:opacity-100 group-hover:h-1.5",
-                service.gradient
-              )}
-            />
-
+          <div className="relative p-5 sm:p-8 flex flex-col justify-between h-full overflow-hidden rounded-[24px]">
             <div>
               {/* Logo & Title Side-by-Side */}
               <div className="mb-6 flex items-center gap-4">
@@ -103,7 +95,7 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
 
             {/* CTA Button */}
             <div className="pt-4 border-t border-border/40 flex justify-center">
-              <LiquidMetalButton className="w-full">
+              <LiquidMetalButton>
                 <span>Pelajari Lebih Lanjut</span>
                 <ArrowRight className="h-4 w-4" />
               </LiquidMetalButton>

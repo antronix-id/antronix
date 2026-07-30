@@ -53,6 +53,7 @@ export interface PortfolioItem {
   description: string;
   thumbnailUrl: string;
   videoUrl?: string;
+  liveUrl?: string;
   techStack: string[];
   isFeatured: boolean;
 }

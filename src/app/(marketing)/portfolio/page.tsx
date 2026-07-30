@@ -31,14 +31,14 @@ export default function PortfolioPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-16 overflow-hidden">
+      <section className="relative pt-24 sm:pt-32 pb-16 overflow-hidden">
         <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-6xl text-foreground">
+            <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-6xl text-foreground">
               Portofolio <span className="gradient-text">Artificial Ripe</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -50,13 +50,13 @@ export default function PortfolioPage() {
 
       {/* Filters + Grid */}
       <section className="pb-24 sm:pb-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-[1536px] px-4 sm:px-6 lg:px-10">
           {/* Filter Tabs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-12 flex flex-wrap items-center justify-center gap-3"
+            className="mb-10 sm:mb-12 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
           >
             {FILTERS.map((filter) => (
               <LiquidMetalButton
@@ -76,14 +76,13 @@ export default function PortfolioPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+              className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16"
             >
               {filteredPortfolio.map((item, index) => (
                 <PortfolioCard
                   key={item.id}
                   item={item}
                   index={index}
-                  onVideoClick={setLightboxItem}
                 />
               ))}
             </motion.div>
@@ -98,13 +97,6 @@ export default function PortfolioPage() {
           )}
         </div>
       </section>
-
-      {/* Video Lightbox */}
-      <VideoLightbox
-        item={lightboxItem}
-        open={!!lightboxItem}
-        onClose={() => setLightboxItem(null)}
-      />
     </>
   );
 }

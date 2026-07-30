@@ -109,7 +109,7 @@ export function PricingCalculator() {
                   </div>
                 )}
 
-                <div className="p-6 lg:p-8 flex flex-col justify-between h-full space-y-6">
+                <div className="p-5 sm:p-6 lg:p-8 flex flex-col justify-between h-full space-y-6">
                   <div>
                     {/* Tier Title & Description */}
                     <h3 className="text-xl font-bold text-white mb-1.5">{tier.name}</h3>
@@ -121,7 +121,7 @@ export function PricingCalculator() {
                     <div className="mb-6 pb-6 border-b border-white/10">
                       <div className="flex items-baseline gap-1">
                         <span className="text-sm font-semibold text-cyan-400">Rp</span>
-                        <span className="text-3xl font-extrabold bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
+                        <span className="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
                           <NumberFlow
                             value={finalPriceNumber}
                             format={{ useGrouping: true }}
@@ -148,7 +148,6 @@ export function PricingCalculator() {
                   <div className="w-full flex justify-center pt-2">
                     <LiquidMetalButton
                       onClick={() => handleWhatsApp(tier.name)}
-                      className="w-full"
                     >
                       <MessageCircle className="h-4 w-4 text-emerald-400" />
                       <span>Pilih Paket {tier.name}</span>

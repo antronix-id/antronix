@@ -21,7 +21,6 @@ import {
   Gauge,
   Sparkles
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -78,7 +77,7 @@ export default function WebStudioPage() {
   return (
     <div className="relative min-h-screen">
       {/* HERO SECTION */}
-      <section className="relative py-24 lg:py-32 overflow-hidden">
+      <section className="relative pt-20 pb-16 sm:py-24 lg:py-32 overflow-hidden">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
             {/* Left Content */}
@@ -219,14 +218,14 @@ export default function WebStudioPage() {
       {/* Related Portfolio */}
       {relatedPortfolio.length > 0 && (
         <section className="py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-[1536px] px-4 sm:px-6 lg:px-10">
             <SectionHeader
               badge="Portfolio"
               title="Proyek"
               titleHighlight="Web Studio"
               description="Lihat hasil karya dan proyek impian klien yang telah kami realisasikan."
             />
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
               {relatedPortfolio.map((item, index) => (
                 <PortfolioCard key={item.id} item={item} index={index} />
               ))}
@@ -346,20 +345,19 @@ export default function WebStudioPage() {
                           ))}
                         </ul>
                       </div>
-                      <Button
-                        asChild
-                        className={cn(
-                          "w-full rounded-full font-semibold",
-                          tier.popular
-                            ? "brand-gradient-btn text-white border-0"
-                            : "bg-secondary text-foreground hover:bg-accent"
-                        )}
-                      >
-                        <Link href={AGENCY.socials.whatsapp} target="_blank">
-                          Pilih Paket
+                      <div className="w-full flex justify-center">
+                        <LiquidMetalButton
+                          onClick={() => {
+                            const message = encodeURIComponent(
+                              `Halo ${AGENCY.name}! 👋\n\nSaya berminat dengan *Web Studio* - Paket *${tier.name}*.\n\nBisa dibantu untuk konsultasi detail?`
+                            );
+                            window.open(`https://wa.me/${AGENCY.whatsapp}?text=${message}`, "_blank");
+                          }}
+                        >
+                          <span>Pilih Paket {tier.name}</span>
                           <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
+                        </LiquidMetalButton>
+                      </div>
                     </div>
                   </BorderGlow>
                 </motion.div>

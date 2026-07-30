@@ -1,27 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { motion, Variants } from "framer-motion"
+import TextType from "@/components/react-bits/text-type"
 
-const words = [
-  "SELAMAT",
-  "DATANG DI",
-  "ARTIFICIAL RIPE"
-]
-
-const opacity: Variants = {
-  initial: {
-    opacity: 0,
-    y: 12,
-    scale: 0.96,
-  },
-  enter: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
-  },
-}
+const words = "SELAMAT DATANG DI ARTIFICIAL RIPE"
 
 const slideUp: Variants = {
   initial: {
@@ -38,29 +21,17 @@ interface PreloaderProps {
 }
 
 export default function Preloader({ onComplete }: PreloaderProps) {
-  const [index, setIndex] = useState(0)
   const [isExiting, setIsExiting] = useState(false)
 
-  useEffect(() => {
-    if (index === words.length - 1) {
-      // Word 3 ("ARTIFICIAL RIPE") stays for 800ms, then slideUp exit takes 800ms = Total 4000ms (4 seconds)
-      const timer = setTimeout(() => {
-        setIsExiting(true)
-        const completeTimer = setTimeout(() => {
-          onComplete?.()
-        }, 800)
-        return () => clearTimeout(completeTimer)
+  const handleTextComplete = () => {
+    // Hold final text briefly then trigger exit transition
+    setTimeout(() => {
+      setIsExiting(true)
+      setTimeout(() => {
+        onComplete?.()
       }, 800)
-      return () => clearTimeout(timer)
-    }
-
-    // Step each of the first 3 words at 800ms interval (3 * 800ms = 2400ms)
-    const timer = setTimeout(() => {
-      setIndex((prevIndex) => prevIndex + 1)
     }, 800)
-
-    return () => clearTimeout(timer)
-  }, [index, onComplete])
+  }
 
   return (
     <motion.div
@@ -69,7 +40,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       animate={isExiting ? "exit" : "initial"}
       className="fixed inset-0 w-screen h-screen flex items-center justify-center bg-black z-[99999999999] pointer-events-auto overflow-hidden select-none"
     >
-      {/* Background Video - Stays active and visible during exit slide */}
+      {/* Background Video */}
       <video
         autoPlay
         loop
@@ -83,16 +54,19 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       {/* Subtle overlay for text contrast */}
       <div className="absolute inset-0 bg-black/40 z-[1] backdrop-blur-[1px]" />
 
-      {/* Professional Silver Metallic Gradient Typography */}
-      <motion.p
-        key={index}
-        variants={opacity}
-        initial="initial"
-        animate="enter"
-        className="absolute z-10 text-center font-extrabold uppercase tracking-wider text-4xl sm:text-5xl md:text-6xl lg:text-7xl bg-gradient-to-b from-white via-slate-100 to-slate-300 bg-clip-text text-transparent drop-shadow-[0_12px_24px_rgba(0,0,0,0.9)]"
-      >
-        {words[index]}
-      </motion.p>
+      {/* Professional Silver Metallic Gradient Typography with TextType */}
+      <div className="absolute z-10 text-center px-4 max-w-5xl">
+        <TextType
+          text={words}
+          typingSpeed={50}
+          loop={false}
+          showCursor={true}
+          cursorCharacter="|"
+          cursorClassName="text-slate-200 font-light opacity-80"
+          className="font-extrabold uppercase tracking-wider text-3xl sm:text-5xl md:text-6xl bg-gradient-to-b from-white via-slate-100 to-slate-300 bg-clip-text text-transparent drop-shadow-[0_12px_24px_rgba(0,0,0,0.9)]"
+          onComplete={handleTextComplete}
+        />
+      </div>
     </motion.div>
   )
 }

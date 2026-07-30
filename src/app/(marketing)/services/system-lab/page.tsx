@@ -21,7 +21,6 @@ import {
   Network,
   BarChart3
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -78,11 +77,7 @@ export default function SystemLabPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative flex min-h-[85vh] items-center overflow-hidden pt-28 pb-16 lg:pt-36 lg:pb-24">
-        {/* Background glow ambient */}
-        <div className="pointer-events-none absolute -left-40 top-1/4 h-[500px] w-[500px] rounded-full bg-emerald-600/15 blur-[120px]" />
-        <div className="pointer-events-none absolute -right-40 bottom-1/4 h-[500px] w-[500px] rounded-full bg-teal-500/15 blur-[120px]" />
-        
+      <section className="relative flex min-h-[75vh] sm:min-h-[85vh] items-center overflow-hidden pt-20 pb-12 sm:pt-28 sm:pb-16 lg:pt-36 lg:pb-24">
         {/* Subtle grid pattern background */}
         <div 
           className="pointer-events-none absolute inset-0 opacity-[0.03]"
@@ -218,14 +213,14 @@ export default function SystemLabPage() {
       {/* Related Portfolio */}
       {relatedPortfolio.length > 0 && (
         <section className="py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-[1536px] px-4 sm:px-6 lg:px-10">
             <SectionHeader
               badge="Portfolio"
               title="Proyek"
               titleHighlight="System Lab"
               description="Lihat implementasi sistem digital dan arsitektur aplikasi yang telah kami bangun."
             />
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
               {relatedPortfolio.map((item, index) => (
                 <PortfolioCard key={item.id} item={item} index={index} />
               ))}
@@ -236,9 +231,6 @@ export default function SystemLabPage() {
 
       {/* Features Section */}
       <section className="relative py-24 sm:py-32 overflow-hidden">
-        {/* Ambient background glow */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[800px] rounded-full bg-emerald-600/10 blur-[140px]" />
-
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeader
             badge="Spesifikasi Sistem"
@@ -343,20 +335,20 @@ export default function SystemLabPage() {
                           ))}
                         </ul>
                       </div>
-                      <Button
-                        asChild
-                        className={cn(
-                          "w-full rounded-full font-semibold",
-                          tier.popular
-                            ? "brand-gradient-btn text-white border-0"
-                            : "bg-secondary text-foreground hover:bg-accent"
-                        )}
-                      >
-                        <Link href={AGENCY.socials.whatsapp} target="_blank">
-                          Pilih Paket
+                      <div className="w-full flex justify-center">
+                        <LiquidMetalButton
+                          onClick={() => {
+                            const message = encodeURIComponent(
+                              `Halo ${AGENCY.name}! 👋\n\nSaya berminat dengan *System Lab* - Paket *${tier.name}*.\n\nBisa dibantu untuk konsultasi detail?`
+                            );
+                            window.open(`https://wa.me/${AGENCY.whatsapp}?text=${message}`, "_blank");
+                          }}
+                          className="w-full"
+                        >
+                          <span>Pilih Paket {tier.name}</span>
                           <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
+                        </LiquidMetalButton>
+                      </div>
                     </div>
                   </BorderGlow>
                 </motion.div>

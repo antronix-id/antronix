@@ -364,6 +364,7 @@ export const PORTFOLIO = [
     description:
       "Platform e-commerce busana modern dengan fitur uji coba pakaian AR, daftar keinginan, dan pembayaran otomatis. Dibangun dengan Next.js & Supabase.",
     thumbnailUrl: "/portfolio/ecommerce-fashion.jpg",
+    videoUrl: "/bc.mp4",
     techStack: ["Next.js", "Supabase", "Tailwind CSS", "Stripe"],
     isFeatured: true,
   },
@@ -375,7 +376,7 @@ export const PORTFOLIO = [
     description:
       "Alat AI yang mengubah foto produk menjadi video promosi profesional dalam hitungan menit. Telah digunakan oleh 50+ brand ternama.",
     thumbnailUrl: "/portfolio/ai-product-video.jpg",
-    videoUrl: "https://example.com/demo.mp4",
+    videoUrl: "/bc.mp4",
     techStack: ["Python", "Stable Diffusion", "FFmpeg", "React"],
     isFeatured: true,
   },
@@ -387,6 +388,7 @@ export const PORTFOLIO = [
     description:
       "Sistem manajemen restoran terpadu — kasir POS, stok bahan baku, layar dapur, dan laporan keuangan terintegrasi online.",
     thumbnailUrl: "/portfolio/restaurant-system.jpg",
+    videoUrl: "/bc.mp4",
     techStack: ["Next.js", "PostgreSQL", "Node.js", "WebSocket"],
     isFeatured: true,
   },
@@ -398,6 +400,7 @@ export const PORTFOLIO = [
     description:
       "Pembaruan total website korporat dengan fokus pencitraan merek premium, animasi halus, dan peningkatan kunjungan Google hingga 300%.",
     thumbnailUrl: "/portfolio/corporate-redesign.jpg",
+    videoUrl: "/bc.mp4",
     techStack: ["Next.js", "Framer Motion", "Tailwind CSS"],
     isFeatured: false,
   },
@@ -409,7 +412,7 @@ export const PORTFOLIO = [
     description:
       "Alur otomatisasi konten media sosial — dari naskah, desain visual, hingga render video akhir. Memproduksi 100+ konten per bulan.",
     thumbnailUrl: "/portfolio/social-media-engine.jpg",
-    videoUrl: "https://example.com/demo2.mp4",
+    videoUrl: "/bc.mp4",
     techStack: ["GPT-4", "Runway ML", "Python", "Next.js"],
     isFeatured: true,
   },
@@ -421,6 +424,7 @@ export const PORTFOLIO = [
     description:
       "Dasbor pemantauan kurir real-time, manajemen armada pengiriman, dan peta interaktif analitik kinerja logistik.",
     thumbnailUrl: "/portfolio/logistics-dashboard.jpg",
+    videoUrl: "/bc.mp4",
     techStack: ["React", "MapboxGL", "Node.js", "PostgreSQL"],
     isFeatured: true,
   },
@@ -432,6 +436,7 @@ export const PORTFOLIO = [
     description:
       "Landing page konversi tinggi untuk perusahaan keuangan fintech dilengkapi dengan kalkulator simulasi dan animasi 3D.",
     thumbnailUrl: "/portfolio/startup-landing.jpg",
+    videoUrl: "/bc.mp4",
     techStack: ["Next.js", "Three.js", "GSAP", "Supabase"],
     isFeatured: false,
   },
@@ -443,6 +448,7 @@ export const PORTFOLIO = [
     description:
       "Sistem kepegawaian terpadu — absensi online, penggajian otomatis, penilaian kinerja, dan perekrutan karyawan perusahaan.",
     thumbnailUrl: "/portfolio/hr-management.jpg",
+    videoUrl: "/bc.mp4",
     techStack: ["Next.js", "PostgreSQL", "Drizzle ORM", "Redis"],
     isFeatured: false,
   },
