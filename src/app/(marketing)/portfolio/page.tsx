@@ -42,7 +42,7 @@ export default function PortfolioPage() {
               Portofolio <span className="gradient-text">Artificial Ripe</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Jelajahi koleksi proyek yang telah kami bangun untuk berbagai klien di seluruh Indonesia.
+              Jelajahi koleksi proyek yang telah kami bangun, untuk berbagai klien di seluruh Indonesia.
             </p>
           </motion.div>
         </div>
