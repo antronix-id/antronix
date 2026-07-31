@@ -1,6 +1,6 @@
 "use client";
 
-import { Header } from "@/components/ui/header-2";
+import { Header } from "@/components/features/header-2";
 
 export function Navbar() {
   return <Header />;

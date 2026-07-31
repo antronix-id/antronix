@@ -1,4 +1,4 @@
-import { RipplePulseLoader } from "@/components/ui/ripple-pulse-loader";
+import { RipplePulseLoader } from "@/components/animations/ripple-pulse-loader";
 
 export default function Loading() {
   return (

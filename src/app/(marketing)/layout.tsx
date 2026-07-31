@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
-import { BeamsBackground } from "@/components/ui/beams-background";
+import { BeamsBackground } from "@/components/animations/beams-background";
 import { PreloaderWrapper } from "@/components/providers/preloader-wrapper";
 import { PageTransitionProvider } from "@/components/providers/page-transition-provider";
 

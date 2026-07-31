@@ -21,15 +21,100 @@ import {
   Gauge,
   Sparkles
 } from "lucide-react";
-import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
+import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BorderGlow } from "@/components/ui/border-glow";
+import { BorderGlow } from "@/components/animations/border-glow";
 import { SectionHeader } from "@/components/shared/section-header";
 import { PortfolioCard } from "@/components/features/portfolio-card";
-import { AnimatedBackground } from "@/components/react-bits/animated-background";
+import { ProblemSolutionSection } from "@/components/features/problem-solution-section";
+import { TargetAudienceSection } from "@/components/features/target-audience-section";
+import { FaqSection, FaqData } from "@/components/features/faq-scroller";
 import { SERVICES, PORTFOLIO, AGENCY } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+
+const webStudioFaqData: FaqData = {
+  mainTitle: "Pertanyaan Umum Web Studio",
+  mainSubtitle:
+    "Segala hal yang perlu Anda ketahui tentang layanan pembuatan website modern & landing page performa tinggi kami.",
+  rows: [
+    {
+      id: "ws-row1",
+      speed: "55s",
+      direction: "left",
+      faqItems: [
+        {
+          id: "ws-q1",
+          question: "Berapa lama proses pembuatan website hingga siap diakses?",
+          answer:
+            "Landing page dan website bisnis standar selesai dalam 3–7 hari kerja. Aplikasi web custom membutuhkan 2–3 minggu."
+        },
+        {
+          id: "ws-q2",
+          question: "Apakah website sudah dioptimasi untuk perangkat HP / Mobile?",
+          answer:
+            "100% responsif. Website dirancang presisi untuk semua ukuran layar (Mobile, Tablet, Desktop) dengan tampilan modern."
+        },
+        {
+          id: "ws-q3",
+          question: "Apakah sudah termasuk Domain, Hosting, dan SSL Gratis?",
+          answer:
+            "Ya! Semua paket Web Studio sudah termasuk gratis domain .com/.id, hosting cloud ultra-cepat, dan enkripsi SSL HTTPS."
+        }
+      ]
+    },
+    {
+      id: "ws-row2",
+      speed: "45s",
+      direction: "right",
+      faqItems: [
+        {
+          id: "ws-q4",
+          question: "Apakah website menggunakan arsitektur Next.js 16 terbaru?",
+          answer:
+            "Ya, kami membangun website menggunakan Next.js 16 Server Components & TypeScript untuk performa skor Lighthouse 95-100."
+        },
+        {
+          id: "ws-q5",
+          question: "Bagaimana jika saya ingin menambah halaman/fitur di kemudian hari?",
+          answer:
+            "Struktur koding berarsitektur modular kami memudahkan penambahan fitur baru atau upgrade paket kapan saja tanpa bongkar ulang."
+        },
+        {
+          id: "ws-q6",
+          question: "Apakah saya bisa mengelola isi konten dan gambar sendiri?",
+          answer:
+            "Tentu. Setiap website dilengkapi CMS Admin intuitif agar Anda dapat memperbarui produk, berita, dan promo mandiri."
+        }
+      ]
+    },
+    {
+      id: "ws-row3",
+      speed: "65s",
+      direction: "left",
+      faqItems: [
+        {
+          id: "ws-q7",
+          question: "Apakah ada garansi jika timbul masalah/bug pada website?",
+          answer:
+            "Kami memberikan garansi pemeliharaan teknis & perbaikan bug gratis selama 30 hingga 90 hari pasca peluncuran."
+        },
+        {
+          id: "ws-q8",
+          question: "Apakah terintegrasi dengan Meta Pixel, Google Analytics & WA?",
+          answer:
+            "Sudah terpasang integrasi lengkap untuk tombol WhatsApp langsung, Meta Pixel, Google Tag Manager, dan Analytics."
+        },
+        {
+          id: "ws-q9",
+          question: "Bagaimana cara melakukan pemesanan paket Web Studio?",
+          answer:
+            "Klik tombol Pilih Paket atau Hubungi Kami via WhatsApp. Tim teknis kami akan langsung memproses konsultasi kebutuhan Anda."
+        }
+      ]
+    }
+  ]
+};
 
 const service = SERVICES.find((s) => s.id === "web-studio")!;
 const relatedPortfolio = PORTFOLIO.filter((p) => p.category === "web-studio").slice(0, 3);
@@ -86,9 +171,9 @@ export default function WebStudioPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-tight">
+              <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-tight text-white">
                 Website Performance Tinggi &{" "}
-                <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
                   Konversi Maksimal
                 </span>
               </h1>
@@ -125,88 +210,70 @@ export default function WebStudioPage() {
                 className="relative"
               >
                 {/* Visual Card Glass Frame */}
-                <div className="relative rounded-2xl border border-white/15 bg-slate-950/80 p-4 shadow-2xl backdrop-blur-xl ring-1 ring-white/10">
-                  {/* Browser Window Header Bar */}
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 px-2">
-                    <div className="flex items-center gap-1.5">
-                      <div className="h-3 w-3 rounded-full bg-red-500/80" />
-                      <div className="h-3 w-3 rounded-full bg-amber-500/80" />
-                      <div className="h-3 w-3 rounded-full bg-emerald-500/80" />
+                <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full">
+                  <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full p-4 sm:p-5 flex flex-col justify-between">
+                    {/* Background ambient lighting & animated effects */}
+                    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                      <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+                      <div className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-slate-300/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce" />
+                      <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-slate-300/15 blur-xl animate-ping" />
+                      <div className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
                     </div>
-                    <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-muted-foreground w-3/5 justify-center">
-                      <Lock className="h-3 w-3 text-emerald-400" />
-                      <span className="truncate">webstudio.artificialripe.com</span>
-                    </div>
-                    <div className="w-8" />
-                  </div>
 
-                  {/* Browser Content Simulated Showcase */}
-                  <div className="relative overflow-hidden rounded-xl border border-white/10 bg-slate-900/60 p-5">
-                    {/* Simulated Modern Web Layout Graphic */}
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center border-b border-white/10 pb-3">
-                        <div className="flex items-center gap-2">
-                          <div className="h-6 w-6 rounded-lg bg-gradient-to-tr from-blue-500 to-cyan-400 flex items-center justify-center text-[10px] font-bold text-white">
-                            AR
-                          </div>
-                          <div className="h-2.5 w-20 rounded-full bg-white/20" />
+                    {/* Content */}
+                    <div className="relative z-10">
+                      {/* Browser Window Header Bar */}
+                      <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 px-2">
+                        <div className="flex items-center gap-1.5">
+                          <div className="h-3 w-3 rounded-full bg-slate-400/80" />
+                          <div className="h-3 w-3 rounded-full bg-zinc-400/80" />
+                          <div className="h-3 w-3 rounded-full bg-slate-300/80" />
                         </div>
-                        <div className="h-6 w-16 rounded-full bg-cyan-500/20 border border-cyan-500/40" />
+                        <div className="flex items-center gap-2 rounded-full border border-slate-400/30 bg-slate-400/10 px-3 py-1 text-[11px] text-zinc-300 w-3/5 justify-center">
+                          <Lock className="h-3 w-3 text-slate-300" />
+                          <span className="truncate">client-website.com</span>
+                        </div>
+                        <div className="w-8" />
                       </div>
 
-                      {/* Web Hero Banner Simulator */}
-                      <div className="rounded-lg bg-gradient-to-r from-blue-900/40 via-cyan-950/30 to-slate-900/60 p-4 border border-blue-500/20">
-                        <div className="h-3 w-3/4 rounded bg-cyan-400/80 mb-2" />
-                        <div className="h-2 w-1/2 rounded bg-white/40 mb-4" />
-                        <div className="flex gap-2">
-                          <div className="h-6 w-20 rounded bg-cyan-500 text-[10px] font-semibold text-slate-950 flex items-center justify-center">
-                            Explore
-                          </div>
-                          <div className="h-6 w-16 rounded border border-white/20 bg-white/5" />
-                        </div>
-                      </div>
+                      {/* Browser Content Video Showcase */}
+                      <div className="relative overflow-hidden rounded-xl border border-slate-400/20 bg-slate-900 aspect-video flex items-center justify-center">
+                        <video
+                          src="/bc.mp4"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="w-full h-full object-cover rounded-xl"
+                        />
 
-                      {/* Feature Blocks Mockup */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="rounded-lg border border-white/10 bg-slate-800/40 p-3">
-                          <div className="h-2 w-12 rounded bg-blue-400 mb-2" />
-                          <div className="h-1.5 w-full rounded bg-white/20 mb-1" />
-                          <div className="h-1.5 w-4/5 rounded bg-white/20" />
+                        {/* Floating Metric Pill #1: Performance Score */}
+                        <div className="absolute top-3 right-3 flex items-center gap-2 rounded-full border border-slate-300/40 bg-slate-950/90 backdrop-blur-md px-3 py-1 shadow-lg z-10">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-slate-200" />
+                          <span className="text-xs font-semibold text-slate-200">Score 100/100</span>
                         </div>
-                        <div className="rounded-lg border border-white/10 bg-slate-800/40 p-3">
-                          <div className="h-2 w-12 rounded bg-cyan-400 mb-2" />
-                          <div className="h-1.5 w-full rounded bg-white/20 mb-1" />
-                          <div className="h-1.5 w-3/5 rounded bg-white/20" />
+
+                        {/* Floating Metric Pill #2: Growth */}
+                        <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full border border-slate-300/40 bg-slate-950/90 backdrop-blur-md px-3 py-1 shadow-lg z-10">
+                          <Activity className="h-3.5 w-3.5 text-slate-300" />
+                          <span className="text-xs font-semibold text-slate-200">Fast & SEO Ready</span>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Floating Metric Pill #1: Lighthouse Score */}
-                    <div className="absolute -top-2 -right-2 flex items-center gap-2 rounded-full border border-emerald-500/40 bg-slate-900/90 px-3.5 py-1.5 shadow-xl backdrop-blur-md">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                      <div className="text-left">
-                        <div className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Performa</div>
-                        <div className="text-xs font-bold text-emerald-400">100/100 Score</div>
+                      {/* Technology Badges Footer */}
+                      <div className="mt-4 flex items-center justify-between px-2 pt-2 text-[11px] text-zinc-400 border-t border-white/5">
+                        <div className="flex items-center gap-1.5">
+                          <Code className="h-3.5 w-3.5 text-slate-300" />
+                          <span>Next.js • React • Tailwind CSS</span>
+                        </div>
+                        <span className="text-zinc-400 font-medium text-[10px]">ULTRA FAST</span>
                       </div>
                     </div>
 
-                    {/* Floating Metric Pill #2: Conversion Growth */}
-                    <div className="absolute -bottom-2 -left-2 flex items-center gap-2 rounded-full border border-cyan-500/40 bg-slate-900/90 px-3.5 py-1.5 shadow-xl backdrop-blur-md">
-                      <Activity className="h-4 w-4 text-cyan-400" />
-                      <div className="text-left">
-                        <div className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Konversi Sales</div>
-                        <div className="text-xs font-bold text-cyan-300">+145% Growth</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Technology Badges Footer */}
-                  <div className="mt-4 flex items-center justify-between px-2 pt-2 text-[11px] text-muted-foreground border-t border-white/5">
-                    <div className="flex items-center gap-1.5">
-                      <Code className="h-3.5 w-3.5 text-blue-400" />
-                      <span>Next.js 16 • React 19 • Tailwind CSS</span>
-                    </div>
-                    <div className="font-mono text-cyan-400 text-[10px]">FAST & SECURE</div>
+                    {/* Decorative Glass Corners */}
+                    <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-slate-300/20 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-slate-300/20 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   </div>
                 </div>
               </motion.div>
@@ -214,6 +281,24 @@ export default function WebStudioPage() {
           </div>
         </div>
       </section>
+
+      {/* PROBLEM & SOLUTION SECTION */}
+      {service.problemsAndSolutions && (
+        <ProblemSolutionSection 
+          problemsAndSolutions={service.problemsAndSolutions}
+          serviceTitle={service.title}
+          glowColor="#06b6d4"
+        />
+      )}
+
+      {/* TARGET AUDIENCE SECTION */}
+      {service.targetAudience && (
+        <TargetAudienceSection 
+          targetAudience={service.targetAudience}
+          serviceTitle={service.title}
+          glowColor="#3b82f6"
+        />
+      )}
 
       {/* Related Portfolio */}
       {relatedPortfolio.length > 0 && (
@@ -266,31 +351,47 @@ export default function WebStudioPage() {
                   transition={{ delay: index * 0.08, duration: 0.5 }}
                   className="h-full"
                 >
-                  <BorderGlow glowColor={cfg.glow} className="group relative h-full transition-all duration-300 hover:scale-[1.02]">
-                    <div className="p-7 h-full flex flex-col justify-between rounded-2xl bg-card/40 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300">
-                      <div>
-                        {/* Icon Header Badge */}
-                        <div className="mb-6 flex items-center justify-between">
-                          <div className={cn("flex h-12 w-12 items-center justify-center rounded-2xl border backdrop-blur-md shadow-lg transition-transform duration-300 group-hover:scale-110", cfg.bg)}>
-                            <FeatureIcon className={cn("h-6 w-6", cfg.color)} />
-                          </div>
-                          <span className="text-xs font-mono font-bold text-muted-foreground/50">
-                            0{index + 1}
-                          </span>
-                        </div>
-
-                        {/* Feature Title */}
-                        <h3 className="mb-3 text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                          {feature.title}
-                        </h3>
-
-                        {/* Feature Description */}
-                        <p className="text-sm leading-relaxed text-muted-foreground group-hover:text-muted-foreground/90 transition-colors">
-                          {feature.description}
-                        </p>
+                  <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full">
+                    <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full flex flex-col justify-between p-7">
+                      {/* Background ambient lighting & animated effects */}
+                      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+                        <div className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-slate-300/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce" />
+                        <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-slate-300/15 blur-xl animate-ping" />
+                        <div className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
                       </div>
+
+                      {/* Content */}
+                      <div className="relative z-10 flex flex-col justify-between h-full">
+                        <div>
+                          {/* Icon Header Badge */}
+                          <div className="mb-6 flex items-center justify-between">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-300/40 bg-slate-400/15 text-slate-200 backdrop-blur-md shadow-lg transition-transform duration-300 group-hover:scale-110">
+                              <FeatureIcon className="h-6 w-6 text-slate-200" />
+                            </div>
+                            <span className="text-xs font-mono font-bold text-slate-400">
+                              0{index + 1}
+                            </span>
+                          </div>
+
+                          {/* Feature Title */}
+                          <h3 className="mb-3 text-lg font-bold text-white group-hover:text-slate-100 transition-colors">
+                            {feature.title}
+                          </h3>
+
+                          {/* Feature Description */}
+                          <p className="text-sm leading-relaxed text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                            {feature.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Decorative Glass Corners */}
+                      <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-slate-300/20 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                      <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-slate-300/20 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     </div>
-                  </BorderGlow>
+                  </div>
                 </motion.div>
               );
             })}
@@ -317,53 +418,75 @@ export default function WebStudioPage() {
                   transition={{ delay: index * 0.1 }}
                   className="h-full"
                 >
-                  <BorderGlow className="relative h-full transition-all duration-300">
-                    {tier.popular && (
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-                        <Badge className="border-0 brand-gradient-btn text-white text-xs rounded-full px-3 py-1">
-                          Most Popular
-                        </Badge>
+                  <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full relative">
+                    <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full p-6 lg:p-8 flex flex-col justify-between">
+                      {/* Background ambient lighting & animated effects */}
+                      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+                        <div className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-slate-300/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce" />
+                        <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-slate-300/15 blur-xl animate-ping" />
+                        <div className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
                       </div>
-                    )}
-                    <div className="p-6 lg:p-8 flex flex-col justify-between h-full">
-                      <div>
-                        <h3 className="mb-1 text-xl font-bold">{tier.name}</h3>
-                        <p className="mb-4 text-sm text-muted-foreground">
-                          {tier.description}
-                        </p>
-                        <div className="mb-6">
-                          <span className="text-3xl font-bold gradient-text">
-                            Rp {tier.price}
-                          </span>
+
+                      {tier.popular && (
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
+                          <Badge className="border border-slate-300/40 bg-slate-400/20 text-slate-100 backdrop-blur-md text-xs font-semibold rounded-full px-3.5 py-1 shadow-lg">
+                            Most Popular
+                          </Badge>
                         </div>
-                        <ul className="mb-8 space-y-3">
-                          {tier.features.map((feature) => (
-                            <li key={feature} className="flex items-start gap-2 text-sm">
-                              <Check className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" />
-                              <span className="text-muted-foreground">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
+                      )}
+
+                      {/* Content */}
+                      <div className="relative z-10 flex flex-col justify-between h-full">
+                        <div>
+                          <h3 className="mb-1 text-xl font-bold text-white group-hover:text-slate-100 transition-colors">{tier.name}</h3>
+                          <p className="mb-4 text-sm text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                            {tier.description}
+                          </p>
+                          <div className="mb-6">
+                            <span className="text-3xl font-bold bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
+                              Rp {tier.price}
+                            </span>
+                          </div>
+                          <ul className="mb-8 space-y-3">
+                            {tier.features.map((feature) => (
+                              <li key={feature} className="flex items-start gap-2 text-sm">
+                                <Check className="mt-0.5 h-4 w-4 shrink-0 text-slate-300" />
+                                <span className="text-zinc-300 group-hover:text-zinc-200 transition-colors">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="w-full flex justify-center pt-4 border-t border-white/10">
+                          <LiquidMetalButton
+                            onClick={() => {
+                              const message = encodeURIComponent(
+                                `Halo ${AGENCY.name}! 👋\n\nSaya berminat dengan *Web Studio* - Paket *${tier.name}*.\n\nBisa dibantu untuk konsultasi detail?`
+                              );
+                              window.open(`https://wa.me/${AGENCY.whatsapp}?text=${message}`, "_blank");
+                            }}
+                          >
+                            <span>Pilih Paket {tier.name}</span>
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </LiquidMetalButton>
+                        </div>
                       </div>
-                      <div className="w-full flex justify-center">
-                        <LiquidMetalButton
-                          onClick={() => {
-                            const message = encodeURIComponent(
-                              `Halo ${AGENCY.name}! 👋\n\nSaya berminat dengan *Web Studio* - Paket *${tier.name}*.\n\nBisa dibantu untuk konsultasi detail?`
-                            );
-                            window.open(`https://wa.me/${AGENCY.whatsapp}?text=${message}`, "_blank");
-                          }}
-                        >
-                          <span>Pilih Paket {tier.name}</span>
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </LiquidMetalButton>
-                      </div>
+
+                      {/* Decorative Glass Corners */}
+                      <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-slate-300/20 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                      <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-slate-300/20 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     </div>
-                  </BorderGlow>
+                  </div>
                 </motion.div>
             ))}
           </div>
         </div>
+      </section>
+
+      {/* FAQ SECTION */}
+      <section className="relative py-12 sm:py-20 border-t border-white/5 overflow-hidden">
+        <FaqSection data={webStudioFaqData} />
       </section>
     </div>
   );

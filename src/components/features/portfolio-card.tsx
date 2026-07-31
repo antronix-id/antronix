@@ -3,8 +3,8 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import type { PortfolioItem } from "@/lib/constants";
-import { Safari } from "@/registry/magicui/safari";
-import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
+import { LaptopMockup } from "@/components/mockups/laptop-mockup";
+import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
 
 import { cn } from "@/lib/utils";
 
@@ -27,12 +27,13 @@ export function PortfolioCard({ item, index, className }: PortfolioCardProps) {
       transition={{ duration: 0.4, delay: index * 0.08 }}
       className={cn("group", className)}
     >
-      {/* Safari Window Container */}
+      {/* Laptop Frame Mockup Container */}
       <div className="relative transition-transform duration-300 group-hover:-translate-y-1">
-        <Safari
+        <LaptopMockup
           url={displayUrl}
           videoSrc={item.videoUrl || "/bc.mp4"}
-          className="w-full shadow-lg group-hover:border-cyan-500/40 group-hover:shadow-2xl transition-all duration-300"
+          src={item.thumbnailUrl}
+          className="w-full filter drop-shadow-xl group-hover:drop-shadow-2xl transition-all duration-300"
         />
       </div>
 

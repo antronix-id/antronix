@@ -14,17 +14,17 @@ import {
   Users,
   Eye,
 } from "lucide-react";
-import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
-import { BorderGlow } from "@/components/ui/border-glow";
+import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
+import { BorderGlow } from "@/components/animations/border-glow";
 import { SectionHeader } from "@/components/shared/section-header";
 import { ServiceCard } from "@/components/features/service-card";
 import { PortfolioCard } from "@/components/features/portfolio-card";
 import { TestimonialCard } from "@/components/features/testimonial-card";
-import { TestimonialsSection } from "@/components/ui/testimonial-v2";
+import { TestimonialsSection } from "@/components/features/testimonial-v2";
 import { PricingCalculator } from "@/components/features/pricing-calculator";
 import { ContactForm } from "@/components/features/contact-form";
-import { LocationMap } from "@/components/ui/location-map";
-import { SplitText, GradientText } from "@/components/react-bits/animated-text";
+import { LocationMap } from "@/components/mockups/location-map";
+import { SplitText, GradientText } from "@/components/animations/animated-text";
 import { SERVICES, PORTFOLIO, TESTIMONIALS, AGENCY, PortfolioItem } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 

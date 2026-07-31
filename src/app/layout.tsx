@@ -30,9 +30,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Artificial Ripe" }],
   icons: {
-    icon: "/logo-agency.png",
-    shortcut: "/logo-agency.png",
-    apple: "/logo-agency.png",
+    icon: "/logo-agency.webp",
+    shortcut: "/logo-agency.webp",
+    apple: "/logo-agency.webp",
   },
   openGraph: {
     type: "website",
@@ -51,8 +51,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${inter.variable} dark h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+    <html lang="id" className={`${inter.variable} font-sans dark h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         {children}
       </body>
     </html>

@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
+import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
 import { SectionHeader } from "@/components/shared/section-header";
 import { PortfolioCard } from "@/components/features/portfolio-card";
 import { VideoLightbox } from "@/components/features/video-lightbox";
-import { AnimatedBackground } from "@/components/react-bits/animated-background";
+import { AnimatedBackground } from "@/components/animations/animated-background";
 import { PORTFOLIO } from "@/lib/constants";
 import type { PortfolioItem } from "@/lib/constants";
 import { cn } from "@/lib/utils";

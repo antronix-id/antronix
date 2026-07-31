@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { RipplePulseLoader } from "@/components/ui/ripple-pulse-loader";
+import { RipplePulseLoader } from "@/components/animations/ripple-pulse-loader";
 
 export function PageTransitionProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

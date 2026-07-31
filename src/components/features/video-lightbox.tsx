@@ -3,7 +3,7 @@
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { X } from "lucide-react";
 import type { PortfolioItem } from "@/lib/constants";
-import { Safari } from "@/registry/magicui/safari";
+import { Safari } from "@/components/mockups/safari";
 
 interface VideoLightboxProps {
   item: PortfolioItem | null;

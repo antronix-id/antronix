@@ -21,15 +21,100 @@ import {
   Network,
   BarChart3
 } from "lucide-react";
-import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
+import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BorderGlow } from "@/components/ui/border-glow";
+import { BorderGlow } from "@/components/animations/border-glow";
 import { SectionHeader } from "@/components/shared/section-header";
 import { PortfolioCard } from "@/components/features/portfolio-card";
-import { AnimatedBackground } from "@/components/react-bits/animated-background";
+import { ProblemSolutionSection } from "@/components/features/problem-solution-section";
+import { TargetAudienceSection } from "@/components/features/target-audience-section";
+import { FaqSection, FaqData } from "@/components/features/faq-scroller";
 import { SERVICES, PORTFOLIO, AGENCY } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+
+const systemLabFaqData: FaqData = {
+  mainTitle: "Pertanyaan Umum System Lab",
+  mainSubtitle:
+    "Jawaban lengkap mengenai arsitektur sistem POS, otomatisasi workflow, integrasi API, dan keamanan infrastruktur cloud.",
+  rows: [
+    {
+      id: "sys-row1",
+      speed: "55s",
+      direction: "left",
+      faqItems: [
+        {
+          id: "sys-q1",
+          question: "Apakah sistem kasir POS & ERP dapat diakses dari HP?",
+          answer:
+            "100% berbasis cloud & responsif. Anda dapat memantau stok, transaksi live, dan laporan arus kas dari HP atau laptop kapan saja."
+        },
+        {
+          id: "sys-q2",
+          question: "Bagaimana jika jaringan internet di toko/lokasi mati?",
+          answer:
+            "Sistem POS kami dilengkapi mode Offline-Sync otomatis. Transaksi tetap dapat diproses dan disinkronkan ke server saat internet kembali."
+        },
+        {
+          id: "sys-q3",
+          question: "Apakah terintegrasi dengan WhatsApp Gateway & Cetak Resi?",
+          answer:
+            "Ya! Sistem langsung terhubung ke printer thermal Bluetooth/USB dan otomatis mengirim nota invoice resmi via WhatsApp."
+        }
+      ]
+    },
+    {
+      id: "sys-row2",
+      speed: "45s",
+      direction: "right",
+      faqItems: [
+        {
+          id: "sys-q4",
+          question: "Berapa jaminan Uptime server infrastruktur Cloud DevOps?",
+          answer:
+            "Kami memberikan jaminan Uptime server 99.9% dengan fitur Auto-Scaling yang secara otomatis menangani lonjakan beban pengunjung."
+        },
+        {
+          id: "sys-q5",
+          question: "Bagaimana sistem keamanan data & backup database?",
+          answer:
+            "Setiap database dienkripsi penuh dengan backup otomatis berkala 24 jam serta perlindungan firewall anti-DDoS."
+        },
+        {
+          id: "sys-q6",
+          question: "Apakah bisa melakukan custom integrasi API dengan software lain?",
+          answer:
+            "Bisa. Tim kami dapat membangun webhook & integrasi API khusus ke payment gateway, kurir logistik, dan sistem akuntansi."
+        }
+      ]
+    },
+    {
+      id: "sys-row3",
+      speed: "65s",
+      direction: "left",
+      faqItems: [
+        {
+          id: "sys-q7",
+          question: "Berapa lama waktu yang dibutuhkan untuk migrasi data awal?",
+          answer:
+            "Proses migrasi data produk, stok, dan akun staf awal biasanya selesai dalam 2–5 hari kerja dipandu tim teknis kami."
+        },
+        {
+          id: "sys-q8",
+          question: "Apakah staf operasional toko kami akan mendapatkan pelatihan?",
+          answer:
+            "Ya! Kami menyediakan sesi training online/onsite dan panduan penggunaan sistem (SOP) lengkap untuk staf dan admin Anda."
+        },
+        {
+          id: "sys-q9",
+          question: "Bagaimana cara berkonsultasi mengenai kebutuhan sistem kami?",
+          answer:
+            "Klik Hubungi Kami via WhatsApp untuk menjadwalkan sesi demonstrasi sistem (Live Demo) dan konsultasi arsitektur gratis."
+        }
+      ]
+    }
+  ]
+};
 
 const service = SERVICES.find((s) => s.id === "system-lab")!;
 const relatedPortfolio = PORTFOLIO.filter((p) => p.category === "system-lab").slice(0, 3);
@@ -75,10 +160,9 @@ const systemLabFeatureConfig: Record<string, { icon: React.ElementType; color: s
 
 export default function SystemLabPage() {
   return (
-    <>
+    <div className="relative min-h-screen">
       {/* Hero */}
       <section className="relative flex min-h-[75vh] sm:min-h-[85vh] items-center overflow-hidden pt-20 pb-12 sm:pt-28 sm:pb-16 lg:pt-36 lg:pb-24">
-        {/* Subtle grid pattern background */}
         <div 
           className="pointer-events-none absolute inset-0 opacity-[0.03]"
           style={{
@@ -97,16 +181,16 @@ export default function SystemLabPage() {
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
                 {/* Main Headline */}
-                <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-[1.15]">
-                  Arsitektur Sistem &{" "}
-                  <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-300 bg-clip-text text-transparent drop-shadow-sm">
-                    Aplikasi Enterprise
+                <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-[1.15] text-white">
+                  Otomatisasi Sistem &{" "}
+                  <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent drop-shadow-sm">
+                    Infrastruktur Cloud
                   </span>
                 </h1>
 
                 {/* Subtitle */}
                 <p className="mt-6 text-base sm:text-lg leading-relaxed text-muted-foreground max-w-2xl">
-                  Kami membangun arsitektur backend scalable, web app kustom, otokomunikasi API, dan infrastruktur cloud terintegrasi yang menjamin performa tinggi, keamanan maksimal, dan efisiensi operasional.
+                  Kami merancang sistem kasir POS, platform SaaS bertaraf perusahaan, dan arsitektur server Cloud DevOps yang aman & andal untuk mengotomatiskan operasional bisnis Anda.
                 </p>
 
                 {/* CTA Action Buttons */}
@@ -114,7 +198,7 @@ export default function SystemLabPage() {
                   <Link href={AGENCY.socials.whatsapp} target="_blank">
                     <LiquidMetalButton>
                       <MessageCircle className="h-4 w-4 text-emerald-400" />
-                      <span>Konsultasi System</span>
+                      <span>Konsultasi Sistem</span>
                     </LiquidMetalButton>
                   </Link>
 
@@ -137,71 +221,68 @@ export default function SystemLabPage() {
                 className="relative"
               >
                 {/* Visual Card Glass Frame */}
-                <div className="relative rounded-2xl border border-emerald-500/25 bg-slate-950/85 p-4 shadow-2xl backdrop-blur-xl ring-1 ring-emerald-500/20">
-                  {/* Console Header Bar */}
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 px-2">
-                    <div className="flex items-center gap-2">
-                      <Terminal className="h-4 w-4 text-emerald-400" />
-                      <span className="text-xs font-semibold text-foreground">System Node #01 • Production</span>
-                    </div>
-                    <div className="flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[10px] text-emerald-300 font-mono">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      SYSTEM ONLINE
-                    </div>
-                  </div>
-
-                  {/* Terminal Log Console */}
-                  <div className="space-y-3">
-                    <div className="rounded-xl border border-white/10 bg-slate-900/90 p-4 font-mono text-[11px] space-y-2 text-emerald-400/90">
-                      <div className="flex items-center justify-between text-muted-foreground border-b border-white/5 pb-1 text-[10px]">
-                        <span>INFRASTRUCTURE MONITOR</span>
-                        <span className="text-emerald-400 font-bold">ACTIVE</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-slate-300">
-                        <span className="text-emerald-400">[OK]</span>
-                        <span>API Gateway Cluster: <span className="text-emerald-300">Healthy</span></span>
-                      </div>
-                      <div className="flex items-center gap-2 text-slate-300">
-                        <span className="text-emerald-400">[OK]</span>
-                        <span>PostgreSQL DB Replication: <span className="text-cyan-300 font-mono">4ms sync</span></span>
-                      </div>
-                      <div className="flex items-center gap-2 text-slate-300">
-                        <span className="text-emerald-400">[OK]</span>
-                        <span>Automated Queue Process: <span className="text-emerald-400 font-mono">100% success</span></span>
-                      </div>
+                <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full">
+                  <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full p-4 sm:p-5 flex flex-col justify-between">
+                    {/* Background ambient lighting & animated effects */}
+                    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                      <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+                      <div className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-slate-300/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce" />
+                      <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-slate-300/15 blur-xl animate-ping" />
+                      <div className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
                     </div>
 
-                    {/* Infrastructure Visual Grid */}
-                    <div className="grid grid-cols-2 gap-3 pt-1">
-                      <div className="rounded-xl border border-emerald-500/20 bg-emerald-950/20 p-3 flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400">
-                          <Activity className="h-4 w-4" />
+                    {/* Content */}
+                    <div className="relative z-10">
+                      {/* Console Header Bar */}
+                      <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 px-2">
+                        <div className="flex items-center gap-2">
+                          <Terminal className="h-4 w-4 text-slate-300" />
+                          <span className="text-xs font-medium text-zinc-300">cloud-server-production</span>
                         </div>
-                        <div>
-                          <div className="text-[10px] text-muted-foreground uppercase font-bold">API Latency</div>
-                          <div className="text-xs font-bold text-emerald-300">&lt;15ms Response</div>
+                        <div className="flex items-center gap-2 rounded-full border border-slate-400/30 bg-slate-400/10 px-2.5 py-0.5 text-[10px] text-slate-200">
+                          <span className="h-1.5 w-1.5 rounded-full bg-slate-300 animate-pulse" />
+                          Sistem Aktif
                         </div>
                       </div>
 
-                      <div className="rounded-xl border border-teal-500/20 bg-teal-950/20 p-3 flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-500/20 text-teal-400">
-                          <Database className="h-4 w-4" />
+                      {/* Video Showcase Content */}
+                      <div className="relative overflow-hidden rounded-xl border border-slate-400/20 bg-slate-900 aspect-video flex items-center justify-center">
+                        <video
+                          src="/bc.mp4"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="w-full h-full object-cover rounded-xl"
+                        />
+
+                        {/* Floating Metric Pill 1 */}
+                        <div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full border border-slate-300/40 bg-slate-950/90 backdrop-blur-md px-3 py-1 text-[10px] font-semibold text-slate-200 shadow-md z-10">
+                          <CheckCircle2 className="h-3 w-3 text-slate-300" />
+                          <span>DATABASE SYNC OK</span>
                         </div>
-                        <div>
-                          <div className="text-[10px] text-muted-foreground uppercase font-bold">Uptime SLA</div>
-                          <div className="text-xs font-bold text-teal-300">99.99% High-Avail</div>
+
+                        {/* Floating Metric Pill 2 */}
+                        <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full border border-slate-300/40 bg-slate-950/90 backdrop-blur-md px-3 py-1 text-[10px] font-semibold text-slate-200 shadow-md z-10">
+                          <Activity className="h-3 w-3 text-slate-300" />
+                          <span>Latensi &lt; 3 ms</span>
                         </div>
                       </div>
-                    </div>
-                  </div>
 
-                  {/* Technology Badges Footer */}
-                  <div className="mt-4 flex items-center justify-between px-2 pt-2 text-[11px] text-muted-foreground border-t border-white/5">
-                    <div className="flex items-center gap-1.5">
-                      <Server className="h-3.5 w-3.5 text-emerald-400" />
-                      <span>Node.js • PostgreSQL • Docker • Redis</span>
+                      {/* System Architecture Badges Footer */}
+                      <div className="mt-4 flex items-center justify-between px-2 pt-2 text-[11px] text-zinc-400 border-t border-white/5">
+                        <div className="flex items-center gap-1.5">
+                          <Server className="h-3.5 w-3.5 text-slate-300" />
+                          <span>PostgreSQL • Redis • Cloud API</span>
+                        </div>
+                        <span className="text-zinc-400 font-medium text-[10px]">ENTERPRISE</span>
+                      </div>
                     </div>
-                    <div className="font-mono text-emerald-400 text-[10px]">ENTERPRISE READY</div>
+
+                    {/* Decorative Glass Corners */}
+                    <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-slate-300/20 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-slate-300/20 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   </div>
                 </div>
               </motion.div>
@@ -209,6 +290,24 @@ export default function SystemLabPage() {
           </div>
         </div>
       </section>
+
+      {/* PROBLEM & SOLUTION SECTION */}
+      {service.problemsAndSolutions && (
+        <ProblemSolutionSection 
+          problemsAndSolutions={service.problemsAndSolutions}
+          serviceTitle={service.title}
+          glowColor="#10b981"
+        />
+      )}
+
+      {/* TARGET AUDIENCE SECTION */}
+      {service.targetAudience && (
+        <TargetAudienceSection 
+          targetAudience={service.targetAudience}
+          serviceTitle={service.title}
+          glowColor="#14b8a6"
+        />
+      )}
 
       {/* Related Portfolio */}
       {relatedPortfolio.length > 0 && (
@@ -218,7 +317,7 @@ export default function SystemLabPage() {
               badge="Portfolio"
               title="Proyek"
               titleHighlight="System Lab"
-              description="Lihat implementasi sistem digital dan arsitektur aplikasi yang telah kami bangun."
+              description="Lihat arsitektur sistem dan aplikasi khusus yang telah kami bangun."
             />
             <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
               {relatedPortfolio.map((item, index) => (
@@ -233,10 +332,10 @@ export default function SystemLabPage() {
       <section className="relative py-24 sm:py-32 overflow-hidden">
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeader
-            badge="Spesifikasi Sistem"
-            title="Kapabilitas"
+            badge="Fitur Unggulan"
+            title="Kapabilitas Sistem"
             titleHighlight="System Lab"
-            description="Sistem khusus dan arsitektur backend andal yang dirancang presisi sesuai dengan alur kerja unik bisnis Anda."
+            description="Solusi teknologi andal untuk menyederhanakan dan mengotomatiskan operasional bisnis Anda."
           />
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-12">
@@ -258,31 +357,47 @@ export default function SystemLabPage() {
                   transition={{ delay: index * 0.08, duration: 0.5 }}
                   className="h-full"
                 >
-                  <BorderGlow glowColor={cfg.glow} className="group relative h-full transition-all duration-300 hover:scale-[1.02]">
-                    <div className="p-7 h-full flex flex-col justify-between rounded-2xl bg-card/40 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300">
-                      <div>
-                        {/* Icon Header Badge */}
-                        <div className="mb-6 flex items-center justify-between">
-                          <div className={cn("flex h-12 w-12 items-center justify-center rounded-2xl border backdrop-blur-md shadow-lg transition-transform duration-300 group-hover:scale-110", cfg.bg)}>
-                            <FeatureIcon className={cn("h-6 w-6", cfg.color)} />
-                          </div>
-                          <span className="text-xs font-mono font-bold text-muted-foreground/50">
-                            0{index + 1}
-                          </span>
-                        </div>
-
-                        {/* Feature Title */}
-                        <h3 className="mb-3 text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                          {feature.title}
-                        </h3>
-
-                        {/* Feature Description */}
-                        <p className="text-sm leading-relaxed text-muted-foreground group-hover:text-muted-foreground/90 transition-colors">
-                          {feature.description}
-                        </p>
+                  <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full">
+                    <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full flex flex-col justify-between p-7">
+                      {/* Background ambient lighting & animated effects */}
+                      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+                        <div className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-slate-300/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce" />
+                        <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-slate-300/15 blur-xl animate-ping" />
+                        <div className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
                       </div>
+
+                      {/* Content */}
+                      <div className="relative z-10 flex flex-col justify-between h-full">
+                        <div>
+                          {/* Icon Header Badge */}
+                          <div className="mb-6 flex items-center justify-between">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-300/40 bg-slate-400/15 text-slate-200 backdrop-blur-md shadow-lg transition-transform duration-300 group-hover:scale-110">
+                              <FeatureIcon className="h-6 w-6 text-slate-200" />
+                            </div>
+                            <span className="text-xs font-mono font-bold text-slate-400">
+                              0{index + 1}
+                            </span>
+                          </div>
+
+                          {/* Feature Title */}
+                          <h3 className="mb-3 text-lg font-bold text-white group-hover:text-slate-100 transition-colors">
+                            {feature.title}
+                          </h3>
+
+                          {/* Feature Description */}
+                          <p className="text-sm leading-relaxed text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                            {feature.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Decorative Glass Corners */}
+                      <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-slate-300/20 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                      <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-slate-300/20 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     </div>
-                  </BorderGlow>
+                  </div>
                 </motion.div>
               );
             })}
@@ -297,7 +412,7 @@ export default function SystemLabPage() {
             badge="Pricing"
             title="Paket"
             titleHighlight="System Lab"
-            description="Investasi tepat untuk transformasi digital bisnis Anda."
+            description="Investasi tepat sasaran untuk otomatisasi dan efisiensi operasional bisnis."
           />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {service.pricing.map((tier, index) => (
@@ -309,53 +424,75 @@ export default function SystemLabPage() {
                   transition={{ delay: index * 0.1 }}
                   className="h-full"
                 >
-                  <BorderGlow className="relative h-full transition-all duration-300">
-                    {tier.popular && (
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-                        <Badge className="border-0 brand-gradient-btn text-white text-xs rounded-full px-3 py-1">
-                          Most Popular
-                        </Badge>
+                  <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full relative">
+                    <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full p-6 lg:p-8 flex flex-col justify-between">
+                      {/* Background ambient lighting & animated effects */}
+                      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+                        <div className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-slate-300/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce" />
+                        <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-slate-300/15 blur-xl animate-ping" />
+                        <div className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
                       </div>
-                    )}
-                    <div className="p-6 lg:p-8 flex flex-col justify-between h-full">
-                      <div>
-                        <h3 className="mb-1 text-xl font-bold">{tier.name}</h3>
-                        <p className="mb-4 text-sm text-muted-foreground">{tier.description}</p>
-                        <div className="mb-6">
-                          <span className="text-3xl font-bold gradient-text">
-                            Rp {tier.price}
-                          </span>
+
+                      {tier.popular && (
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
+                          <Badge className="border border-slate-300/40 bg-slate-400/20 text-slate-100 backdrop-blur-md text-xs font-semibold rounded-full px-3.5 py-1 shadow-lg">
+                            Most Popular
+                          </Badge>
                         </div>
-                        <ul className="mb-8 space-y-3">
-                          {tier.features.map((feature) => (
-                            <li key={feature} className="flex items-start gap-2 text-sm">
-                              <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-                              <span className="text-muted-foreground">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
+                      )}
+
+                      {/* Content */}
+                      <div className="relative z-10 flex flex-col justify-between h-full">
+                        <div>
+                          <h3 className="mb-1 text-xl font-bold text-white group-hover:text-slate-100 transition-colors">{tier.name}</h3>
+                          <p className="mb-4 text-sm text-zinc-400 group-hover:text-zinc-300 transition-colors">{tier.description}</p>
+                          <div className="mb-6">
+                            <span className="text-3xl font-bold bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
+                              Rp {tier.price}
+                            </span>
+                          </div>
+                          <ul className="mb-8 space-y-3">
+                            {tier.features.map((feature) => (
+                              <li key={feature} className="flex items-start gap-2 text-sm">
+                                <Check className="mt-0.5 h-4 w-4 shrink-0 text-slate-300" />
+                                <span className="text-zinc-300 group-hover:text-zinc-200 transition-colors">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="w-full flex justify-center pt-4 border-t border-white/10">
+                          <LiquidMetalButton
+                            onClick={() => {
+                              const message = encodeURIComponent(
+                                `Halo ${AGENCY.name}! 👋\n\nSaya berminat dengan *System Lab* - Paket *${tier.name}*.\n\nBisa dibantu untuk konsultasi detail?`
+                              );
+                              window.open(`https://wa.me/${AGENCY.whatsapp}?text=${message}`, "_blank");
+                            }}
+                            className="w-full"
+                          >
+                            <span>Pilih Paket {tier.name}</span>
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </LiquidMetalButton>
+                        </div>
                       </div>
-                      <div className="w-full flex justify-center">
-                        <LiquidMetalButton
-                          onClick={() => {
-                            const message = encodeURIComponent(
-                              `Halo ${AGENCY.name}! 👋\n\nSaya berminat dengan *System Lab* - Paket *${tier.name}*.\n\nBisa dibantu untuk konsultasi detail?`
-                            );
-                            window.open(`https://wa.me/${AGENCY.whatsapp}?text=${message}`, "_blank");
-                          }}
-                          className="w-full"
-                        >
-                          <span>Pilih Paket {tier.name}</span>
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </LiquidMetalButton>
-                      </div>
+
+                      {/* Decorative Glass Corners */}
+                      <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-slate-300/20 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                      <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-slate-300/20 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     </div>
-                  </BorderGlow>
+                  </div>
                 </motion.div>
             ))}
           </div>
         </div>
       </section>
-    </>
+
+      {/* FAQ SECTION */}
+      <section className="relative py-12 sm:py-20 border-t border-white/5 overflow-hidden">
+        <FaqSection data={systemLabFaqData} />
+      </section>
+    </div>
   );
 }

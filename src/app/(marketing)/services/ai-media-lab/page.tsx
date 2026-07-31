@@ -19,15 +19,100 @@ import {
   Bot,
   ShieldCheck
 } from "lucide-react";
-import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
+import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BorderGlow } from "@/components/ui/border-glow";
+import { BorderGlow } from "@/components/animations/border-glow";
 import { SectionHeader } from "@/components/shared/section-header";
 import { PortfolioCard } from "@/components/features/portfolio-card";
-import { AnimatedBackground } from "@/components/react-bits/animated-background";
+import { ProblemSolutionSection } from "@/components/features/problem-solution-section";
+import { TargetAudienceSection } from "@/components/features/target-audience-section";
+import { FaqSection, FaqData } from "@/components/features/faq-scroller";
 import { SERVICES, PORTFOLIO, AGENCY } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+
+const aiMediaLabFaqData: FaqData = {
+  mainTitle: "Pertanyaan Umum AI Media Lab",
+  mainSubtitle:
+    "Semua informasi mengenai efisiensi produksi media visual 4K, video sintetis, dan avatar AI bertaraf sinematik.",
+  rows: [
+    {
+      id: "ai-row1",
+      speed: "55s",
+      direction: "left",
+      faqItems: [
+        {
+          id: "ai-q1",
+          question: "Berapa lama proses pembuatan video iklan dengan AI?",
+          answer:
+            "Video iklan dan konten visual siap rilis diproduksi hanya dalam 24–48 jam, jauh lebih cepat daripada syuting studio konvensional."
+        },
+        {
+          id: "ai-q2",
+          question: "Apakah konten gambar & video beresolusi tinggi 4K?",
+          answer:
+            "Ya! Semua hasil rendering gambar 4K ultra-photorealistic dan video sinematik dirancang untuk tampilan layar besar & promosi sosial media."
+        },
+        {
+          id: "ai-q3",
+          question: "Apakah hak cipta konten 100% menjadi milik saya?",
+          answer:
+            "Tentu saja. Lisensi penuh hak cipta komersial diserahkan 100% kepada Anda untuk iklan TikTok, Meta Ads, YouTube, dan website."
+        }
+      ]
+    },
+    {
+      id: "ai-row2",
+      speed: "45s",
+      direction: "right",
+      faqItems: [
+        {
+          id: "ai-q4",
+          question: "Bagaimana cara membuat avatar AI khusus untuk brand kami?",
+          answer:
+            "Kami melakukan kloning visual avatar dan sampel suara emosional hiper-realistis untuk menjadi juru bicara resmi produk Anda."
+        },
+        {
+          id: "ai-q5",
+          question: "Berapa penghematan biaya dibanding produksi studio tradisional?",
+          answer:
+            "Menggunakan AI Media Lab memangkas biaya produksi hingga 70% karena tidak memerlukan sewa studio, kamera, talent, dan kru lapangan."
+        },
+        {
+          id: "ai-q6",
+          question: "Apakah bisa request narasi/voiceover dalam berbagai bahasa?",
+          answer:
+            "Bisa! Voiceover AI mendukung puluhan bahasa dan dialek lokal (Bahasa Indonesia, Inggris, Mandarin, dll.) dengan artikulasi alami."
+        }
+      ]
+    },
+    {
+      id: "ai-row3",
+      speed: "65s",
+      direction: "left",
+      faqItems: [
+        {
+          id: "ai-q7",
+          question: "Apakah ada revisi jika visual belum sesuai dengan keinginan?",
+          answer:
+            "Setiap paket sudah termasuk kuota revisi penyesuaian gaya visual, narasi, dan hook untuk memastikan hasil sesuai ekspektasi."
+        },
+        {
+          id: "ai-q8",
+          question: "Format file apa yang akan saya dapatkan?",
+          answer:
+            "Aset dikirim dalam format siap tayang: MP4 4K (16:9 & 9:16 untuk Reels/TikTok) dan image WebP/PNG ultra HD."
+        },
+        {
+          id: "ai-q9",
+          question: "Bagaimana cara memesan paket AI Media Lab?",
+          answer:
+            "Klik tombol Mulai Produksi AI atau hubungi kami via WhatsApp untuk mengirimkan brief produk & gaya visual yang diinginkan."
+        }
+      ]
+    }
+  ]
+};
 
 const service = SERVICES.find((s) => s.id === "ai-media-lab")!;
 const relatedPortfolio = PORTFOLIO.filter((p) => p.category === "ai-media-lab").slice(0, 3);
@@ -73,10 +158,9 @@ const aiMediaFeatureConfig: Record<string, { icon: React.ElementType; color: str
 
 export default function AIMediaLabPage() {
   return (
-    <>
+    <div className="relative min-h-screen">
       {/* Hero */}
       <section className="relative flex min-h-[75vh] sm:min-h-[85vh] items-center overflow-hidden pt-20 pb-12 sm:pt-28 sm:pb-16 lg:pt-36 lg:pb-24">
-        {/* Subtle grid pattern background */}
         <div 
           className="pointer-events-none absolute inset-0 opacity-[0.03]"
           style={{
@@ -95,9 +179,9 @@ export default function AIMediaLabPage() {
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
                 {/* Main Headline */}
-                <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-[1.15]">
+                <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-[1.15] text-white">
                   Konten Visual & Media{" "}
-                  <span className="bg-gradient-to-r from-purple-400 via-fuchsia-300 to-pink-400 bg-clip-text text-transparent drop-shadow-sm">
+                  <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent drop-shadow-sm">
                     Powered by AI
                   </span>
                 </h1>
@@ -135,65 +219,69 @@ export default function AIMediaLabPage() {
                 className="relative"
               >
                 {/* Visual Card Glass Frame */}
-                <div className="relative rounded-2xl border border-purple-500/25 bg-slate-950/85 p-4 shadow-2xl backdrop-blur-xl ring-1 ring-purple-500/20">
-                  {/* Console Top Bar */}
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 px-2">
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="h-4 w-4 text-fuchsia-400" />
-                      <span className="text-xs font-semibold text-foreground">AI Creative Engine v4.5</span>
-                    </div>
-                    <div className="flex items-center gap-2 rounded-full border border-fuchsia-500/30 bg-fuchsia-500/10 px-2.5 py-0.5 text-[10px] text-fuchsia-300 font-mono">
-                      <span className="h-1.5 w-1.5 rounded-full bg-fuchsia-400 animate-pulse" />
-                      RENDERING LIVE
-                    </div>
-                  </div>
-
-                  {/* Simulated AI Prompt Box */}
-                  <div className="space-y-3.5">
-                    <div className="rounded-xl border border-white/10 bg-slate-900/80 p-3.5">
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5 flex justify-between">
-                        <span>Generative Prompt</span>
-                        <span className="text-fuchsia-400">FLUX-ULTRA AI</span>
-                      </div>
-                      <div className="font-mono text-xs text-purple-200 bg-purple-950/40 p-2.5 rounded-lg border border-purple-500/20 leading-relaxed">
-                        &quot;Cyberpunk brand commercial teaser, 8K ultra detail, photorealistic lighting, cinematic motion, vibrant neon accent...&quot;
-                      </div>
+                <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full">
+                  <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full p-4 sm:p-5 flex flex-col justify-between">
+                    {/* Background ambient lighting & animated effects */}
+                    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                      <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+                      <div className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-slate-300/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce" />
+                      <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-slate-300/15 blur-xl animate-ping" />
+                      <div className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
                     </div>
 
-                    {/* Generative Visual Canvas Box */}
-                    <div className="relative h-44 rounded-xl border border-white/10 bg-gradient-to-br from-purple-950/60 via-slate-900/80 to-fuchsia-950/60 overflow-hidden flex items-center justify-center p-4">
-                      {/* Ambient background particles graphic */}
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,70,239,0.15)_0,transparent_70%)]" />
-                      
-                      <div className="relative z-10 text-center">
-                        <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-purple-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-500/30">
-                          <Play className="h-5 w-5 fill-white ml-0.5" />
+                    {/* Content */}
+                    <div className="relative z-10">
+                      {/* Console Top Bar */}
+                      <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 px-2">
+                        <div className="flex items-center gap-2">
+                          <Sparkles className="h-4 w-4 text-slate-300" />
+                          <span className="text-xs font-medium text-zinc-300">AI Media Production Studio</span>
                         </div>
-                        <div className="text-xs font-semibold text-slate-200">4K Cinematic Video Preview</div>
-                        <div className="text-[10px] text-muted-foreground mt-0.5">3840 x 2160 • 60 FPS • High Dynamic Range</div>
+                        {/* Pill Badge */}
+                        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/20 bg-white/10 text-slate-300 text-xs font-semibold shadow-inner backdrop-blur-md">
+                          <Sparkles className="w-3.5 h-3.5 text-slate-300 animate-pulse" />
+                          <span>AI Media Lab — Generative Content & Visual 4K</span>
+                        </div>
                       </div>
 
-                      {/* Floating Badge 1: Render Speed */}
-                      <div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full border border-fuchsia-500/40 bg-slate-950/90 px-3 py-1 text-[10px] font-bold text-fuchsia-300 shadow-lg backdrop-blur-md">
-                        <Zap className="h-3 w-3 text-amber-400" />
-                        <span>Render: 0.8s/frame</span>
+                      {/* Video Showcase Content */}
+                      <div className="relative overflow-hidden rounded-xl border border-slate-400/20 bg-slate-900 aspect-video flex items-center justify-center">
+                        <video
+                          src="/bc.mp4"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="w-full h-full object-cover rounded-xl"
+                        />
+
+                        {/* Floating Badge 1: Render Speed */}
+                        <div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full border border-slate-300/40 bg-slate-950/90 backdrop-blur-md px-3 py-1 text-[10px] font-semibold text-slate-200 shadow-md z-10">
+                          <Zap className="h-3 w-3 text-slate-300" />
+                          <span>Rendering 4K</span>
+                        </div>
+
+                        {/* Floating Badge 2: Output format */}
+                        <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full border border-slate-300/40 bg-slate-950/90 backdrop-blur-md px-3 py-1 text-[10px] font-semibold text-slate-200 shadow-md z-10">
+                          <ImageIcon className="h-3 w-3 text-slate-300" />
+                          <span>Aset Siap Pakai</span>
+                        </div>
                       </div>
 
-                      {/* Floating Badge 2: Output format */}
-                      <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full border border-purple-500/40 bg-slate-950/90 px-3 py-1 text-[10px] font-bold text-purple-300 shadow-lg backdrop-blur-md">
-                        <ImageIcon className="h-3 w-3 text-purple-400" />
-                        <span>PRO Visual Asset</span>
+                      {/* AI Tools Footer Badges */}
+                      <div className="mt-4 flex items-center justify-between px-2 pt-2 text-[11px] text-zinc-400 border-t border-white/5">
+                        <div className="flex items-center gap-1.5">
+                          <Layers className="h-3.5 w-3.5 text-slate-300" />
+                          <span>AI Generator • Video Editing • Sound Design</span>
+                        </div>
+                        <span className="text-zinc-400 font-medium text-[10px]">4K ULTRA HD</span>
                       </div>
                     </div>
-                  </div>
 
-                  {/* AI Tools Footer Badges */}
-                  <div className="mt-4 flex items-center justify-between px-2 pt-2 text-[11px] text-muted-foreground border-t border-white/5">
-                    <div className="flex items-center gap-1.5">
-                      <Layers className="h-3.5 w-3.5 text-fuchsia-400" />
-                      <span>Midjourney • Flux • Runway • ComfyUI</span>
-                    </div>
-                    <div className="font-mono text-fuchsia-400 text-[10px]">ULTRA HD 4K</div>
+                    {/* Decorative Glass Corners */}
+                    <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-slate-300/20 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-slate-300/20 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   </div>
                 </div>
               </motion.div>
@@ -201,6 +289,24 @@ export default function AIMediaLabPage() {
           </div>
         </div>
       </section>
+
+      {/* PROBLEM & SOLUTION SECTION */}
+      {service.problemsAndSolutions && (
+        <ProblemSolutionSection 
+          problemsAndSolutions={service.problemsAndSolutions}
+          serviceTitle={service.title}
+          glowColor="#a855f7"
+        />
+      )}
+
+      {/* TARGET AUDIENCE SECTION */}
+      {service.targetAudience && (
+        <TargetAudienceSection 
+          targetAudience={service.targetAudience}
+          serviceTitle={service.title}
+          glowColor="#ec4899"
+        />
+      )}
 
       {/* Related Portfolio */}
       {relatedPortfolio.length > 0 && (
@@ -250,31 +356,47 @@ export default function AIMediaLabPage() {
                   transition={{ delay: index * 0.08, duration: 0.5 }}
                   className="h-full"
                 >
-                  <BorderGlow glowColor={cfg.glow} className="group relative h-full transition-all duration-300 hover:scale-[1.02]">
-                    <div className="p-7 h-full flex flex-col justify-between rounded-2xl bg-card/40 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300">
-                      <div>
-                        {/* Icon Header Badge */}
-                        <div className="mb-6 flex items-center justify-between">
-                          <div className={cn("flex h-12 w-12 items-center justify-center rounded-2xl border backdrop-blur-md shadow-lg transition-transform duration-300 group-hover:scale-110", cfg.bg)}>
-                            <FeatureIcon className={cn("h-6 w-6", cfg.color)} />
-                          </div>
-                          <span className="text-xs font-mono font-bold text-muted-foreground/50">
-                            0{index + 1}
-                          </span>
-                        </div>
-
-                        {/* Feature Title */}
-                        <h3 className="mb-3 text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                          {feature.title}
-                        </h3>
-
-                        {/* Feature Description */}
-                        <p className="text-sm leading-relaxed text-muted-foreground group-hover:text-muted-foreground/90 transition-colors">
-                          {feature.description}
-                        </p>
+                  <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full">
+                    <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full flex flex-col justify-between p-7">
+                      {/* Background ambient lighting & animated effects */}
+                      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+                        <div className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-slate-300/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce" />
+                        <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-slate-300/15 blur-xl animate-ping" />
+                        <div className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
                       </div>
+
+                      {/* Content */}
+                      <div className="relative z-10 flex flex-col justify-between h-full">
+                        <div>
+                          {/* Icon Header Badge */}
+                          <div className="mb-6 flex items-center justify-between">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-300/40 bg-slate-400/15 text-slate-200 backdrop-blur-md shadow-lg transition-transform duration-300 group-hover:scale-110">
+                              <FeatureIcon className="h-6 w-6 text-slate-200" />
+                            </div>
+                            <span className="text-xs font-mono font-bold text-slate-400">
+                              0{index + 1}
+                            </span>
+                          </div>
+
+                          {/* Feature Title */}
+                          <h3 className="mb-3 text-lg font-bold text-white group-hover:text-slate-100 transition-colors">
+                            {feature.title}
+                          </h3>
+
+                          {/* Feature Description */}
+                          <p className="text-sm leading-relaxed text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                            {feature.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Decorative Glass Corners */}
+                      <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-slate-300/20 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                      <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-slate-300/20 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     </div>
-                  </BorderGlow>
+                  </div>
                 </motion.div>
               );
             })}
@@ -301,53 +423,75 @@ export default function AIMediaLabPage() {
                   transition={{ delay: index * 0.1 }}
                   className="h-full"
                 >
-                  <BorderGlow className="relative h-full transition-all duration-300">
-                    {tier.popular && (
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-                        <Badge className="border-0 brand-gradient-btn text-white text-xs rounded-full px-3 py-1">
-                          Most Popular
-                        </Badge>
+                  <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full relative">
+                    <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full p-6 lg:p-8 flex flex-col justify-between">
+                      {/* Background ambient lighting & animated effects */}
+                      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+                        <div className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-slate-300/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce" />
+                        <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-slate-300/15 blur-xl animate-ping" />
+                        <div className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
                       </div>
-                    )}
-                    <div className="p-6 lg:p-8 flex flex-col justify-between h-full">
-                      <div>
-                        <h3 className="mb-1 text-xl font-bold">{tier.name}</h3>
-                        <p className="mb-4 text-sm text-muted-foreground">{tier.description}</p>
-                        <div className="mb-6">
-                          <span className="text-3xl font-bold gradient-text">
-                            Rp {tier.price}
-                          </span>
+
+                      {tier.popular && (
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
+                          <Badge className="border border-slate-300/40 bg-slate-400/20 text-slate-100 backdrop-blur-md text-xs font-semibold rounded-full px-3.5 py-1 shadow-lg">
+                            Most Popular
+                          </Badge>
                         </div>
-                        <ul className="mb-8 space-y-3">
-                          {tier.features.map((feature) => (
-                            <li key={feature} className="flex items-start gap-2 text-sm">
-                              <Check className="mt-0.5 h-4 w-4 shrink-0 text-purple-400" />
-                              <span className="text-muted-foreground">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
+                      )}
+
+                      {/* Content */}
+                      <div className="relative z-10 flex flex-col justify-between h-full">
+                        <div>
+                          <h3 className="mb-1 text-xl font-bold text-white group-hover:text-slate-100 transition-colors">{tier.name}</h3>
+                          <p className="mb-4 text-sm text-zinc-400 group-hover:text-zinc-300 transition-colors">{tier.description}</p>
+                          <div className="mb-6">
+                            <span className="text-3xl font-bold bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
+                              Rp {tier.price}
+                            </span>
+                          </div>
+                          <ul className="mb-8 space-y-3">
+                            {tier.features.map((feature) => (
+                              <li key={feature} className="flex items-start gap-2 text-sm">
+                                <Check className="mt-0.5 h-4 w-4 shrink-0 text-slate-300" />
+                                <span className="text-zinc-300 group-hover:text-zinc-200 transition-colors">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="w-full flex justify-center pt-4 border-t border-white/10">
+                          <LiquidMetalButton
+                            onClick={() => {
+                              const message = encodeURIComponent(
+                                `Halo ${AGENCY.name}! 👋\n\nSaya berminat dengan *AI Media Lab* - Paket *${tier.name}*.\n\nBisa dibantu untuk konsultasi detail?`
+                              );
+                              window.open(`https://wa.me/${AGENCY.whatsapp}?text=${message}`, "_blank");
+                            }}
+                            className="w-full"
+                          >
+                            <span>Pilih Paket {tier.name}</span>
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </LiquidMetalButton>
+                        </div>
                       </div>
-                      <div className="w-full flex justify-center">
-                        <LiquidMetalButton
-                          onClick={() => {
-                            const message = encodeURIComponent(
-                              `Halo ${AGENCY.name}! 👋\n\nSaya berminat dengan *AI Media Lab* - Paket *${tier.name}*.\n\nBisa dibantu untuk konsultasi detail?`
-                            );
-                            window.open(`https://wa.me/${AGENCY.whatsapp}?text=${message}`, "_blank");
-                          }}
-                          className="w-full"
-                        >
-                          <span>Pilih Paket {tier.name}</span>
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </LiquidMetalButton>
-                      </div>
+
+                      {/* Decorative Glass Corners */}
+                      <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-slate-300/20 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                      <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-slate-300/20 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     </div>
-                  </BorderGlow>
+                  </div>
                 </motion.div>
             ))}
           </div>
         </div>
       </section>
-    </>
+
+      {/* FAQ SECTION */}
+      <section className="relative py-12 sm:py-20 border-t border-white/5 overflow-hidden">
+        <FaqSection data={aiMediaLabFaqData} />
+      </section>
+    </div>
   );
 }

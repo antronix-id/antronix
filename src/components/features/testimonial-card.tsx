@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BorderGlow } from "@/components/ui/border-glow";
+import { BorderGlow } from "@/components/animations/border-glow";
 import { Quote, Star } from "lucide-react";
 import type { Testimonial } from "@/lib/constants";
 
