@@ -17,6 +17,7 @@ export default function MarketingLayout({
           <BeamsBackground intensity="strong">
             <Navbar />
             <main className="flex-1 relative z-10">{children}</main>
+
             <Footer />
           </BeamsBackground>
         </PageTransitionProvider>
@@ -24,3 +25,5 @@ export default function MarketingLayout({
     </PreloaderWrapper>
   );
 }
+
+

@@ -30,7 +30,8 @@ export interface FaqData {
  */
 export const FaqCard = ({ question, answer }: { question: string; answer: string }) => {
   return (
-    <div className="flex flex-col items-start justify-between gap-4 p-5 sm:p-7 bg-black rounded-3xl border border-white/10 hover:border-white/25 backdrop-blur-xl w-[320px] sm:w-[420px] flex-shrink-0 faq-card transition-all duration-300 hover:scale-[1.02] shadow-2xl group cursor-default">
+    <div className="flex flex-col items-start justify-between gap-4 p-5 sm:p-7 bg-black rounded-3xl border border-white/10 hover:border-white/25 backdrop-blur-xl w-[280px] xs:w-[320px] sm:w-[420px] flex-shrink-0 faq-card transition-all duration-300 hover:scale-[1.02] shadow-2xl group cursor-default">
+
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/5 text-slate-300 border border-white/10 group-hover:border-white/30 group-hover:text-white transition-all duration-300">

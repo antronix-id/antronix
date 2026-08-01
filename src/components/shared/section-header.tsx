@@ -33,12 +33,13 @@ export function SectionHeader({
           className
         )}
       >
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl bg-gradient-to-b from-white via-slate-200 to-slate-400 bg-clip-text text-transparent drop-shadow-sm">
+        <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight sm:leading-snug bg-gradient-to-b from-white via-slate-200 to-slate-400 bg-clip-text text-transparent drop-shadow-sm">
           {title}{" "}
           {titleHighlight && (
             <span className="gradient-text">{titleHighlight}</span>
           )}
         </h2>
+
         {description && (
           <p className="mt-4 text-base sm:text-lg leading-relaxed text-muted-foreground">
             {description}

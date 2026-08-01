@@ -218,32 +218,24 @@ export function LiquidMetalButton({
 
   return (
     <div className={cn("relative inline-flex items-center justify-center select-none group/liquid", className)}>
-      <div
-        className="relative h-full flex items-center justify-center"
-        style={{
-          perspective: "1000px",
-          perspectiveOrigin: "50% 50%",
-        }}
-      >
+      <div className="relative h-full flex items-center justify-center">
         <div
           className={cn(
             "relative flex items-center justify-center min-h-[46px] h-full",
             isIcon ? "w-[46px] h-[46px] min-w-[46px]" : "px-6 py-2.5"
           )}
           style={{
-            transformStyle: "preserve-3d",
             transition:
               "all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.4s ease, height 0.4s ease",
-            transform: "none",
           }}
         >
           {/* Layer 1: Content Layer */}
           <div
             className="relative z-30 flex items-center justify-center gap-2 text-sm font-medium text-[#e0e0e6] pointer-events-none whitespace-nowrap h-full"
             style={{
-              transformStyle: "preserve-3d",
-              transform: "translateZ(20px)",
               textShadow: "0px 1px 2px rgba(0, 0, 0, 0.5)",
+              transform: isPressed ? "translateY(1px) scale(0.98)" : "translateY(0) scale(1)",
+              transition: "transform 0.15s cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           >
             {content}
@@ -253,10 +245,7 @@ export function LiquidMetalButton({
           <div
             className="absolute inset-0 z-20 w-full h-full pointer-events-none"
             style={{
-              transformStyle: "preserve-3d",
-              transform: `translateZ(10px) ${
-                isPressed ? "translateY(1px) scale(0.98)" : "translateY(0) scale(1)"
-              }`,
+              transform: isPressed ? "translateY(1px) scale(0.98)" : "translateY(0) scale(1)",
               transition:
                 "all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.4s ease, height 0.4s ease",
             }}
@@ -281,10 +270,7 @@ export function LiquidMetalButton({
           <div
             className="absolute inset-0 z-10 w-full h-full pointer-events-none"
             style={{
-              transformStyle: "preserve-3d",
-              transform: `translateZ(0px) ${
-                isPressed ? "translateY(1px) scale(0.98)" : "translateY(0) scale(1)"
-              }`,
+              transform: isPressed ? "translateY(1px) scale(0.98)" : "translateY(0) scale(1)",
               transition:
                 "all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.4s ease, height 0.4s ease",
             }}
@@ -325,10 +311,6 @@ export function LiquidMetalButton({
               onMouseDown={() => setIsPressed(true)}
               onMouseUp={() => setIsPressed(false)}
               className="absolute inset-0 z-40 w-full h-full bg-transparent border-0 cursor-pointer outline-none rounded-[100px] overflow-hidden block"
-              style={{
-                transformStyle: "preserve-3d",
-                transform: "translateZ(25px)",
-              }}
               aria-label={typeof content === "string" ? content : label || "button"}
             >
               {ripples.map((ripple) => (
@@ -358,10 +340,6 @@ export function LiquidMetalButton({
               onMouseDown={() => setIsPressed(true)}
               onMouseUp={() => setIsPressed(false)}
               className="absolute inset-0 z-40 w-full h-full bg-transparent border-0 cursor-pointer outline-none rounded-[100px] overflow-hidden block"
-              style={{
-                transformStyle: "preserve-3d",
-                transform: "translateZ(25px)",
-              }}
               aria-label={typeof content === "string" ? content : label || "button"}
               {...props}
             >

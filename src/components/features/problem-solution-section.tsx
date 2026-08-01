@@ -105,7 +105,7 @@ export function ProblemSolutionSection({
             >
               {/* LEFT CARD: TANTANGAN (MASALAH) */}
               <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full">
-                <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full flex flex-col justify-between p-6 sm:p-8">
+                <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full flex flex-col justify-between p-5 sm:p-8">
                   {/* Background ambient lighting & animated effects */}
                   <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                     <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
@@ -156,7 +156,8 @@ export function ProblemSolutionSection({
 
               {/* RIGHT CARD: SOLUSI KAMI */}
               <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:rotate-1 h-full w-full">
-                <div className="text-white rounded-3xl border border-slate-300/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-100/60 hover:shadow-slate-200/10 hover:shadow-3xl w-full h-full flex flex-col justify-between p-6 sm:p-8">
+                <div className="text-white rounded-3xl border border-slate-300/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-100/60 hover:shadow-slate-200/10 hover:shadow-3xl w-full h-full flex flex-col justify-between p-5 sm:p-8">
+
                   {/* Background ambient lighting & animated effects */}
                   <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                     <div className="absolute inset-0 bg-gradient-to-tr from-zinc-300/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />

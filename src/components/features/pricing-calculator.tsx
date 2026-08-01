@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import NumberFlow from "@number-flow/react";
 import { Button } from "@/components/ui/button";
 import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
 import { Badge } from "@/components/ui/badge";
@@ -43,29 +42,40 @@ export function PricingCalculator() {
 
   return (
     <div className="w-full space-y-10">
-      {/* Service Division Tabs Selector */}
-      <div className="flex flex-wrap items-center justify-center gap-3">
-        {SERVICES.map((service) => {
+      {/* Service Division Tabs Selector - 2 Top (Left/Right) + 1 Bottom Centered on Mobile */}
+      <div className="grid grid-cols-2 sm:flex sm:flex-row items-center justify-center gap-2.5 sm:gap-3 w-full max-w-sm sm:max-w-none mx-auto px-2">
+        {SERVICES.map((service, index) => {
           const logoSrc = service.logo || divisionLogos[service.id] || "/Web-Studio.avif";
           const isSelected = selectedServiceId === service.id;
 
           return (
-            <LiquidMetalButton
+            <div
               key={service.id}
-              onClick={() => setSelectedServiceId(service.id)}
+              className={cn(
+                "flex justify-center sm:w-auto",
+                index === 2 ? "col-span-2 justify-center" : "col-span-1"
+              )}
             >
-              <Image
-                src={logoSrc}
-                alt={service.title}
-                width={20}
-                height={20}
-                className="h-5 w-5 object-contain filter drop-shadow-sm"
-              />
-              <span>{service.shortTitle || service.title}</span>
-            </LiquidMetalButton>
+              <LiquidMetalButton
+                onClick={() => setSelectedServiceId(service.id)}
+                className="w-full sm:w-auto justify-center"
+              >
+                <Image
+                  src={logoSrc}
+                  alt={service.title}
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 object-contain filter drop-shadow-sm shrink-0"
+                />
+                <span className="whitespace-nowrap text-xs sm:text-sm">{service.shortTitle || service.title}</span>
+              </LiquidMetalButton>
+            </div>
           );
         })}
       </div>
+
+
+
 
       {/* Active Service Description */}
       <motion.div
@@ -124,14 +134,19 @@ export function PricingCalculator() {
 
                       {/* Price Header */}
                       <div className="mb-6 pb-6 border-b border-white/10">
-                        <div className="flex items-baseline gap-1">
+                        <div className="flex items-baseline gap-1.5">
                           <span className="text-sm font-semibold text-slate-300">Rp</span>
-                          <span className="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
-                            <NumberFlow
-                              value={finalPriceNumber}
-                              format={{ useGrouping: true }}
-                            />
-                          </span>
+                          <motion.span
+                            key={tier.name + tier.price}
+                            initial={{ opacity: 0, y: -4 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="text-2xl sm:text-3xl font-extrabold text-white"
+                          >
+                            {finalPriceNumber > 0
+                              ? `${new Intl.NumberFormat("id-ID").format(finalPriceNumber)}${tier.price.includes("+") ? "+" : ""}`
+                              : tier.price}
+                          </motion.span>
                         </div>
                         <div className="mt-1 text-[11px] text-zinc-400 font-medium">
                           Estimasi pengerjaan per proyek

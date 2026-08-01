@@ -514,3 +514,28 @@ body {
     transparent
   );
 }
+
+/* Mobile Native Utility Classes */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.touch-scroller {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+}
+
+.active-touch {
+  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.4, 1);
+}
+.active-touch:active {
+  transform: scale(0.97);
+}

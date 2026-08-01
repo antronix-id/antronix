@@ -41,41 +41,46 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -left-40 top-1/4 h-80 w-80 rounded-full bg-[oklch(0.5_0.18_270)] opacity-10 blur-[100px]" />
         <div className="pointer-events-none absolute -right-40 bottom-1/4 h-80 w-80 rounded-full bg-[oklch(0.5_0.2_310)] opacity-10 blur-[100px]" />
 
-        <div className="relative mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-40">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 lg:px-8 lg:py-40">
           <div className="mx-auto max-w-4xl text-center">
             {/* Headline */}
-            <h1 className="mt-8 text-4xl font-bold tracking-tight sm:text-5xl lg:text-7xl">
+            <h1 className="mt-4 sm:mt-8 text-3xl font-bold tracking-tight sm:text-5xl lg:text-7xl leading-tight sm:leading-none">
               <SplitText text="Solusi Digital" delay={0.3} />
               <br />
               <SplitText text="Terdepan Untuk" delay={0.5} />
               <br />
               <GradientText
                 text="Akselerasi Bisnis"
-                className="text-4xl sm:text-5xl lg:text-7xl font-bold"
+                className="text-3xl sm:text-5xl lg:text-7xl font-bold"
               />
             </h1>
 
             {/* Sub-headline */}
-            <p className="mt-6 text-lg leading-8 text-muted-foreground sm:text-xl">
+            <p className="mt-4 sm:mt-6 text-base sm:text-xl leading-relaxed text-muted-foreground max-w-2xl mx-auto">
               Artificial Ripe hadir membantu Anda mengubah tantangan bisnis menjadi peluang dengan
               layanan Web Studio, AI Media Lab, dan System Lab terbaik.
             </p>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons - Side-by-side Left-Right on Mobile */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-10 flex flex-wrap items-center justify-center gap-4"
+              className="mt-8 sm:mt-10 flex flex-row items-center justify-center gap-2.5 sm:gap-4 w-full max-w-md mx-auto px-2"
             >
-              <LiquidMetalButton href="#pricing">
-                <span>Mulai Proyek</span>
-                <ChevronRight className="h-4 w-4" />
-              </LiquidMetalButton>
-              <LiquidMetalButton href="#services">
-                <span>Lihat Layanan</span>
-              </LiquidMetalButton>
+              <div className="flex justify-center shrink-0">
+                <LiquidMetalButton href="#pricing">
+                  <span className="text-xs sm:text-sm whitespace-nowrap">Mulai Proyek</span>
+                  <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                </LiquidMetalButton>
+              </div>
+              <div className="flex justify-center shrink-0">
+                <LiquidMetalButton href="#services">
+                  <span className="text-xs sm:text-sm whitespace-nowrap">Lihat Layanan</span>
+                </LiquidMetalButton>
+              </div>
             </motion.div>
+
           </div>
         </div>
       </section>
@@ -83,7 +88,8 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* SERVICES SECTION */}
       {/* ============================================ */}
-      <section id="services" className="relative py-24 sm:py-32">
+      <section id="services" className="relative py-16 sm:py-32">
+
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <SectionHeader
             title="Solusi Unggulan Untuk"

@@ -56,17 +56,21 @@ export default function PortfolioPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-10 sm:mb-12 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
+            className="mb-10 sm:mb-12 flex flex-col sm:flex-row items-center justify-center gap-2.5 w-full max-w-xs sm:max-w-none mx-auto"
           >
             {FILTERS.map((filter) => (
-              <LiquidMetalButton
-                key={filter.id}
-                onClick={() => setActiveFilter(filter.id)}
-              >
-                <span>{filter.label}</span>
-              </LiquidMetalButton>
+              <div key={filter.id} className="w-full sm:w-auto flex justify-center">
+                <LiquidMetalButton
+                  onClick={() => setActiveFilter(filter.id)}
+                  className="w-full sm:w-auto justify-center"
+                >
+                  <span className="whitespace-nowrap">{filter.label}</span>
+                </LiquidMetalButton>
+              </div>
             ))}
           </motion.div>
+
+
 
           {/* Portfolio Grid */}
           <AnimatePresence mode="wait">

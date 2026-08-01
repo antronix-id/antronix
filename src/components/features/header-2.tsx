@@ -119,14 +119,14 @@ export function Header() {
             "flex h-full w-full flex-col justify-between gap-y-4 p-6"
           )}
         >
-          <div className="flex flex-col gap-2 overflow-y-auto pr-1">
+          <div className="flex flex-col divide-y divide-white/10 overflow-y-auto">
             {NAV_LINKS.map((link) => (
-              <div key={link.label}>
+              <div key={link.label} className="w-full">
                 {link.children ? (
-                  <div className="space-y-1 py-1">
+                  <div className="space-y-1 py-2 flex flex-col items-center">
                     <Link
                       href={link.href}
-                      className="flex items-center justify-between px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-white transition-colors"
+                      className="flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-white transition-colors text-center w-full"
                       onClick={(e) =>
                         handleSectionNavigation(e, link.href, pathname, router, () =>
                           setOpen(false)
@@ -147,7 +147,7 @@ export function Header() {
                         <Link
                           key={child.label}
                           href={child.href}
-                          className="flex items-center gap-3 rounded-xl px-3 py-3.5 transition-colors hover:bg-white/10 active:bg-white/15 text-sm font-medium text-neutral-200"
+                          className="flex items-center justify-center gap-3 rounded-xl px-4 py-3.5 transition-colors hover:bg-white/10 active:bg-white/15 text-base font-medium text-neutral-200 w-full text-center"
                           onClick={(e) =>
                             handleSectionNavigation(e, child.href, pathname, router, () =>
                               setOpen(false)
@@ -155,7 +155,7 @@ export function Header() {
                           }
                         >
                           {logoSrc ? (
-                            <Image src={logoSrc} alt={child.label} width={20} height={20} className="h-5 w-5 object-contain" />
+                            <Image src={logoSrc} alt={child.label} width={20} height={20} className="h-5 w-5 object-contain shrink-0" />
                           ) : null}
                           <span>{child.label}</span>
                         </Link>
@@ -165,7 +165,7 @@ export function Header() {
                 ) : (
                   <Link
                     href={link.href}
-                    className="flex items-center rounded-xl px-3 py-3.5 transition-colors hover:bg-white/10 active:bg-white/15 text-sm font-medium text-white block"
+                    className="flex items-center justify-center rounded-xl px-4 py-4 transition-colors hover:bg-white/10 active:bg-white/15 text-base font-medium text-white w-full text-center"
                     onClick={(e) =>
                       handleSectionNavigation(e, link.href, pathname, router, () =>
                         setOpen(false)
@@ -178,6 +178,7 @@ export function Header() {
               </div>
             ))}
           </div>
+
 
           <div className="flex justify-center pt-3 pb-[env(safe-area-inset-bottom)] border-t border-white/10">
             <Link
