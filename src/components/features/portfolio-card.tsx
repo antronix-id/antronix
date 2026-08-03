@@ -16,7 +16,9 @@ interface PortfolioCardProps {
 }
 
 export function PortfolioCard({ item, index, className }: PortfolioCardProps) {
-  const displayUrl = `${item.slug || "project"}.artificialripe.com`;
+  const displayUrl = item.liveUrl
+    ? item.liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")
+    : `${item.slug || "project"}.artificialripe.com`;
   const targetUrl = item.liveUrl || `https://${displayUrl}`;
 
   return (

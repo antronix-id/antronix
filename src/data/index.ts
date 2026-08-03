@@ -630,14 +630,15 @@ export const SERVICES: Service[] = [
 export const PORTFOLIO: PortfolioItem[] = [
   {
     id: "1",
-    title: "Platform E-Commerce Busana Modern",
-    slug: "ecommerce-fashion",
+    title: "Website Perumahan Modern",
+    slug: "website-perumahan",
     category: "web-studio",
     description:
-      "Platform e-commerce busana modern dengan fitur uji coba pakaian AR, daftar keinginan, dan pembayaran otomatis. Dibangun dengan Next.js & Supabase.",
+      "Platform website perumahan modern dengan tampilan visual interaktif, galeri tipe unit, dan integrasi pemesanan WhatsApp.",
     thumbnailUrl: "/portfolio/ecommerce-fashion.jpg",
-    videoUrl: "/bc.mp4",
-    techStack: ["Next.js", "Supabase", "Tailwind CSS", "Stripe"],
+    videoUrl: "/vidio/website--perumahan.mp4",
+    liveUrl: "https://website-perumahan-nu.vercel.app/",
+    techStack: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
     isFeatured: true,
   },
   {
@@ -666,15 +667,16 @@ export const PORTFOLIO: PortfolioItem[] = [
   },
   {
     id: "4",
-    title: "Pembaruan Website Perusahaan Korporat",
-    slug: "corporate-redesign",
+    title: "Website Aureo Coffee",
+    slug: "website-aureo-coffee",
     category: "web-studio",
     description:
-      "Pembaruan total website korporat dengan fokus pencitraan merek premium, animasi halus, dan peningkatan kunjungan Google hingga 300%.",
+      "Landing page & website brand Aureo Coffee dengan desain visual modern, animasi interaktif, dan performa tinggi.",
     thumbnailUrl: "/portfolio/corporate-redesign.jpg",
-    videoUrl: "/bc.mp4",
-    techStack: ["Next.js", "Framer Motion", "Tailwind CSS"],
-    isFeatured: false,
+    videoUrl: "/vidio/website-aureo-coffe.mp4",
+    liveUrl: "https://energy-drink-five.vercel.app/",
+    techStack: ["Next.js", "Framer Motion", "Tailwind CSS", "TypeScript"],
+    isFeatured: true,
   },
   {
     id: "5",
