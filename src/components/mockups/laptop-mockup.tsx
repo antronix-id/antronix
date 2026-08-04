@@ -18,6 +18,8 @@ export interface LaptopMockupProps extends React.HTMLAttributes<HTMLDivElement> 
   showSafariHeader?: boolean;
   className?: string;
   children?: React.ReactNode;
+  playOnHover?: boolean;
+  isHovered?: boolean;
 }
 
 export function LaptopMockup({
@@ -27,10 +29,63 @@ export function LaptopMockup({
   showSafariHeader = true,
   className = "",
   children,
+  playOnHover = true,
+  isHovered: externalHovered,
+  onMouseEnter,
+  onMouseLeave,
   ...props
 }: LaptopMockupProps) {
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+  const [internalHovered, setInternalHovered] = React.useState(false);
+  const [initialPreviewDone, setInitialPreviewDone] = React.useState(false);
+
+  const activeHovered = externalHovered !== undefined ? externalHovered : internalHovered;
+
+  // Initial 2-second autoplay preview to show bright video frame
+  React.useEffect(() => {
+    if (!videoSrc || !videoRef.current) return;
+
+    const video = videoRef.current;
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+
+    const timer = setTimeout(() => {
+      setInitialPreviewDone(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [videoSrc]);
+
+  // Handle playback based on hover state after initial 2-second preview
+  React.useEffect(() => {
+    if (!videoRef.current) return;
+
+    if (activeHovered) {
+      videoRef.current.play().catch(() => {});
+    } else if (initialPreviewDone) {
+      videoRef.current.pause();
+    }
+  }, [activeHovered, initialPreviewDone]);
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    setInternalHovered(true);
+    onMouseEnter?.(e);
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    setInternalHovered(false);
+    onMouseLeave?.(e);
+  };
+
   return (
-    <div className={`relative w-full select-none ${className}`} {...props}>
+    <div
+      className={`relative w-full select-none ${className}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      {...props}
+    >
       {/* Laptop Hardware Frame Overlay */}
       <img
         src="/border-leptop.avif"
@@ -89,11 +144,14 @@ export function LaptopMockup({
         <div className="relative flex-1 w-full h-full overflow-hidden bg-slate-950">
           {videoSrc ? (
             <video
+              ref={videoRef}
               src={videoSrc}
+              poster={src}
               autoPlay
               loop
               muted
               playsInline
+              preload="auto"
               className="h-full w-full object-cover"
             />
           ) : src ? (

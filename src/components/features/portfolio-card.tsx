@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import type { PortfolioItem } from "@/lib/constants";
@@ -16,6 +17,8 @@ interface PortfolioCardProps {
 }
 
 export function PortfolioCard({ item, index, className }: PortfolioCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   const displayUrl = item.liveUrl
     ? item.liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")
     : `${item.slug || "project"}.artificialripe.com`;
@@ -28,6 +31,8 @@ export function PortfolioCard({ item, index, className }: PortfolioCardProps) {
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
       className={cn("group", className)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Laptop Frame Mockup Container */}
       <div className="relative transition-transform duration-300 group-hover:-translate-y-1">
@@ -35,6 +40,7 @@ export function PortfolioCard({ item, index, className }: PortfolioCardProps) {
           url={displayUrl}
           videoSrc={item.videoUrl || "/bc.mp4"}
           src={item.thumbnailUrl}
+          isHovered={isHovered}
           className="w-full filter drop-shadow-xl group-hover:drop-shadow-2xl transition-all duration-300"
         />
       </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   MessageCircle,
@@ -36,51 +37,81 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* HERO SECTION */}
       {/* ============================================ */}
-      <section id="hero" className="relative flex min-h-screen items-center overflow-hidden">
-        {/* Decorative orbs */}
-        <div className="pointer-events-none absolute -left-40 top-1/4 h-80 w-80 rounded-full bg-[oklch(0.5_0.18_270)] opacity-10 blur-[100px]" />
-        <div className="pointer-events-none absolute -right-40 bottom-1/4 h-80 w-80 rounded-full bg-[oklch(0.5_0.2_310)] opacity-10 blur-[100px]" />
+      <section id="hero" className="relative flex min-h-screen items-center overflow-hidden -mt-16 sm:-mt-20 pt-36 sm:pt-44 lg:pt-52 pb-36 sm:pb-48 lg:pb-64 bg-black">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center mt-4 sm:mt-8">
+            {/* Left Content */}
+            <div className="lg:col-span-6 xl:col-span-6 text-center lg:text-left z-10">
+              {/* Headline */}
+              <h1 className="text-3xl font-bold tracking-tight sm:text-5xl lg:text-6xl leading-tight sm:leading-none">
+                <SplitText text="Solusi Digital" delay={0.3} />
+                <br />
+                <SplitText text="Terdepan Untuk" delay={0.5} />
+                <br />
+                <GradientText
+                  text="Akselerasi Bisnis"
+                  className="text-3xl sm:text-5xl lg:text-6xl font-bold"
+                />
+              </h1>
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 lg:px-8 lg:py-40">
-          <div className="mx-auto max-w-4xl text-center">
-            {/* Headline */}
-            <h1 className="mt-4 sm:mt-8 text-3xl font-bold tracking-tight sm:text-5xl lg:text-7xl leading-tight sm:leading-none">
-              <SplitText text="Solusi Digital" delay={0.3} />
-              <br />
-              <SplitText text="Terdepan Untuk" delay={0.5} />
-              <br />
-              <GradientText
-                text="Akselerasi Bisnis"
-                className="text-3xl sm:text-5xl lg:text-7xl font-bold"
-              />
-            </h1>
+              {/* Sub-headline */}
+              <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-relaxed text-muted-foreground max-w-xl mx-auto lg:mx-0">
+                Artificial Ripe hadir membantu Anda mengubah tantangan bisnis menjadi peluang dengan
+                layanan Web Studio, AI Media Lab, dan System Lab terbaik.
+              </p>
 
-            {/* Sub-headline */}
-            <p className="mt-4 sm:mt-6 text-base sm:text-xl leading-relaxed text-muted-foreground max-w-2xl mx-auto">
-              Artificial Ripe hadir membantu Anda mengubah tantangan bisnis menjadi peluang dengan
-              layanan Web Studio, AI Media Lab, dan System Lab terbaik.
-            </p>
+              {/* CTA Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mt-8 sm:mt-10 flex flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-4 w-full max-w-md mx-auto lg:mx-0"
+              >
+                <div className="flex justify-center shrink-0">
+                  <LiquidMetalButton href="#pricing">
+                    <span className="text-xs sm:text-sm whitespace-nowrap">Mulai Proyek</span>
+                    <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  </LiquidMetalButton>
+                </div>
+                <div className="flex justify-center shrink-0">
+                  <LiquidMetalButton href="#services">
+                    <span className="text-xs sm:text-sm whitespace-nowrap">Lihat Layanan</span>
+                  </LiquidMetalButton>
+                </div>
+              </motion.div>
+            </div>
 
-            {/* CTA Buttons - Side-by-side Left-Right on Mobile */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-8 sm:mt-10 flex flex-row items-center justify-center gap-2.5 sm:gap-4 w-full max-w-md mx-auto px-2"
-            >
-              <div className="flex justify-center shrink-0">
-                <LiquidMetalButton href="#pricing">
-                  <span className="text-xs sm:text-sm whitespace-nowrap">Mulai Proyek</span>
-                  <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                </LiquidMetalButton>
-              </div>
-              <div className="flex justify-center shrink-0">
-                <LiquidMetalButton href="#services">
-                  <span className="text-xs sm:text-sm whitespace-nowrap">Lihat Layanan</span>
-                </LiquidMetalButton>
-              </div>
-            </motion.div>
+            {/* Right Hero Image Showcase */}
+            <div className="lg:col-span-6 xl:col-span-6 relative mt-10 lg:mt-0 flex justify-center lg:justify-end items-end">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-3xl xl:max-w-4xl transform lg:scale-110 xl:scale-125 translate-x-6 sm:translate-x-12 lg:translate-x-20 xl:translate-x-28 translate-y-3 sm:translate-y-5 lg:translate-y-8 origin-bottom-right"
+              >
+                {/* Hero Image Container */}
+                <div className="relative w-full flex justify-center lg:justify-end">
+                  <div className="relative w-full overflow-hidden">
+                    {/* Laptop Frame Image */}
+                    <Image
+                      src="/tangan-leptop.avif"
+                      alt="Artificial Ripe Laptop Showcase"
+                      width={1100}
+                      height={850}
+                      priority
+                      className="relative z-10 w-full h-auto object-contain pointer-events-none"
+                      style={{
+                        maskImage: "linear-gradient(to bottom, black 40%, transparent 95%)",
+                        WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 95%)"
+                      }}
+                    />
 
+                    {/* Bottom Shadow Fade Gradient Overlay */}
+                    <div className="pointer-events-none absolute bottom-0 inset-x-0 h-1/3 bg-gradient-to-t from-background via-background/90 to-transparent z-20" />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>

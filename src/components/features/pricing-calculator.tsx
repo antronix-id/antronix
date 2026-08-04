@@ -115,14 +115,6 @@ export function PricingCalculator() {
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
                   </div>
 
-                  {tier.popular && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-                      <Badge className="border border-slate-300/40 bg-slate-400/20 text-slate-100 backdrop-blur-md text-xs font-semibold rounded-full px-3.5 py-1 shadow-lg">
-                        Most Popular
-                      </Badge>
-                    </div>
-                  )}
-
                   {/* Content */}
                   <div className="relative z-10 flex flex-col justify-between h-full space-y-6">
                     <div>

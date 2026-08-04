@@ -42,7 +42,7 @@ const servicesFaqData: FaqData = {
   rows: [
     {
       id: "row1",
-      speed: "55s",
+      speed: "24s",
       direction: "left",
       faqItems: [
         {
@@ -67,7 +67,7 @@ const servicesFaqData: FaqData = {
     },
     {
       id: "row2",
-      speed: "45s",
+      speed: "18s",
       direction: "right",
       faqItems: [
         {
@@ -92,7 +92,7 @@ const servicesFaqData: FaqData = {
     },
     {
       id: "row3",
-      speed: "65s",
+      speed: "28s",
       direction: "left",
       faqItems: [
         {

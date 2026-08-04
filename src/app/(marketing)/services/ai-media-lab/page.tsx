@@ -8,9 +8,7 @@ import {
   MessageCircle,
   Sparkles,
   ArrowRight,
-  Zap,
   Wand2,
-  Image as ImageIcon,
   Cpu,
   Layers,
   Play,
@@ -38,7 +36,7 @@ const aiMediaLabFaqData: FaqData = {
   rows: [
     {
       id: "ai-row1",
-      speed: "55s",
+      speed: "24s",
       direction: "left",
       faqItems: [
         {
@@ -63,7 +61,7 @@ const aiMediaLabFaqData: FaqData = {
     },
     {
       id: "ai-row2",
-      speed: "45s",
+      speed: "18s",
       direction: "right",
       faqItems: [
         {
@@ -88,7 +86,7 @@ const aiMediaLabFaqData: FaqData = {
     },
     {
       id: "ai-row3",
-      speed: "65s",
+      speed: "28s",
       direction: "left",
       faqItems: [
         {
@@ -232,19 +230,6 @@ export default function AIMediaLabPage() {
 
                     {/* Content */}
                     <div className="relative z-10">
-                      {/* Console Top Bar */}
-                      <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 px-2">
-                        <div className="flex items-center gap-2">
-                          <Sparkles className="h-4 w-4 text-slate-300" />
-                          <span className="text-xs font-medium text-zinc-300">AI Media Production Studio</span>
-                        </div>
-                        {/* Pill Badge */}
-                        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/20 bg-white/10 text-slate-300 text-xs font-semibold shadow-inner backdrop-blur-md">
-                          <Sparkles className="w-3.5 h-3.5 text-slate-300 animate-pulse" />
-                          <span>AI Media Lab — Generative Content & Visual 4K</span>
-                        </div>
-                      </div>
-
                       {/* Video Showcase Content */}
                       <div className="relative overflow-hidden rounded-xl border border-slate-400/20 bg-slate-900 aspect-video flex items-center justify-center">
                         <video
@@ -255,27 +240,6 @@ export default function AIMediaLabPage() {
                           playsInline
                           className="w-full h-full object-cover rounded-xl"
                         />
-
-                        {/* Floating Badge 1: Render Speed */}
-                        <div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full border border-slate-300/40 bg-slate-950/90 backdrop-blur-md px-3 py-1 text-[10px] font-semibold text-slate-200 shadow-md z-10">
-                          <Zap className="h-3 w-3 text-slate-300" />
-                          <span>Rendering 4K</span>
-                        </div>
-
-                        {/* Floating Badge 2: Output format */}
-                        <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full border border-slate-300/40 bg-slate-950/90 backdrop-blur-md px-3 py-1 text-[10px] font-semibold text-slate-200 shadow-md z-10">
-                          <ImageIcon className="h-3 w-3 text-slate-300" />
-                          <span>Aset Siap Pakai</span>
-                        </div>
-                      </div>
-
-                      {/* AI Tools Footer Badges */}
-                      <div className="mt-4 flex items-center justify-between px-2 pt-2 text-[11px] text-zinc-400 border-t border-white/5">
-                        <div className="flex items-center gap-1.5">
-                          <Layers className="h-3.5 w-3.5 text-slate-300" />
-                          <span>AI Generator • Video Editing • Sound Design</span>
-                        </div>
-                        <span className="text-zinc-400 font-medium text-[10px]">4K ULTRA HD</span>
                       </div>
                     </div>
 
@@ -370,20 +334,20 @@ export default function AIMediaLabPage() {
                       {/* Content */}
                       <div className="relative z-10 flex flex-col justify-between h-full">
                         <div>
-                          {/* Icon Header Badge */}
-                          <div className="mb-6 flex items-center justify-between">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-300/40 bg-slate-400/15 text-slate-200 backdrop-blur-md shadow-lg transition-transform duration-300 group-hover:scale-110">
-                              <FeatureIcon className="h-6 w-6 text-slate-200" />
+                          {/* Header with Icon, Title next to Icon, and Index number */}
+                          <div className="mb-5 flex items-start justify-between gap-3">
+                            <div className="flex items-center gap-3.5 min-w-0 flex-1">
+                              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-slate-300/40 bg-slate-400/15 text-slate-200 backdrop-blur-md shadow-lg transition-transform duration-300 group-hover:scale-110">
+                                <FeatureIcon className="h-6 w-6 text-slate-200" />
+                              </div>
+                              <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-slate-100 transition-colors leading-snug">
+                                {feature.title}
+                              </h3>
                             </div>
-                            <span className="text-xs font-mono font-bold text-slate-400">
+                            <span className="text-xs font-mono font-bold text-slate-400 shrink-0 pt-1">
                               0{index + 1}
                             </span>
                           </div>
-
-                          {/* Feature Title */}
-                          <h3 className="mb-3 text-lg font-bold text-white group-hover:text-slate-100 transition-colors">
-                            {feature.title}
-                          </h3>
 
                           {/* Feature Description */}
                           <p className="text-sm leading-relaxed text-zinc-400 group-hover:text-zinc-300 transition-colors">
@@ -433,14 +397,6 @@ export default function AIMediaLabPage() {
                         <div className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping" />
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
                       </div>
-
-                      {tier.popular && (
-                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-                          <Badge className="border border-slate-300/40 bg-slate-400/20 text-slate-100 backdrop-blur-md text-xs font-semibold rounded-full px-3.5 py-1 shadow-lg">
-                            Most Popular
-                          </Badge>
-                        </div>
-                      )}
 
                       {/* Content */}
                       <div className="relative z-10 flex flex-col justify-between h-full">

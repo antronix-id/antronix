@@ -47,68 +47,75 @@ export function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
-        scrolled
-          ? "bg-background/80 border-b border-white/10 backdrop-blur-xl shadow-lg shadow-black/20 py-2.5"
-          : "bg-transparent py-4"
+        "sticky top-0 z-50 w-full bg-background/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300 ease-out",
+        {
+          "md:top-4 md:mx-auto md:max-w-5xl md:rounded-2xl md:border md:border-white/10 md:shadow-2xl md:shadow-black/60":
+            scrolled && !open,
+          "bg-background/95": open,
+        }
       )}
     >
-      <div className="w-full px-4 sm:px-8 lg:px-12">
-        <nav className="flex items-center justify-between gap-4">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-3 group"
-            onClick={(e) => handleSectionNavigation(e, "/", pathname, router)}
-          >
-            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center transition-transform group-hover:scale-105">
-              <Image
-                src="/logo-agency.webp"
-                alt="Artificial Ripe Logo"
-                width={40}
-                height={40}
-                className="h-full w-full object-contain"
-                priority
-              />
-            </div>
-            <span className="text-xl font-bold gradient-text tracking-tight">
-              Artificial Ripe
-            </span>
-          </Link>
-
-          {/* Desktop Gooey Navigation */}
-          <div className="hidden items-center md:flex">
-            <GooeyNav items={NAV_LINKS} />
+      <nav
+        className={cn(
+          "mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 md:h-14 md:transition-all md:duration-300 md:ease-out",
+          {
+            "md:px-4": scrolled,
+          }
+        )}
+      >
+        {/* Logo */}
+        <Link
+          href="/"
+          className="flex items-center gap-3 group"
+          onClick={(e) => handleSectionNavigation(e, "/", pathname, router)}
+        >
+          <div className="relative flex h-9 w-9 shrink-0 items-center justify-center transition-transform group-hover:scale-105">
+            <Image
+              src="/logo-agency.webp"
+              alt="Artificial Ripe Logo"
+              width={36}
+              height={36}
+              className="h-full w-full object-contain"
+              priority
+            />
           </div>
+          <span className="text-xl font-bold gradient-text tracking-tight">
+            Artificial Ripe
+          </span>
+        </Link>
 
-          {/* Desktop Action CTA */}
-          <div className="hidden items-center gap-2 md:flex">
-            <LiquidMetalButton
-              href="/#contact"
-              onClick={(e) => handleSectionNavigation(e, "/#contact", pathname, router)}
-            >
-              <MessageCircle className="h-4 w-4 text-emerald-400" />
-              <span>Hubungi Kami</span>
-            </LiquidMetalButton>
-          </div>
+        {/* Desktop Gooey Navigation */}
+        <div className="hidden items-center md:flex">
+          <GooeyNav items={NAV_LINKS} />
+        </div>
 
-          {/* Mobile Toggle Button */}
-          <Button
-            size="icon"
-            variant="outline"
-            onClick={() => setOpen(!open)}
-            className="md:hidden size-9 rounded-full border-white/10 bg-white/5 backdrop-blur-md"
-            aria-label="Toggle Navigation Menu"
+        {/* Desktop Action CTA */}
+        <div className="hidden items-center gap-2 md:flex">
+          <LiquidMetalButton
+            href="/#contact"
+            onClick={(e) => handleSectionNavigation(e, "/#contact", pathname, router)}
           >
-            <MenuToggleIcon open={open} className="size-5 text-white" duration={300} />
-          </Button>
-        </nav>
-      </div>
+            <MessageCircle className="h-4 w-4 text-emerald-400" />
+            <span>Hubungi Kami</span>
+          </LiquidMetalButton>
+        </div>
+
+        {/* Mobile Toggle Button */}
+        <Button
+          size="icon"
+          variant="outline"
+          onClick={() => setOpen(!open)}
+          className="md:hidden size-9 rounded-full border-white/10 bg-white/5 backdrop-blur-md"
+          aria-label="Toggle Navigation Menu"
+        >
+          <MenuToggleIcon open={open} className="size-5 text-white" duration={300} />
+        </Button>
+      </nav>
 
       {/* Mobile Drawer Menu */}
       <div
         className={cn(
-          "bg-background/95 backdrop-blur-xl fixed top-16 right-4 left-4 z-50 flex flex-col overflow-hidden rounded-2xl border border-white/10 md:hidden shadow-2xl max-h-[calc(100dvh-5rem)]",
+          "bg-black/95 backdrop-blur-xl fixed top-16 right-0 bottom-0 left-0 z-50 flex flex-col overflow-hidden border-y border-white/10 md:hidden",
           open ? "block" : "hidden"
         )}
       >
@@ -178,7 +185,6 @@ export function Header() {
               </div>
             ))}
           </div>
-
 
           <div className="flex justify-center pt-3 pb-[env(safe-area-inset-bottom)] border-t border-white/10">
             <Link

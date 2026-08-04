@@ -704,15 +704,16 @@ export const PORTFOLIO: PortfolioItem[] = [
   },
   {
     id: "7",
-    title: "Landing Page Startup Teknologi",
-    slug: "startup-landing",
+    title: "Website Rental Mobil",
+    slug: "website-rental-mobil",
     category: "web-studio",
     description:
-      "Landing page konversi tinggi untuk perusahaan keuangan fintech dilengkapi dengan kalkulator simulasi dan animasi 3D.",
+      "Platform website rental & sewa mobil modern dengan sistem katalog kendaraan, reservasi armada, dan integrasi pemesanan WhatsApp.",
     thumbnailUrl: "/portfolio/startup-landing.jpg",
-    videoUrl: "/bc.mp4",
-    techStack: ["Next.js", "Three.js", "GSAP", "Supabase"],
-    isFeatured: false,
+    videoUrl: "/vidio/website-rental-mobil.mp4",
+    liveUrl: "https://rental-mobil-kappa.vercel.app/",
+    techStack: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
+    isFeatured: true,
   },
   {
     id: "8",
@@ -725,6 +726,19 @@ export const PORTFOLIO: PortfolioItem[] = [
     videoUrl: "/bc.mp4",
     techStack: ["Next.js", "PostgreSQL", "Drizzle ORM", "Redis"],
     isFeatured: false,
+  },
+  {
+    id: "9",
+    title: "Website Marketplace Skincare",
+    slug: "marketplace-skincare",
+    category: "web-studio",
+    description:
+      "Platform website e-commerce & marketplace skincare modern dengan desain visual anggun, katalog produk interaktif, dan integrasi pemesanan WhatsApp.",
+    thumbnailUrl: "/portfolio/ecommerce-fashion.jpg",
+    videoUrl: "/vidio/marketplace-skincare.mp4",
+    liveUrl: "https://skincare-lime-zeta.vercel.app/",
+    techStack: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
+    isFeatured: true,
   },
 ];
 
