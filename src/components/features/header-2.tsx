@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -22,12 +23,17 @@ const iconMap: Record<string, React.ElementType> = {
 
 export function Header() {
   const [open, setOpen] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
   const scrolled = useScroll(10);
   const pathname = usePathname();
   const router = useRouter();
 
   // Handle hash scrolling and clean duplicate hashes across all routes
   useHashScroll();
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   React.useEffect(() => {
     if (open) {
@@ -45,164 +51,193 @@ export function Header() {
   }, [open]);
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 w-full bg-background/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300 ease-out",
-        {
-          "md:top-4 md:mx-auto md:max-w-5xl md:rounded-2xl md:border md:border-white/10 md:shadow-2xl md:shadow-black/60":
-            scrolled && !open,
-          "bg-background/95": open,
-        }
-      )}
-    >
-      <nav
+    <>
+      <header
         className={cn(
-          "mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 md:h-14 md:transition-all md:duration-300 md:ease-out",
+          "sticky top-0 z-50 w-full bg-background/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300 ease-out",
           {
-            "md:px-4": scrolled,
+            "md:top-4 md:mx-auto md:max-w-5xl md:rounded-2xl md:border md:border-white/10 md:shadow-2xl md:shadow-black/60":
+              scrolled && !open,
+            "bg-background/95": open,
           }
         )}
       >
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-3 group"
-          onClick={(e) => handleSectionNavigation(e, "/", pathname, router)}
-        >
-          <div className="relative flex h-9 w-9 shrink-0 items-center justify-center transition-transform group-hover:scale-105">
-            <Image
-              src="/logo-agency.webp"
-              alt="Artificial Ripe Logo"
-              width={36}
-              height={36}
-              className="h-full w-full object-contain"
-              priority
-            />
-          </div>
-          <span className="text-xl font-bold gradient-text tracking-tight">
-            Artificial Ripe
-          </span>
-        </Link>
-
-        {/* Desktop Gooey Navigation */}
-        <div className="hidden items-center md:flex">
-          <GooeyNav items={NAV_LINKS} />
-        </div>
-
-        {/* Desktop Action CTA */}
-        <div className="hidden items-center gap-2 md:flex">
-          <LiquidMetalButton
-            href="/#contact"
-            onClick={(e) => handleSectionNavigation(e, "/#contact", pathname, router)}
-          >
-            <MessageCircle className="h-4 w-4 text-emerald-400" />
-            <span>Hubungi Kami</span>
-          </LiquidMetalButton>
-        </div>
-
-        {/* Mobile Toggle Button */}
-        <Button
-          size="icon"
-          variant="outline"
-          onClick={() => setOpen(!open)}
-          className="md:hidden size-9 rounded-full border-white/10 bg-white/5 backdrop-blur-md"
-          aria-label="Toggle Navigation Menu"
-        >
-          <MenuToggleIcon open={open} className="size-5 text-white" duration={300} />
-        </Button>
-      </nav>
-
-      {/* Mobile Drawer Menu */}
-      <div
-        className={cn(
-          "bg-black/95 backdrop-blur-xl fixed top-16 right-0 bottom-0 left-0 z-50 flex flex-col overflow-hidden border-y border-white/10 md:hidden",
-          open ? "block" : "hidden"
-        )}
-      >
-        <div
-          data-slot={open ? "open" : "closed"}
+        <nav
           className={cn(
-            "data-[slot=open]:animate-in data-[slot=open]:zoom-in-95 data-[slot=closed]:animate-out data-[slot=closed]:zoom-out-95 ease-out",
-            "flex h-full w-full flex-col justify-between gap-y-4 p-6"
+            "mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 md:h-14 md:transition-all md:duration-300 md:ease-out",
+            {
+              "md:px-4": scrolled,
+            }
           )}
         >
-          <div className="flex flex-col divide-y divide-white/10 overflow-y-auto">
-            {NAV_LINKS.map((link) => (
-              <div key={link.label} className="w-full">
-                {link.children ? (
-                  <div className="space-y-1 py-2 flex flex-col items-center">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center gap-3 group"
+            onClick={(e) => handleSectionNavigation(e, "/", pathname, router)}
+          >
+            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center transition-transform group-hover:scale-105">
+              <Image
+                src="/logo-agency.webp"
+                alt="Artificial Ripe Logo"
+                width={36}
+                height={36}
+                className="h-full w-full object-contain"
+                priority
+              />
+            </div>
+            <span className="text-xl font-bold gradient-text tracking-tight">
+              Artificial Ripe
+            </span>
+          </Link>
+
+          {/* Desktop Gooey Navigation */}
+          <div className="hidden items-center md:flex">
+            <GooeyNav items={NAV_LINKS} />
+          </div>
+
+          {/* Desktop Action CTA */}
+          <div className="hidden items-center gap-2 md:flex">
+            <LiquidMetalButton
+              href="/#contact"
+              onClick={(e) => handleSectionNavigation(e, "/#contact", pathname, router)}
+            >
+              <MessageCircle className="h-4 w-4 text-emerald-400" />
+              <span>Hubungi Kami</span>
+            </LiquidMetalButton>
+          </div>
+
+          {/* Mobile Toggle Button */}
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => setOpen(!open)}
+            className="md:hidden size-9 rounded-full border-white/10 bg-white/5 backdrop-blur-md"
+            aria-label="Toggle Navigation Menu"
+          >
+            <MenuToggleIcon open={open} className="size-5 text-white" duration={300} />
+          </Button>
+        </nav>
+      </header>
+
+      {/* Mobile Drawer Menu Overlay via React Portal */}
+      {mounted && open && createPortal(
+        <div className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-2xl flex flex-col pt-4 pb-8 px-6 md:hidden overflow-y-auto">
+          {/* Mobile Header Bar */}
+          <div className="flex items-center justify-between pb-3 border-b border-white/10 shrink-0">
+            <Link
+              href="/"
+              className="flex items-center gap-3"
+              onClick={(e) =>
+                handleSectionNavigation(e, "/", pathname, router, () => setOpen(false))
+              }
+            >
+              <div className="relative flex h-8 w-8 shrink-0 items-center justify-center">
+                <Image
+                  src="/logo-agency.webp"
+                  alt="Artificial Ripe Logo"
+                  width={32}
+                  height={32}
+                  className="h-full w-full object-contain"
+                />
+              </div>
+              <span className="text-lg font-bold gradient-text tracking-tight">
+                Artificial Ripe
+              </span>
+            </Link>
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={() => setOpen(false)}
+              className="size-9 rounded-full border-white/10 bg-white/5 backdrop-blur-md"
+              aria-label="Close Navigation Menu"
+            >
+              <MenuToggleIcon open={true} className="size-5 text-white" duration={300} />
+            </Button>
+          </div>
+
+          {/* Centered Links List & CTA */}
+          <div className="flex-1 flex flex-col justify-start items-center pt-8 sm:pt-12 pb-6 gap-5 -translate-y-4 sm:-translate-y-8">
+            <div className="flex flex-col items-center justify-center gap-1.5 w-full max-w-sm">
+              {NAV_LINKS.map((link) => (
+                <div key={link.label} className="w-full flex flex-col items-center">
+                  {link.children ? (
+                    <div className="w-full flex flex-col items-center gap-1 py-1">
+                      <Link
+                        href={link.href}
+                        className="flex items-center justify-center gap-1.5 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-white transition-colors text-center w-full"
+                        onClick={(e) =>
+                          handleSectionNavigation(e, link.href, pathname, router, () =>
+                            setOpen(false)
+                          )
+                        }
+                      >
+                        <span>{link.label}</span>
+                        <ChevronRight className="h-3.5 w-3.5" />
+                      </Link>
+                      {link.children.map((child) => {
+                        const logoMap: Record<string, string> = {
+                          globe: "/Web-Studio.avif",
+                          sparkles: "/Media-Lab.avif",
+                          cpu: "/System-Lab.avif",
+                        };
+                        const logoSrc = child.logo || (child.icon ? logoMap[child.icon] : null);
+                        return (
+                          <Link
+                            key={child.label}
+                            href={child.href}
+                            className="flex items-center justify-center gap-3 rounded-xl px-4 py-2.5 transition-colors hover:bg-white/10 active:bg-white/15 text-base font-medium text-neutral-200 w-full text-center"
+                            onClick={(e) =>
+                              handleSectionNavigation(e, child.href, pathname, router, () =>
+                                setOpen(false)
+                              )
+                            }
+                          >
+                            {logoSrc ? (
+                              <Image src={logoSrc} alt={child.label} width={20} height={20} className="h-5 w-5 object-contain shrink-0" />
+                            ) : null}
+                            <span>{child.label}</span>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  ) : (
                     <Link
                       href={link.href}
-                      className="flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-white transition-colors text-center w-full"
+                      className="flex items-center justify-center rounded-xl px-4 py-2.5 transition-colors hover:bg-white/10 active:bg-white/15 text-base font-medium text-white w-full text-center"
                       onClick={(e) =>
                         handleSectionNavigation(e, link.href, pathname, router, () =>
                           setOpen(false)
                         )
                       }
                     >
-                      <span>{link.label}</span>
-                      <ChevronRight className="h-3.5 w-3.5" />
+                      {link.label}
                     </Link>
-                    {link.children.map((child) => {
-                      const logoMap: Record<string, string> = {
-                        globe: "/Web-Studio.avif",
-                        sparkles: "/Media-Lab.avif",
-                        cpu: "/System-Lab.avif",
-                      };
-                      const logoSrc = child.logo || (child.icon ? logoMap[child.icon] : null);
-                      return (
-                        <Link
-                          key={child.label}
-                          href={child.href}
-                          className="flex items-center justify-center gap-3 rounded-xl px-4 py-3.5 transition-colors hover:bg-white/10 active:bg-white/15 text-base font-medium text-neutral-200 w-full text-center"
-                          onClick={(e) =>
-                            handleSectionNavigation(e, child.href, pathname, router, () =>
-                              setOpen(false)
-                            )
-                          }
-                        >
-                          {logoSrc ? (
-                            <Image src={logoSrc} alt={child.label} width={20} height={20} className="h-5 w-5 object-contain shrink-0" />
-                          ) : null}
-                          <span>{child.label}</span>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <Link
-                    href={link.href}
-                    className="flex items-center justify-center rounded-xl px-4 py-4 transition-colors hover:bg-white/10 active:bg-white/15 text-base font-medium text-white w-full text-center"
-                    onClick={(e) =>
-                      handleSectionNavigation(e, link.href, pathname, router, () =>
-                        setOpen(false)
-                      )
-                    }
-                  >
-                    {link.label}
-                  </Link>
-                )}
-              </div>
-            ))}
-          </div>
+                  )}
+                </div>
+              ))}
+            </div>
 
-          <div className="flex justify-center pt-3 pb-[env(safe-area-inset-bottom)] border-t border-white/10">
-            <Link
-              href="/#contact"
-              onClick={(e) =>
-                handleSectionNavigation(e, "/#contact", pathname, router, () => setOpen(false))
-              }
-              className="w-full flex justify-center"
-            >
-              <LiquidMetalButton>
-                <MessageCircle className="h-4 w-4 text-emerald-400" />
-                <span>Hubungi Kami</span>
-              </LiquidMetalButton>
-            </Link>
+            {/* Mobile CTA */}
+            <div className="pt-4 border-t border-white/10 w-full max-w-xs flex justify-center shrink-0">
+              <Link
+                href="/#contact"
+                onClick={(e) =>
+                  handleSectionNavigation(e, "/#contact", pathname, router, () => setOpen(false))
+                }
+                className="w-full flex justify-center"
+              >
+                <LiquidMetalButton className="w-full justify-center">
+                  <MessageCircle className="h-4 w-4 text-emerald-400" />
+                  <span>Hubungi Kami</span>
+                </LiquidMetalButton>
+              </Link>
+            </div>
           </div>
-        </div>
-      </div>
-    </header>
+        </div>,
+        document.body
+      )}
+    </>
   );
 }
 

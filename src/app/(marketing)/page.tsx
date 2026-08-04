@@ -37,11 +37,11 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* HERO SECTION */}
       {/* ============================================ */}
-      <section id="hero" className="relative flex min-h-screen items-center overflow-hidden -mt-16 sm:-mt-20 pt-36 sm:pt-44 lg:pt-52 pb-36 sm:pb-48 lg:pb-64 bg-black">
+      <section id="hero" className="relative flex min-h-screen items-center overflow-hidden -mt-16 sm:-mt-20 pt-20 sm:pt-32 lg:pt-52 pb-36 sm:pb-48 lg:pb-64 bg-black">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center mt-4 sm:mt-8">
+          <div className="grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-12 lg:items-center mt-0 sm:mt-8">
             {/* Left Content */}
-            <div className="lg:col-span-6 xl:col-span-6 text-center lg:text-left z-10">
+            <div className="order-2 lg:order-1 lg:col-span-6 xl:col-span-6 text-center lg:text-left z-10 -mt-10 sm:-mt-14 lg:mt-0">
               {/* Headline */}
               <h1 className="text-3xl font-bold tracking-tight sm:text-5xl lg:text-6xl leading-tight sm:leading-none">
                 <SplitText text="Solusi Digital" delay={0.3} />
@@ -82,12 +82,12 @@ export default function HomePage() {
             </div>
 
             {/* Right Hero Image Showcase */}
-            <div className="lg:col-span-6 xl:col-span-6 relative mt-10 lg:mt-0 flex justify-center lg:justify-end items-end">
+            <div className="order-1 lg:order-2 lg:col-span-6 xl:col-span-6 relative mt-0 lg:mt-0 flex justify-center lg:justify-end items-end">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.3 }}
-                className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-3xl xl:max-w-4xl transform lg:scale-110 xl:scale-125 translate-x-6 sm:translate-x-12 lg:translate-x-20 xl:translate-x-28 translate-y-3 sm:translate-y-5 lg:translate-y-8 origin-bottom-right"
+                className="relative w-full max-w-md sm:max-w-xl lg:max-w-3xl xl:max-w-4xl mx-auto transform translate-x-0 lg:translate-x-20 xl:translate-x-28 translate-y-0 lg:translate-y-8 lg:scale-110 xl:scale-125 origin-center lg:origin-bottom-right"
               >
                 {/* Hero Image Container */}
                 <div className="relative w-full flex justify-center lg:justify-end">
