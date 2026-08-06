@@ -21,7 +21,7 @@ export function PortfolioCard({ item, index, className }: PortfolioCardProps) {
 
   const displayUrl = item.liveUrl
     ? item.liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")
-    : `${item.slug || "project"}.artificialripe.com`;
+    : `${item.slug || "project"}.antronix.com`;
   const targetUrl = item.liveUrl || `https://${displayUrl}`;
 
   return (
@@ -38,7 +38,7 @@ export function PortfolioCard({ item, index, className }: PortfolioCardProps) {
       <div className="relative transition-transform duration-300 group-hover:-translate-y-1">
         <LaptopMockup
           url={displayUrl}
-          videoSrc={item.videoUrl || "/bc.mp4"}
+          videoSrc={item.videoUrl}
           src={item.thumbnailUrl}
           isHovered={isHovered}
           className="w-full filter drop-shadow-xl group-hover:drop-shadow-2xl transition-all duration-300"

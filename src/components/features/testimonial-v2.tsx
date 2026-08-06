@@ -14,7 +14,7 @@ export interface Testimonial {
 // --- Data (12 Testimonials for 4 Columns) ---
 const testimonials: Testimonial[] = [
   {
-    text: "Artificial Ripe benar-benar mengubah cara operasional perusahaan kami. Sistem yang mereka bangun meningkatkan efisiensi tim hingga 60%. Sangat direkomendasikan!",
+    text: "Antronix benar-benar mengubah cara operasional perusahaan kami. Sistem yang mereka bangun meningkatkan efisiensi tim hingga 60%. Sangat direkomendasikan!",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150&h=150",
     name: "Ahmad Rizky",
     role: "Direktur Utama, TechVenture",

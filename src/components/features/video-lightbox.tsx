@@ -14,7 +14,7 @@ interface VideoLightboxProps {
 export function VideoLightbox({ item, open, onClose }: VideoLightboxProps) {
   if (!item) return null;
 
-  const displayUrl = `${item.slug || "project"}.artificialripe.com`;
+  const displayUrl = `${item.slug || "project"}.antronix.com`;
 
   return (
     <Dialog open={open} onOpenChange={(val) => !val && onClose()}>

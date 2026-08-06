@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -53,7 +53,7 @@ const servicesFaqData: FaqData = {
         },
         {
           id: "q2",
-          question: "Apakah website buatan Artificial Ripe ramah SEO & cepat?",
+          question: "Apakah website buatan Antronix ramah SEO & cepat?",
           answer:
             "Sangat ramah SEO. Kami menggunakan Next.js 16 terbaru dengan skor Google Lighthouse 95-100, arsitektur HTML5 semantik, serta meta tags presisi."
         },
@@ -103,7 +103,7 @@ const servicesFaqData: FaqData = {
         },
         {
           id: "q8",
-          question: "Bagaimana skema pembayaran layanan di Artificial Ripe?",
+          question: "Bagaimana skema pembayaran layanan di Antronix?",
           answer:
             "Pembayaran transparan dengan skema DP 50% di awal sebelum pengerjaan dimulai dan 50% sisanya dilunasi setelah proyek selesai & siap launch."
         },
@@ -119,11 +119,24 @@ const servicesFaqData: FaqData = {
 };
 
 export default function ServicesPage() {
+  const [servicesList, setServicesList] = useState(SERVICES);
   const [activeTab, setActiveTab] = useState<string>("all");
 
-  const filteredServices = activeTab === "all" 
-    ? SERVICES 
-    : SERVICES.filter((s) => s.id === activeTab);
+  useEffect(() => {
+    fetch("/api/services")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setServicesList(data);
+        }
+      })
+      .catch((err) => console.error("Error fetching services in services page:", err));
+  }, []);
+
+  const filteredServices =
+    activeTab === "all"
+      ? servicesList
+      : servicesList.filter((s) => s.id === activeTab || s.slug === activeTab);
 
   return (
     <div className="relative min-h-screen pt-20 pb-20">
@@ -170,20 +183,23 @@ export default function ServicesPage() {
             >
               Semua Layanan (3 Pilar)
             </button>
-            {SERVICES.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => setActiveTab(s.id)}
-                className={cn(
-                  "px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 border flex items-center gap-2",
-                  activeTab === s.id
-                    ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/50 shadow-lg shadow-cyan-500/20"
-                    : "bg-slate-900/60 text-muted-foreground border-white/10 hover:border-white/20"
-                )}
-              >
-                <span>{s.title}</span>
-              </button>
-            ))}
+            {servicesList.map((s) => {
+              const tabKey = String(s.id || s.slug);
+              return (
+                <button
+                  key={tabKey}
+                  onClick={() => setActiveTab(tabKey)}
+                  className={cn(
+                    "px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 border flex items-center gap-2",
+                    activeTab === tabKey
+                      ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/50 shadow-lg shadow-cyan-500/20"
+                      : "bg-slate-900/60 text-muted-foreground border-white/10 hover:border-white/20"
+                  )}
+                >
+                  <span>{s.title}</span>
+                </button>
+              );
+            })}
           </motion.div>
         </div>
       </section>
@@ -353,7 +369,7 @@ export default function ServicesPage() {
                 Bingung Memilih Layanan yang Tepat?
               </h2>
               <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-                Tim teknis Artificial Ripe siap mendiskusikan tantangan bisnis Anda dan memberikan rekomendasi strategi digital terbaik secara cuma-cuma.
+                Tim teknis Antronix siap mendiskusikan tantangan bisnis Anda dan memberikan rekomendasi strategi digital terbaik secara cuma-cuma.
               </p>
               <div className="mt-8 flex justify-center">
                 <Link href={AGENCY.socials.whatsapp} target="_blank">

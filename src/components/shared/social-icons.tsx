@@ -77,16 +77,36 @@ const defaultSocials: SocialItem[] = [
 
 interface SocialIconsProps {
   items?: SocialItem[];
+  socials?: {
+    whatsapp?: string;
+    instagram?: string;
+    tiktok?: string;
+    linkedin?: string;
+    x?: string;
+    youtube?: string;
+  };
+  email?: string;
 }
 
-export function SocialIcons({ items = defaultSocials }: SocialIconsProps) {
+export function SocialIcons({ items, socials, email }: SocialIconsProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const activeItems = (items || defaultSocials).map((item) => {
+    if (item.name === "WhatsApp" && socials?.whatsapp) return { ...item, href: socials.whatsapp };
+    if (item.name === "Email" && email) return { ...item, href: `mailto:${email}` };
+    if (item.name === "Instagram" && socials?.instagram) return { ...item, href: socials.instagram };
+    if (item.name === "TikTok" && socials?.tiktok) return { ...item, href: socials.tiktok };
+    if (item.name === "LinkedIn" && socials?.linkedin) return { ...item, href: socials.linkedin };
+    if (item.name === "X" && socials?.x) return { ...item, href: socials.x };
+    if (item.name === "YouTube" && socials?.youtube) return { ...item, href: socials.youtube };
+    return item;
+  });
 
   return (
     <div className="relative inline-flex items-center gap-0.5 px-1.5 py-1.5 rounded-2xl bg-neutral-950/80 backdrop-blur-md border border-white/[0.08] shadow-lg">
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none" />
 
-      {items.map((social, index) => (
+      {activeItems.map((social, index) => (
         <a
           key={social.name}
           href={social.href}

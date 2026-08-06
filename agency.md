@@ -1,12 +1,12 @@
-Siap! Berikut adalah **Rangkuman Lengkap & Master Blueprint** dari **Artificial Ripe** yang sudah disesuaikan, difokuskan murni pada sisi bisnis, layanan, dan strategi operasional.
+Siap! Berikut adalah **Rangkuman Lengkap & Master Blueprint** dari **Antronix** yang sudah disesuaikan, difokuskan murni pada sisi bisnis, layanan, dan strategi operasional.
 
 ---
 
-# 🚀 Executive Summary: Artificial Ripe
+# 🚀 Executive Summary: Antronix
 
 | Parameter | Detail |
 | --- | --- |
-| **Nama Brand** | **Artificial Ripe** |
+| **Nama Brand** | **Antronix** |
 | **Tagline** | *"Accelerating Growth with AI Creativity & Full-Stack Systems"* |
 | **Model Bisnis** | **Lean Digital Agency** berbasis *Productized Services* (Paket Harga Pasti & Solusi *Custom*) |
 | **Nilai Utama (USP)** | Menggabungkan efisiensi & kecepatan **Kecerdasan Buatan (AI)** dengan ketahanan **Sistem Software Engineering** yang presisi. |
@@ -17,7 +17,7 @@ Siap! Berikut adalah **Rangkuman Lengkap & Master Blueprint** dari **Artificial 
 
 ```
                                ┌─────────────────────────┐
-                               │     ARTIFICIAL RIPE     │
+                               │        ANTRONIX         │
                                └────────────┬────────────┘
                                             │
         ┌───────────────────────────────────┼───────────────────────────────────┐
@@ -29,19 +29,19 @@ Siap! Berikut adalah **Rangkuman Lengkap & Master Blueprint** dari **Artificial 
 
 ```
 
-### 1. **Artificial Ripe Web Studio**
+### 1. **Antronix Web Studio**
 
 * **Fokus:** Website & Web App berkinerja tinggi, SEO-friendly, dan berdesain modern.
 * **Layanan Utama:** Landing Page UMKM, Company Profile Sekolah/Lembaga, & Web App Custom.
 * **Keunggulan:** Loading super cepat, desain *mobile-first*, dan terintegrasi sistem analitik/WhatsApp langsung untuk mengkonversi pengunjung menjadi pembeli.
 
-### 2. **Artificial Ripe AI Media Lab** *(Pintu Masuk Klien Paling Cepat)*
+### 2. **Antronix AI Media Lab** *(Pintu Masuk Klien Paling Cepat)*
 
 * **Fokus:** Produksi konten pemasaran visual berbasis AI generasi terbaru.
 * **Layanan Utama:** Video iklan produk (15–30 detik), *visual branding*, video promosi sosmed (Reels/TikTok), dan aset desain promosi.
 * **Keunggulan:** Biaya & waktu produksi 3x lebih efisien dibanding *shooting* video konvensional dengan kualitas sinematik visual yang sangat tinggi.
 
-### 3. **Artificial Ripe System Lab**
+### 3. **Antronix System Lab**
 
 * **Fokus:** Digitalisasi operasional bisnis dan pengembangan sistem yang kompleks.
 * **Layanan Utama:** Aplikasi Kasir (POS), Manajemen Stok/Inventori, Sistem Akademik Kampus/Sekolah, CRM, dan infrastruktur operasional.

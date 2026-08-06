@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -30,7 +30,22 @@ import { SERVICES, PORTFOLIO, TESTIMONIALS, AGENCY, PortfolioItem } from "@/lib/
 import { cn } from "@/lib/utils";
 
 export default function HomePage() {
-  const featuredPortfolio = PORTFOLIO.filter((p) => p.isFeatured).slice(0, 6);
+  const [portfolioList, setPortfolioList] = useState<PortfolioItem[]>(PORTFOLIO);
+
+  useEffect(() => {
+    fetch("/api/portfolio")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setPortfolioList(data);
+        }
+      })
+      .catch(() => {
+        // Fallback to static constants if API fails
+      });
+  }, []);
+
+  const featuredPortfolio = portfolioList.filter((p) => p.isFeatured).slice(0, 6);
 
   return (
     <>
@@ -56,7 +71,7 @@ export default function HomePage() {
 
               {/* Sub-headline */}
               <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-relaxed text-muted-foreground max-w-xl mx-auto lg:mx-0">
-                Artificial Ripe hadir membantu Anda mengubah tantangan bisnis menjadi peluang dengan
+                Antronix hadir membantu Anda mengubah tantangan bisnis menjadi peluang dengan
                 layanan Web Studio, AI Media Lab, dan System Lab terbaik.
               </p>
 
@@ -95,7 +110,7 @@ export default function HomePage() {
                     {/* Laptop Frame Image */}
                     <Image
                       src="/tangan-leptop.avif"
-                      alt="Artificial Ripe Laptop Showcase"
+                      alt="Antronix Laptop Showcase"
                       width={1100}
                       height={850}
                       priority
@@ -236,8 +251,8 @@ export default function HomePage() {
                   {
                     lng: 104.7565,
                     lat: -2.9845,
-                    label: "Artificial Ripe",
-                    popupTitle: "Artificial Ripe",
+                    label: "Antronix",
+                    popupTitle: "Antronix",
                     icon: "hq",
                   },
                 ]}

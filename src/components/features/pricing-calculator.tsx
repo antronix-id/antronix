@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -28,9 +28,23 @@ function parsePriceToNumber(priceStr: string): number {
 }
 
 export function PricingCalculator() {
+  const [servicesList, setServicesList] = useState(SERVICES);
   const [selectedServiceId, setSelectedServiceId] = useState<string>("web-studio");
 
-  const activeService = SERVICES.find((s) => s.id === selectedServiceId) || SERVICES[0];
+  useEffect(() => {
+    fetch("/api/services")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setServicesList(data);
+        }
+      })
+      .catch((err) => console.error("Error fetching services in calculator:", err));
+  }, []);
+
+  const activeService =
+    servicesList.find((s) => s.id === selectedServiceId || s.slug === selectedServiceId) ||
+    servicesList[0];
 
   const handleWhatsApp = (tierName: string) => {
     const serviceName = activeService.title;
@@ -44,20 +58,20 @@ export function PricingCalculator() {
     <div className="w-full space-y-10">
       {/* Service Division Tabs Selector - 2 Top (Left/Right) + 1 Bottom Centered on Mobile */}
       <div className="grid grid-cols-2 sm:flex sm:flex-row items-center justify-center gap-2.5 sm:gap-3 w-full max-w-sm sm:max-w-none mx-auto px-2">
-        {SERVICES.map((service, index) => {
-          const logoSrc = service.logo || divisionLogos[service.id] || "/Web-Studio.avif";
-          const isSelected = selectedServiceId === service.id;
+        {servicesList.map((service, index) => {
+          const serviceKey = String(service.id || service.slug);
+          const logoSrc = service.logo || divisionLogos[serviceKey] || divisionLogos[service.slug] || "/Web-Studio.avif";
 
           return (
             <div
-              key={service.id}
+              key={serviceKey}
               className={cn(
                 "flex justify-center sm:w-auto",
                 index === 2 ? "col-span-2 justify-center" : "col-span-1"
               )}
             >
               <LiquidMetalButton
-                onClick={() => setSelectedServiceId(service.id)}
+                onClick={() => setSelectedServiceId(serviceKey)}
                 className="w-full sm:w-auto justify-center"
               >
                 <Image

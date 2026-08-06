@@ -11,7 +11,7 @@ export const RipplePulseLoader = ({ className }: { className?: string }) => {
         <div className="logo">
           <Image
             src="/logo-agency.webp"
-            alt="Artificial Ripe Logo"
+            alt="Antronix Logo"
             width={32}
             height={32}
             className="h-8 w-8 object-contain filter drop-shadow-md"

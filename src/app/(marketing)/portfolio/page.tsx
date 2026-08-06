@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
@@ -22,11 +22,23 @@ const FILTERS = [
 export default function PortfolioPage() {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [lightboxItem, setLightboxItem] = useState<PortfolioItem | null>(null);
+  const [items, setItems] = useState<PortfolioItem[]>(PORTFOLIO);
+
+  useEffect(() => {
+    fetch("/api/portfolio")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setItems(data);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const filteredPortfolio =
     activeFilter === "all"
-      ? PORTFOLIO
-      : PORTFOLIO.filter((item) => item.category === activeFilter);
+      ? items
+      : items.filter((item) => item.category === activeFilter);
 
   return (
     <>
@@ -39,7 +51,7 @@ export default function PortfolioPage() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-6xl text-foreground">
-              Portofolio <span className="gradient-text">Artificial Ripe</span>
+              Portofolio <span className="gradient-text">Antronix</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Jelajahi koleksi proyek yang telah kami bangun, untuk berbagai klien di seluruh Indonesia.

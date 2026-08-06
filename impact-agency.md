@@ -1,18 +1,18 @@
-# ⚡ Impact & Strategic Value Matrix: Artificial Ripe
+# ⚡ Impact & Strategic Value Matrix: Antronix
 
 > **"Transforming Businesses from Legacy Operations to Futuristic, AI-Powered Digital Powerhouses."**
 
-Dokumen ini memuat analisa dampak strategis dan **alasan fundamental** mengapa Korporasi, Enterprise, UMKM, Startup, Toko Retail, hingga Bisnis Jasa memilih layanan & subskripsi (*subscription/retainer*) dari **Artificial Ripe** (*Web Studio, AI Media Lab, & System Lab*).
+Dokumen ini memuat analisa dampak strategis dan **alasan fundamental** mengapa Korporasi, Enterprise, UMKM, Startup, Toko Retail, hingga Bisnis Jasa memilih layanan & subskripsi (*subscription/retainer*) dari **Antronix** (*Web Studio, AI Media Lab, & System Lab*).
 
 ---
 
-## 🌟 Executive Summary: Mengapa Harus Artificial Ripe?
+## 🌟 Executive Summary: Mengapa Harus Antronix?
 
-Di era kecepatan AI dan kompetisi digital yang ketat, model agency konvensional yang lambat, mahal, dan kaku sudah usang. **Artificial Ripe** hadir membawa paradigma baru: **Hyper-Efficiency Digital Transformation**.
+Di era kecepatan AI dan kompetisi digital yang ketat, model agency konvensional yang lambat, mahal, dan kaku sudah usang. **Antronix** hadir membawa paradigma baru: **Hyper-Efficiency Digital Transformation**.
 
 ```
   ┌────────────────────────────────────────────────────────────────────────┐
-  │                           ARTIFICIAL RIPE                              │
+  │                               ANTRONIX                                 │
   │            "Accelerating Growth with AI & Full-Stack Systems"          │
   └───────────────────────────────────┬────────────────────────────────────┘
                                       │
@@ -36,7 +36,7 @@ Di era kecepatan AI dan kompetisi digital yang ketat, model agency konvensional 
 
 ---
 
-## 💎 1. Artificial Ripe WEB STUDIO
+## 💎 1. Antronix WEB STUDIO
 ### *Hyper-Performance, High-Conversion Modern Web Architecture*
 
 Bukan sekadar "membuat website", **Web Studio** membangun fondasi *digital presence* yang dirancang untuk mengonversi pengunjung menjadi pelanggan setia secara cepat dan presisi.
@@ -50,11 +50,11 @@ Bukan sekadar "membuat website", **Web Studio** membangun fondasi *digital prese
 ### 🔄 Mengapa Menggunakan Langganan (Subscription/Retainer) Web Studio?
 * **A/B Testing & Dynamic UI Updates:** Website Anda selalu berevolusi mengikuti tren pasar dan perilaku pembeli tanpa biaya pembuatan ulang dari nol.
 * **Continuous Security & Zero-Downtime Guarantee:** Perlindungan SSL, proteksi DDoS, backup rutin, dan pembaharuan keamanan otomatis.
-* **Monthly Content & Promo Launch:** Tim Artificial Ripe siap memperbarui banner promo, event landing page, dan artikel SEO bisnis Anda setiap bulan.
+* **Monthly Content & Promo Launch:** Tim Antronix siap memperbarui banner promo, event landing page, dan artikel SEO bisnis Anda setiap bulan.
 
 ---
 
-## 🎬 2. Artificial Ripe AI MEDIA LAB
+## 🎬 2. Antronix AI MEDIA LAB
 ### *Next-Gen AI Visuals & Cinematic Content Production Engine*
 
 Pemasaran visual modern membutuhkan kuantitas tinggi tanpa mengorbankan kualitas visual. **AI Media Lab** merevolusi cara produk dan brand Anda dipromosikan.
@@ -67,12 +67,12 @@ Pemasaran visual modern membutuhkan kuantitas tinggi tanpa mengorbankan kualitas
 
 ### 🔄 Mengapa Menggunakan Langganan (Subscription/Retainer) AI Media Lab?
 * **Solusi Anti-Ad Fatigue (Kelelahan Iklan):** Iklan sosial media membutuhkan variasi konten baru setiap minggu agar *Conversion Rate* tidak turun. Subskripsi memastikan stok video & materi promosi Anda selalu *fresh*.
-* **Dedicated Creative Content Pipeline:** Menghemat biaya tim kreator in-house (Video Editor, Prompt Engineer, Graphic Designer). Artificial Ripe menjadi *Outsourced Creative Studio* yang selalu siapkan konten rutin Anda.
+* **Dedicated Creative Content Pipeline:** Menghemat biaya tim kreator in-house (Video Editor, Prompt Engineer, Graphic Designer). Antronix menjadi *Outsourced Creative Studio* yang selalu siapkan konten rutin Anda.
 * **Scalable Content Distribution:** Dari video singkat Reels/TikTok (15 detik) hingga materi iklan promosi musiman (Harbolnas, Ramadhan, New Year) langsung diproduksi secara teratur.
 
 ---
 
-## ⚡ 3. Artificial Ripe SYSTEM LAB
+## ⚡ 3. Antronix SYSTEM LAB
 ### *Custom Software, POS, CRM, & Operational Automation Engines*
 
 Bisnis yang berkembang pesat sering kali runtuh karena operasional manual yang berantakan. **System Lab** mengotomatisasi seluruh proses bisnis Anda dari hulu ke hilir.
@@ -90,9 +90,9 @@ Bisnis yang berkembang pesat sering kali runtuh karena operasional manual yang b
 
 ---
 
-## 📊 Matriks Perbandingan: Agency Konvensional vs Artificial Ripe
+## 📊 Matriks Perbandingan: Agency Konvensional vs Antronix
 
-| Parameter Evaluasi | Agency Konvensional / In-House IT | **Artificial Ripe System & Subskripsi** |
+| Parameter Evaluasi | Agency Konvensional / In-House IT | **Antronix System & Subskripsi** |
 | :--- | :--- | :--- |
 | **Biaya Investasi** | Sangat Mahal (Gaji Tim + Sewa Alat Video) | **Efisien & Terprediksi (Flat Monthly/Project Rate)** |
 | **Waktu Pengerjaan** | Lambat (Bulanan per proyek) | **Ultra-Fast (Hitungan Hari dengan bantuan AI)** |
@@ -106,24 +106,24 @@ Bisnis yang berkembang pesat sering kali runtuh karena operasional manual yang b
 
 ### 🏬 1. UMKM, Toko Retail & Usaha Lokal
 * **Masalah:** Terlihat kurang profesional, kalah bersaing dengan brand besar, kasir masih manual.
-* **Solusi Artificial Ripe:** Web Studio membuatkan website instan modern, AI Media Lab buatkan iklan video kelas atas, System Lab sediakan aplikasi Kasir POS & Stok HP.
+* **Solusi Antronix:** Web Studio membuatkan website instan modern, AI Media Lab buatkan iklan video kelas atas, System Lab sediakan aplikasi Kasir POS & Stok HP.
 * **Dampak:** Kepercayaan pembeli melonjak 300%, operasional rapi tanpa ada kebocoran barang.
 
 ### 🛍️ 2. Brand D2C, Online Shop & E-Commerce
 * **Masalah:** Biaya iklan mahal tapi konversi rendah karena konten visual membosankan.
-* **Solusi Artificial Ripe:** Subskripsi bulanan AI Media Lab untuk suplai konten Reels/TikTok harian + Web Studio untuk landing page promo kilat.
+* **Solusi Antronix:** Subskripsi bulanan AI Media Lab untuk suplai konten Reels/TikTok harian + Web Studio untuk landing page promo kilat.
 * **Dampak:** *Click-Through Rate (CTR)* iklan naik pesat, biaya *Customer Acquisition Cost (CAC)* turun signifikan.
 
 ### 🏢 3. Korporasi, Startup, & Instansi Pendidikan
 * **Masalah:** Sistem lama (*legacy system*) lambat, UI buruk, butuh otomatisasi kompleks.
-* **Solusi Artificial Ripe:** System Lab membangun arsitektur software custom (CRM/Akademik/ERP) + Retainer Server & Maintenance.
+* **Solusi Antronix:** System Lab membangun arsitektur software custom (CRM/Akademik/ERP) + Retainer Server & Maintenance.
 * **Dampak:** Efisiensi kerja staf naik hingga 80%, citra perusahaan sangat modern & futuristik di mata klien/mitra.
 
 ---
 
 ## ⚡ The Subscription Value: Mengapa Mode Subskripsi Adalah Masa Depan Bisnis?
 
-Bagi perusahaan & UMKM, bermitra secara **Subskripsi (Retainer)** dengan Artificial Ripe memberikan keunggulan kompetitif mutlak:
+Bagi perusahaan & UMKM, bermitra secara **Subskripsi (Retainer)** dengan Antronix memberikan keunggulan kompetitif mutlak:
 
 1. **Prediktabilitas Anggaran (Predictable Expenses):** Tanpa kejutan biaya tersembunyi. Semua kebutuhan web, media, dan software sudah ter-cover dalam 1 paket bulanan yang terukur.
 2. **Mitra Teknologi Jangka Panjang (Plug-and-Play Tech Department):** Anda mendapatkan tim gabungan Software Engineer, AI Specialist, Graphic Designer, dan UI/UX Expert sekaligus tanpa beban *overhead* karyawan tetap.
@@ -133,10 +133,10 @@ Bagi perusahaan & UMKM, bermitra secara **Subskripsi (Retainer)** dengan Artific
 
 ## 🎯 Penutup & Next Action Plan
 
-Menggunakan ekosistem **Artificial Ripe (Web Studio, AI Media Lab, & System Lab)** bukan lagi sekadar pilihan estetik, melainkan **investasi strategis** untuk mendominasi pasar digital. 
+Menggunakan ekosistem **Antronix (Web Studio, AI Media Lab, & System Lab)** bukan lagi sekadar pilihan estetik, melainkan **investasi strategis** untuk mendominasi pasar digital. 
 
 * **Siap Mentransformasi Bisnis Anda?** 
-* Kunjungi **Artificial Ripe Platform** atau Hubungi Tim Konsultan Strategis Kami Hari Ini.
+* Kunjungi **Antronix Platform** atau Hubungi Tim Konsultan Strategis Kami Hari Ini.
 
 ---
-*Document Version: 1.0.0 | Created for Artificial Ripe Strategic Client Value Proposition*
+*Document Version: 1.0.0 | Created for Antronix Strategic Client Value Proposition*

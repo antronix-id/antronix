@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, LogIn } from "lucide-react";
 import { SocialIcons } from "@/components/shared/social-icons";
 import { AGENCY, SERVICES } from "@/lib/constants";
 import { Marquee } from "@/components/animations/marquee";
@@ -16,20 +16,40 @@ export function Footer() {
   const pathname = usePathname();
   const router = useRouter();
 
+  const [agency, setAgency] = useState(AGENCY);
+
+  useEffect(() => {
+    fetch("/api/agency")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && !data.error) {
+          setAgency((prev) => ({
+            ...prev,
+            ...data,
+            socials: {
+              ...prev.socials,
+              ...(data.socials || {}),
+            },
+          }));
+        }
+      })
+      .catch((err) => console.error("Error fetching agency in footer:", err));
+  }, []);
+
   const contactInfo = [
     {
       icon: <MapPin size={18} className="text-slate-300 shrink-0" />,
-      text: AGENCY.address,
+      text: agency.address || AGENCY.address,
     },
     {
       icon: <Phone size={18} className="text-slate-300 shrink-0" />,
-      text: AGENCY.phone,
-      href: `tel:${AGENCY.phone.replace(/[^0-9+]/g, "")}`,
+      text: agency.phone || AGENCY.phone,
+      href: `tel:${(agency.phone || AGENCY.phone).replace(/[^0-9+]/g, "")}`,
     },
     {
       icon: <Mail size={18} className="text-slate-300 shrink-0" />,
-      text: AGENCY.email,
-      href: `mailto:${AGENCY.email}`,
+      text: agency.email || AGENCY.email,
+      href: `mailto:${agency.email || AGENCY.email}`,
     },
   ];
 
@@ -40,7 +60,7 @@ export function Footer() {
         <Marquee text="Web Studio • AI Media Lab • System Lab" fontSize="lg" />
       </div>
 
-      <div className="w-full px-6 sm:px-12 lg:px-16 py-10 sm:py-14 z-40 relative">
+      <div className="w-full px-6 sm:px-12 lg:px-16 py-10 sm:py-14 z-50 relative pointer-events-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-16 pb-12">
           {/* Brand section */}
           <div className="flex flex-col space-y-4">
@@ -52,22 +72,22 @@ export function Footer() {
               <div className="relative flex h-10 w-10 shrink-0 items-center justify-center transition-transform group-hover:scale-105">
                 <Image
                   src="/logo-agency.webp"
-                  alt="Artificial Ripe Logo"
+                  alt="Antronix Logo"
                   width={40}
                   height={40}
                   className="h-full w-full object-contain"
                 />
               </div>
               <span className="text-white text-2xl font-bold tracking-tight">
-                Artificial Ripe
+                {agency.name || AGENCY.name}
               </span>
             </Link>
             <p className="text-sm leading-relaxed text-zinc-400">
-              {AGENCY.description}
+              {agency.description || AGENCY.description}
             </p>
             {/* Social Icons directly under description */}
             <div className="pt-2">
-              <SocialIcons />
+              <SocialIcons socials={agency.socials} email={agency.email} />
             </div>
           </div>
 
@@ -168,17 +188,27 @@ export function Footer() {
         {/* Footer bottom */}
         <div className="flex flex-col md:flex-row justify-between items-center text-sm space-y-4 md:space-y-0 text-zinc-400">
           <p className="text-center md:text-left">
-            &copy; {currentYear} {AGENCY.name}. All rights reserved.
+            &copy; {currentYear} {agency.name || AGENCY.name}. All rights reserved.
           </p>
-          <p className="text-center md:text-right text-xs text-zinc-500">
-            Digital Agency & AI Innovation Partner
-          </p>
+          <div className="flex items-center space-x-3">
+            <p className="text-center md:text-right text-xs text-zinc-500">
+              Digital Agency & AI Innovation Partner
+            </p>
+            <Link
+              href="/login"
+              title="Admin Login"
+              aria-label="Admin Login"
+              className="relative z-50 text-zinc-500 hover:text-white transition-colors p-1.5 rounded-md hover:bg-white/10 flex items-center justify-center group cursor-pointer"
+            >
+              <LogIn size={15} className="group-hover:scale-110 transition-transform" />
+            </Link>
+          </div>
         </div>
       </div>
 
       {/* Text hover effect */}
-      <div className="w-full flex justify-center h-[14rem] sm:h-[18rem] md:h-[22rem] lg:h-[26rem] -mt-24 sm:-mt-36 md:-mt-44 -mb-16 sm:-mb-24 relative z-40 px-4 sm:px-8">
-        <TextHoverEffect text="ARTIFICIAL RIPE" className="z-50 w-full" />
+      <div className="w-full flex justify-center h-[14rem] sm:h-[18rem] md:h-[22rem] lg:h-[26rem] -mt-24 sm:-mt-36 md:-mt-44 -mb-16 sm:-mb-24 relative z-30 px-4 sm:px-8 pointer-events-auto">
+        <TextHoverEffect text="ANTRONIX" className="z-30 w-full" />
       </div>
 
       <FooterBackgroundGradient />

@@ -113,7 +113,9 @@ const webStudioFaqData: FaqData = {
   ]
 };
 
-const service = SERVICES.find((s) => s.id === "web-studio")!;
+import { useState, useEffect } from "react";
+
+const defaultService = SERVICES.find((s) => s.id === "web-studio")!;
 const relatedPortfolio = PORTFOLIO.filter((p) => p.category === "web-studio");
 
 const webStudioFeatureConfig: Record<string, { icon: React.ElementType; color: string; bg: string; glow: string }> = {
@@ -156,6 +158,19 @@ const webStudioFeatureConfig: Record<string, { icon: React.ElementType; color: s
 };
 
 export default function WebStudioPage() {
+  const [service, setService] = useState<any>(defaultService);
+
+  useEffect(() => {
+    fetch("/api/services")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          const match = data.find((s) => s.slug === "web-studio" || s.id === "web-studio" || s.id === 1);
+          if (match) setService(match);
+        }
+      })
+      .catch((err) => console.error("Error fetching web-studio service:", err));
+  }, []);
   return (
     <div className="relative min-h-screen">
       {/* HERO SECTION */}
@@ -309,7 +324,7 @@ export default function WebStudioPage() {
           />
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-12">
-            {service.features.map((feature, index) => {
+            {(service.features || []).map((feature: any, index: number) => {
               const cfg = webStudioFeatureConfig[feature.title] || {
                 icon: Check,
                 color: "text-blue-400",
@@ -385,7 +400,7 @@ export default function WebStudioPage() {
             description="Pilih paket yang sesuai dengan kebutuhan dan skala bisnis Anda."
           />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {service.pricing.map((tier, index) => (
+            {(service.pricing || []).map((tier: any, index: number) => (
               <motion.div
                 key={tier.name}
                   initial={{ opacity: 0, y: 30 }}
@@ -418,7 +433,7 @@ export default function WebStudioPage() {
                             </span>
                           </div>
                           <ul className="mb-8 space-y-3">
-                            {tier.features.map((feature) => (
+                            {(tier.features || []).map((feature: any) => (
                               <li key={feature} className="flex items-start gap-2 text-sm">
                                 <Check className="mt-0.5 h-4 w-4 shrink-0 text-slate-300" />
                                 <span className="text-zinc-300 group-hover:text-zinc-200 transition-colors">{feature}</span>

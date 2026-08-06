@@ -4,7 +4,7 @@ import { useState } from "react"
 import { motion, Variants } from "framer-motion"
 import TextType from "@/components/animations/text-type";
 
-const words = "SELAMAT DATANG DI ARTIFICIAL RIPE"
+const words = "SELAMAT DATANG DI ANTRONIX"
 
 const slideUp: Variants = {
   initial: {

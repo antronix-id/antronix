@@ -41,33 +41,12 @@ export function LaptopMockup({
 
   const activeHovered = externalHovered !== undefined ? externalHovered : internalHovered;
 
-  // Initial 2-second autoplay preview to show bright video frame
+  // Continuously play video in loop
   React.useEffect(() => {
     if (!videoSrc || !videoRef.current) return;
-
     const video = videoRef.current;
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {});
-    }
-
-    const timer = setTimeout(() => {
-      setInitialPreviewDone(true);
-    }, 2000);
-
-    return () => clearTimeout(timer);
+    video.play().catch(() => {});
   }, [videoSrc]);
-
-  // Handle playback based on hover state after initial 2-second preview
-  React.useEffect(() => {
-    if (!videoRef.current) return;
-
-    if (activeHovered) {
-      videoRef.current.play().catch(() => {});
-    } else if (initialPreviewDone) {
-      videoRef.current.pause();
-    }
-  }, [activeHovered, initialPreviewDone]);
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     setInternalHovered(true);
@@ -146,7 +125,7 @@ export function LaptopMockup({
             <video
               ref={videoRef}
               src={videoSrc}
-              poster={src}
+              poster={src || undefined}
               autoPlay
               loop
               muted

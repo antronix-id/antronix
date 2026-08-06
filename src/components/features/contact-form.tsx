@@ -46,9 +46,30 @@ export function ContactForm() {
     if (!validate()) return;
 
     setStatus("loading");
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log("Form submitted:", formData);
-    setStatus("success");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: `${formData.whatsapp.replace(/\D/g, "")}@whatsapp.user`,
+          phone: formData.whatsapp,
+          subject: formData.service,
+          message: formData.details || `Konsultasi layanan: ${formData.service}`,
+        }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+      } else {
+        alert("Gagal mengirim pesan. Silakan coba lagi.");
+        setStatus("idle");
+      }
+    } catch (err) {
+      console.error("Contact submit error:", err);
+      alert("Terjadi kesalahan koneksi.");
+      setStatus("idle");
+    }
   };
 
   if (status === "success") {

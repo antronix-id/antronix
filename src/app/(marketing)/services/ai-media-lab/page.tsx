@@ -112,7 +112,9 @@ const aiMediaLabFaqData: FaqData = {
   ]
 };
 
-const service = SERVICES.find((s) => s.id === "ai-media-lab")!;
+import { useState, useEffect } from "react";
+
+const defaultService = SERVICES.find((s) => s.id === "ai-media-lab")!;
 const relatedPortfolio = PORTFOLIO.filter((p) => p.category === "ai-media-lab").slice(0, 3);
 
 const aiMediaFeatureConfig: Record<string, { icon: React.ElementType; color: string; bg: string; glow: string }> = {
@@ -155,6 +157,19 @@ const aiMediaFeatureConfig: Record<string, { icon: React.ElementType; color: str
 };
 
 export default function AIMediaLabPage() {
+  const [service, setService] = useState<any>(defaultService);
+
+  useEffect(() => {
+    fetch("/api/services")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          const match = data.find((s) => s.slug === "ai-media-lab" || s.id === "ai-media-lab" || s.id === 2);
+          if (match) setService(match);
+        }
+      })
+      .catch((err) => console.error("Error fetching ai-media-lab service:", err));
+  }, []);
   return (
     <div className="relative min-h-screen">
       {/* Hero */}
@@ -302,7 +317,7 @@ export default function AIMediaLabPage() {
           />
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-12">
-            {service.features.map((feature, index) => {
+            {(service.features || []).map((feature: any, index: number) => {
               const cfg = aiMediaFeatureConfig[feature.title] || {
                 icon: Sparkles,
                 color: "text-purple-400",
@@ -375,10 +390,10 @@ export default function AIMediaLabPage() {
             badge="Pricing"
             title="Paket"
             titleHighlight="AI Media Lab"
-            description="Investasi cerdas untuk produksi konten berkualitas tinggi."
+            description="Investasi produksi konten dan media branding masa depan."
           />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {service.pricing.map((tier, index) => (
+            {(service.pricing || []).map((tier: any, index: number) => (
               <motion.div
                 key={tier.name}
                   initial={{ opacity: 0, y: 30 }}
@@ -409,7 +424,7 @@ export default function AIMediaLabPage() {
                             </span>
                           </div>
                           <ul className="mb-8 space-y-3">
-                            {tier.features.map((feature) => (
+                            {(tier.features || []).map((feature: any) => (
                               <li key={feature} className="flex items-start gap-2 text-sm">
                                 <Check className="mt-0.5 h-4 w-4 shrink-0 text-slate-300" />
                                 <span className="text-zinc-300 group-hover:text-zinc-200 transition-colors">{feature}</span>

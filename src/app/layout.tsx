@@ -10,8 +10,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Artificial Ripe Mempercepat Pertumbuhan melalui Kreativitas dan Sistem Full-Stack",
-    template: "%s | Artificial Ripe",
+    default: "Antronix Mempercepat Pertumbuhan melalui Kreativitas dan Sistem Full-Stack",
+    template: "%s | Antronix",
   },
   description:
     "Agency digital terdepan yang mengakselerasi pertumbuhan bisnis Anda melalui kreativitas AI & sistem full-stack terintegrasi.",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     "Indonesia",
     "Jakarta",
   ],
-  authors: [{ name: "Artificial Ripe" }],
+  authors: [{ name: "Antronix" }],
   icons: {
     icon: "/logo-agency.webp",
     shortcut: "/logo-agency.webp",
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: "https://artificialripe.com",
-    siteName: "Artificial Ripe",
-    title: "Artificial Ripe — Mempercepat Pertumbuhan melalui Kreativitas dan Sistem Full-Stack",
+    url: "https://antronix.com",
+    siteName: "Antronix",
+    title: "Antronix — Mempercepat Pertumbuhan melalui Kreativitas dan Sistem Full-Stack",
     description:
       "Agency digital terdepan yang mengakselerasi pertumbuhan bisnis Anda melalui kreativitas AI & sistem full-stack terintegrasi.",
   },

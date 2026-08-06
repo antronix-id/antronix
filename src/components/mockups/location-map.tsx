@@ -40,7 +40,7 @@ export function LocationMap({
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
             </span>
-            <h4 className="text-xs font-bold tracking-wide text-white whitespace-nowrap">Artificial Ripe HQ</h4>
+            <h4 className="text-xs font-bold tracking-wide text-white whitespace-nowrap">Antronix HQ</h4>
           </div>
 
           {/* Red Pin SVG */}

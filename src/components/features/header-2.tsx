@@ -79,7 +79,7 @@ export function Header() {
             <div className="relative flex h-9 w-9 shrink-0 items-center justify-center transition-transform group-hover:scale-105">
               <Image
                 src="/logo-agency.webp"
-                alt="Artificial Ripe Logo"
+                alt="Antronix Logo"
                 width={36}
                 height={36}
                 className="h-full w-full object-contain"
@@ -87,7 +87,7 @@ export function Header() {
               />
             </div>
             <span className="text-xl font-bold gradient-text tracking-tight">
-              Artificial Ripe
+              Antronix
             </span>
           </Link>
 
@@ -135,14 +135,14 @@ export function Header() {
               <div className="relative flex h-8 w-8 shrink-0 items-center justify-center">
                 <Image
                   src="/logo-agency.webp"
-                  alt="Artificial Ripe Logo"
+                  alt="Antronix Logo"
                   width={32}
                   height={32}
                   className="h-full w-full object-contain"
                 />
               </div>
               <span className="text-lg font-bold gradient-text tracking-tight">
-                Artificial Ripe
+                Antronix
               </span>
             </Link>
             <Button
