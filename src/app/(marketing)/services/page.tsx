@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -25,8 +25,8 @@ import { BorderGlow } from "@/components/animations/border-glow";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Badge } from "@/components/ui/badge";
 import { PricingCalculator } from "@/components/features/pricing-calculator";
-import { FaqSection, FaqData } from "@/components/features/faq-scroller";
-import { SERVICES, AGENCY, Service } from "@/lib/constants";
+import { FaqSection } from "@/components/features/faq-scroller";
+import { SERVICES, AGENCY, SERVICES_FAQ, Service } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const logoMap: Record<string, string> = {
@@ -35,108 +35,13 @@ const logoMap: Record<string, string> = {
   "system-lab": "/System-Lab.avif",
 };
 
-const servicesFaqData: FaqData = {
-  mainTitle: "Frequently Asked Questions",
-  mainSubtitle:
-    "Punya pertanyaan seputar layanan Web Studio, AI Media Lab, atau System Lab? Temukan jawaban lengkapnya di bawah ini.",
-  rows: [
-    {
-      id: "row1",
-      speed: "24s",
-      direction: "left",
-      faqItems: [
-        {
-          id: "q1",
-          question: "Berapa lama proses pengerjaan pembuatan website?",
-          answer:
-            "Landing page dan website standar selesai dalam 3–7 hari kerja. Pembuatan web application custom memerlukan waktu 2–3 minggu tergantung skala fitur."
-        },
-        {
-          id: "q2",
-          question: "Apakah website buatan Antronix ramah SEO & cepat?",
-          answer:
-            "Sangat ramah SEO. Kami menggunakan Next.js 16 terbaru dengan skor Google Lighthouse 95-100, arsitektur HTML5 semantik, serta meta tags presisi."
-        },
-        {
-          id: "q3",
-          question: "Apakah saya bisa mengedit sendiri konten website setelah selesai?",
-          answer:
-            "Ya! Kami menyediakan panel CMS admin yang intuitif sehingga Anda bisa memperbarui teks, foto produk, dan promo kapan saja tanpa koding."
-        }
-      ]
-    },
-    {
-      id: "row2",
-      speed: "18s",
-      direction: "right",
-      faqItems: [
-        {
-          id: "q4",
-          question: "Apakah aset visual & video AI Media Lab bebas hak cipta?",
-          answer:
-            "100% lisensi komersial penuh milik Anda. Semua konten gambar 4K, video promo, dan avatar AI bebas digunakan untuk promosi & iklan komersial."
-        },
-        {
-          id: "q5",
-          question: "Berapa persen penghematan biaya menggunakan AI Media Lab?",
-          answer:
-            "Produksi media dengan AI menghemat biaya hingga 70% dibanding biaya sewa studio, kru produksi, talent, dan video editor profesional."
-        },
-        {
-          id: "q6",
-          question: "Apakah bisa membuat avatar AI yang mirip wajah owner/brand?",
-          answer:
-            "Tentu. Kami dapat melakukan kloning visual avatar dan sampel suara hiper-realistis untuk menjadi presenter resmi brand Anda."
-        }
-      ]
-    },
-    {
-      id: "row3",
-      speed: "28s",
-      direction: "left",
-      faqItems: [
-        {
-          id: "q7",
-          question: "Bagaimana sistem garansi dan dukungan pasca pengerjaan?",
-          answer:
-            "Setiap proyek dilindungi garansi pemeliharaan teknis gratis 30–90 hari untuk memastikan sistem Anda berjalan 100% stabil tanpa error."
-        },
-        {
-          id: "q8",
-          question: "Bagaimana skema pembayaran layanan di Antronix?",
-          answer:
-            "Pembayaran transparan dengan skema DP 50% di awal sebelum pengerjaan dimulai dan 50% sisanya dilunasi setelah proyek selesai & siap launch."
-        },
-        {
-          id: "q9",
-          question: "Bagaimana cara memulai konsultasi proyek kami?",
-          answer:
-            "Cukup klik tombol WhatsApp atau Hubungi Kami. Tim spesialis kami siap berdiskusi dan memberikan analisa strategi teknis gratis."
-        }
-      ]
-    }
-  ]
-};
-
 export default function ServicesPage() {
-  const [servicesList, setServicesList] = useState(SERVICES);
   const [activeTab, setActiveTab] = useState<string>("all");
-
-  useEffect(() => {
-    fetch("/api/services")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setServicesList(data);
-        }
-      })
-      .catch((err) => console.error("Error fetching services in services page:", err));
-  }, []);
 
   const filteredServices =
     activeTab === "all"
-      ? servicesList
-      : servicesList.filter((s) => s.id === activeTab || s.slug === activeTab);
+      ? SERVICES
+      : SERVICES.filter((s) => s.id === activeTab || s.slug === activeTab);
 
   return (
     <div className="relative min-h-screen pt-20 pb-20">
@@ -183,7 +88,7 @@ export default function ServicesPage() {
             >
               Semua Layanan (3 Pilar)
             </button>
-            {servicesList.map((s) => {
+            {SERVICES.map((s) => {
               const tabKey = String(s.id || s.slug);
               return (
                 <button
@@ -387,7 +292,7 @@ export default function ServicesPage() {
 
       {/* FAQ HORIZONTAL SCROLLER SECTION (DEAK DEKAT FOOTER) */}
       <section className="relative py-12 sm:py-20 border-t border-white/5 overflow-hidden">
-        <FaqSection data={servicesFaqData} />
+        <FaqSection data={SERVICES_FAQ} />
       </section>
     </div>
   );

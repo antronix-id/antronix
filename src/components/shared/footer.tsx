@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Mail, MapPin, Phone, LogIn } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { SocialIcons } from "@/components/shared/social-icons";
 import { AGENCY, SERVICES } from "@/lib/constants";
 import { Marquee } from "@/components/animations/marquee";
@@ -16,40 +16,20 @@ export function Footer() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const [agency, setAgency] = useState(AGENCY);
-
-  useEffect(() => {
-    fetch("/api/agency")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && !data.error) {
-          setAgency((prev) => ({
-            ...prev,
-            ...data,
-            socials: {
-              ...prev.socials,
-              ...(data.socials || {}),
-            },
-          }));
-        }
-      })
-      .catch((err) => console.error("Error fetching agency in footer:", err));
-  }, []);
-
   const contactInfo = [
     {
       icon: <MapPin size={18} className="text-slate-300 shrink-0" />,
-      text: agency.address || AGENCY.address,
+      text: AGENCY.address,
     },
     {
       icon: <Phone size={18} className="text-slate-300 shrink-0" />,
-      text: agency.phone || AGENCY.phone,
-      href: `tel:${(agency.phone || AGENCY.phone).replace(/[^0-9+]/g, "")}`,
+      text: AGENCY.phone,
+      href: `tel:${AGENCY.phone.replace(/[^0-9+]/g, "")}`,
     },
     {
       icon: <Mail size={18} className="text-slate-300 shrink-0" />,
-      text: agency.email || AGENCY.email,
-      href: `mailto:${agency.email || AGENCY.email}`,
+      text: AGENCY.email,
+      href: `mailto:${AGENCY.email}`,
     },
   ];
 
@@ -79,15 +59,15 @@ export function Footer() {
                 />
               </div>
               <span className="text-white text-2xl font-bold tracking-tight">
-                {agency.name || AGENCY.name}
+                {AGENCY.name}
               </span>
             </Link>
             <p className="text-sm leading-relaxed text-zinc-400">
-              {agency.description || AGENCY.description}
+              {AGENCY.description}
             </p>
             {/* Social Icons directly under description */}
             <div className="pt-2">
-              <SocialIcons socials={agency.socials} email={agency.email} />
+              <SocialIcons socials={AGENCY.socials} email={AGENCY.email} />
             </div>
           </div>
 
@@ -188,20 +168,12 @@ export function Footer() {
         {/* Footer bottom */}
         <div className="flex flex-col md:flex-row justify-between items-center text-sm space-y-4 md:space-y-0 text-zinc-400">
           <p className="text-center md:text-left">
-            &copy; {currentYear} {agency.name || AGENCY.name}. All rights reserved.
+            &copy; {currentYear} {AGENCY.name}. All rights reserved.
           </p>
           <div className="flex items-center space-x-3">
             <p className="text-center md:text-right text-xs text-zinc-500">
               Digital Agency & AI Innovation Partner
             </p>
-            <Link
-              href="/login"
-              title="Admin Login"
-              aria-label="Admin Login"
-              className="relative z-50 text-zinc-500 hover:text-white transition-colors p-1.5 rounded-md hover:bg-white/10 flex items-center justify-center group cursor-pointer"
-            >
-              <LogIn size={15} className="group-hover:scale-110 transition-transform" />
-            </Link>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -20,7 +20,6 @@ import { BorderGlow } from "@/components/animations/border-glow";
 import { SectionHeader } from "@/components/shared/section-header";
 import { ServiceCard } from "@/components/features/service-card";
 import { PortfolioCard } from "@/components/features/portfolio-card";
-import { TestimonialCard } from "@/components/features/testimonial-card";
 import { TestimonialsSection } from "@/components/features/testimonial-v2";
 import { PricingCalculator } from "@/components/features/pricing-calculator";
 import { ContactForm } from "@/components/features/contact-form";
@@ -30,29 +29,14 @@ import { SERVICES, PORTFOLIO, TESTIMONIALS, AGENCY, PortfolioItem } from "@/lib/
 import { cn } from "@/lib/utils";
 
 export default function HomePage() {
-  const [portfolioList, setPortfolioList] = useState<PortfolioItem[]>(PORTFOLIO);
-
-  useEffect(() => {
-    fetch("/api/portfolio")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setPortfolioList(data);
-        }
-      })
-      .catch(() => {
-        // Fallback to static constants if API fails
-      });
-  }, []);
-
-  const featuredPortfolio = portfolioList.filter((p) => p.isFeatured).slice(0, 6);
+  const featuredPortfolio = PORTFOLIO.filter((p) => p.isFeatured).slice(0, 6);
 
   return (
     <>
       {/* ============================================ */}
       {/* HERO SECTION */}
       {/* ============================================ */}
-      <section id="hero" className="relative flex min-h-screen items-center overflow-hidden -mt-16 sm:-mt-20 pt-20 sm:pt-32 lg:pt-52 pb-36 sm:pb-48 lg:pb-64 bg-black">
+      <section id="hero" className="relative flex min-h-screen items-center overflow-hidden -mt-16 sm:-mt-20 pt-20 sm:pt-32 lg:pt-52 pb-36 sm:pb-48 lg:pb-64">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-12 lg:items-center mt-0 sm:mt-8">
             {/* Left Content */}

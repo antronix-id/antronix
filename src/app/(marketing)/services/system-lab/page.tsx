@@ -25,92 +25,9 @@ import { SectionHeader } from "@/components/shared/section-header";
 import { PortfolioCard } from "@/components/features/portfolio-card";
 import { ProblemSolutionSection } from "@/components/features/problem-solution-section";
 import { TargetAudienceSection } from "@/components/features/target-audience-section";
-import { FaqSection, FaqData } from "@/components/features/faq-scroller";
-import { SERVICES, PORTFOLIO, AGENCY } from "@/lib/constants";
+import { FaqSection } from "@/components/features/faq-scroller";
+import { SERVICES, PORTFOLIO, AGENCY, SYSTEM_LAB_FAQ } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-
-const systemLabFaqData: FaqData = {
-  mainTitle: "Pertanyaan Umum System Lab",
-  mainSubtitle:
-    "Jawaban lengkap mengenai arsitektur sistem POS, otomatisasi workflow, integrasi API, dan keamanan infrastruktur cloud.",
-  rows: [
-    {
-      id: "sys-row1",
-      speed: "24s",
-      direction: "left",
-      faqItems: [
-        {
-          id: "sys-q1",
-          question: "Apakah sistem kasir POS & ERP dapat diakses dari HP?",
-          answer:
-            "100% berbasis cloud & responsif. Anda dapat memantau stok, transaksi live, dan laporan arus kas dari HP atau laptop kapan saja."
-        },
-        {
-          id: "sys-q2",
-          question: "Bagaimana jika jaringan internet di toko/lokasi mati?",
-          answer:
-            "Sistem POS kami dilengkapi mode Offline-Sync otomatis. Transaksi tetap dapat diproses dan disinkronkan ke server saat internet kembali."
-        },
-        {
-          id: "sys-q3",
-          question: "Apakah terintegrasi dengan WhatsApp Gateway & Cetak Resi?",
-          answer:
-            "Ya! Sistem langsung terhubung ke printer thermal Bluetooth/USB dan otomatis mengirim nota invoice resmi via WhatsApp."
-        }
-      ]
-    },
-    {
-      id: "sys-row2",
-      speed: "18s",
-      direction: "right",
-      faqItems: [
-        {
-          id: "sys-q4",
-          question: "Berapa jaminan Uptime server infrastruktur Cloud DevOps?",
-          answer:
-            "Kami memberikan jaminan Uptime server 99.9% dengan fitur Auto-Scaling yang secara otomatis menangani lonjakan beban pengunjung."
-        },
-        {
-          id: "sys-q5",
-          question: "Bagaimana sistem keamanan data & backup database?",
-          answer:
-            "Setiap database dienkripsi penuh dengan backup otomatis berkala 24 jam serta perlindungan firewall anti-DDoS."
-        },
-        {
-          id: "sys-q6",
-          question: "Apakah bisa melakukan custom integrasi API dengan software lain?",
-          answer:
-            "Bisa. Tim kami dapat membangun webhook & integrasi API khusus ke payment gateway, kurir logistik, dan sistem akuntansi."
-        }
-      ]
-    },
-    {
-      id: "sys-row3",
-      speed: "28s",
-      direction: "left",
-      faqItems: [
-        {
-          id: "sys-q7",
-          question: "Berapa lama waktu yang dibutuhkan untuk migrasi data awal?",
-          answer:
-            "Proses migrasi data produk, stok, dan akun staf awal biasanya selesai dalam 2–5 hari kerja dipandu tim teknis kami."
-        },
-        {
-          id: "sys-q8",
-          question: "Apakah staf operasional toko kami akan mendapatkan pelatihan?",
-          answer:
-            "Ya! Kami menyediakan sesi training online/onsite dan panduan penggunaan sistem (SOP) lengkap untuk staf dan admin Anda."
-        },
-        {
-          id: "sys-q9",
-          question: "Bagaimana cara berkonsultasi mengenai kebutuhan sistem kami?",
-          answer:
-            "Klik Hubungi Kami via WhatsApp untuk menjadwalkan sesi demonstrasi sistem (Live Demo) dan konsultasi arsitektur gratis."
-        }
-      ]
-    }
-  ]
-};
 
 import { useState, useEffect } from "react";
 
@@ -157,19 +74,7 @@ const systemLabFeatureConfig: Record<string, { icon: React.ElementType; color: s
 };
 
 export default function SystemLabPage() {
-  const [service, setService] = useState<any>(defaultService);
-
-  useEffect(() => {
-    fetch("/api/services")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          const match = data.find((s) => s.slug === "system-lab" || s.id === "system-lab" || s.id === 3);
-          if (match) setService(match);
-        }
-      })
-      .catch((err) => console.error("Error fetching system-lab service:", err));
-  }, []);
+  const service = SERVICES.find((s) => s.slug === "system-lab") || SERVICES[2] || SERVICES[0];
   return (
     <div className="relative min-h-screen">
       {/* Hero */}
@@ -461,7 +366,7 @@ export default function SystemLabPage() {
 
       {/* FAQ SECTION */}
       <section className="relative py-12 sm:py-20 border-t border-white/5 overflow-hidden">
-        <FaqSection data={systemLabFaqData} />
+        <FaqSection data={SYSTEM_LAB_FAQ} />
       </section>
     </div>
   );

@@ -25,92 +25,9 @@ import { SectionHeader } from "@/components/shared/section-header";
 import { PortfolioCard } from "@/components/features/portfolio-card";
 import { ProblemSolutionSection } from "@/components/features/problem-solution-section";
 import { TargetAudienceSection } from "@/components/features/target-audience-section";
-import { FaqSection, FaqData } from "@/components/features/faq-scroller";
-import { SERVICES, PORTFOLIO, AGENCY } from "@/lib/constants";
+import { FaqSection } from "@/components/features/faq-scroller";
+import { SERVICES, PORTFOLIO, AGENCY, AI_MEDIA_LAB_FAQ } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-
-const aiMediaLabFaqData: FaqData = {
-  mainTitle: "Pertanyaan Umum AI Media Lab",
-  mainSubtitle:
-    "Semua informasi mengenai efisiensi produksi media visual 4K, video sintetis, dan avatar AI bertaraf sinematik.",
-  rows: [
-    {
-      id: "ai-row1",
-      speed: "24s",
-      direction: "left",
-      faqItems: [
-        {
-          id: "ai-q1",
-          question: "Berapa lama proses pembuatan video iklan dengan AI?",
-          answer:
-            "Video iklan dan konten visual siap rilis diproduksi hanya dalam 24–48 jam, jauh lebih cepat daripada syuting studio konvensional."
-        },
-        {
-          id: "ai-q2",
-          question: "Apakah konten gambar & video beresolusi tinggi 4K?",
-          answer:
-            "Ya! Semua hasil rendering gambar 4K ultra-photorealistic dan video sinematik dirancang untuk tampilan layar besar & promosi sosial media."
-        },
-        {
-          id: "ai-q3",
-          question: "Apakah hak cipta konten 100% menjadi milik saya?",
-          answer:
-            "Tentu saja. Lisensi penuh hak cipta komersial diserahkan 100% kepada Anda untuk iklan TikTok, Meta Ads, YouTube, dan website."
-        }
-      ]
-    },
-    {
-      id: "ai-row2",
-      speed: "18s",
-      direction: "right",
-      faqItems: [
-        {
-          id: "ai-q4",
-          question: "Bagaimana cara membuat avatar AI khusus untuk brand kami?",
-          answer:
-            "Kami melakukan kloning visual avatar dan sampel suara emosional hiper-realistis untuk menjadi juru bicara resmi produk Anda."
-        },
-        {
-          id: "ai-q5",
-          question: "Berapa penghematan biaya dibanding produksi studio tradisional?",
-          answer:
-            "Menggunakan AI Media Lab memangkas biaya produksi hingga 70% karena tidak memerlukan sewa studio, kamera, talent, dan kru lapangan."
-        },
-        {
-          id: "ai-q6",
-          question: "Apakah bisa request narasi/voiceover dalam berbagai bahasa?",
-          answer:
-            "Bisa! Voiceover AI mendukung puluhan bahasa dan dialek lokal (Bahasa Indonesia, Inggris, Mandarin, dll.) dengan artikulasi alami."
-        }
-      ]
-    },
-    {
-      id: "ai-row3",
-      speed: "28s",
-      direction: "left",
-      faqItems: [
-        {
-          id: "ai-q7",
-          question: "Apakah ada revisi jika visual belum sesuai dengan keinginan?",
-          answer:
-            "Setiap paket sudah termasuk kuota revisi penyesuaian gaya visual, narasi, dan hook untuk memastikan hasil sesuai ekspektasi."
-        },
-        {
-          id: "ai-q8",
-          question: "Format file apa yang akan saya dapatkan?",
-          answer:
-            "Aset dikirim dalam format siap tayang: MP4 4K (16:9 & 9:16 untuk Reels/TikTok) dan image WebP/PNG ultra HD."
-        },
-        {
-          id: "ai-q9",
-          question: "Bagaimana cara memesan paket AI Media Lab?",
-          answer:
-            "Klik tombol Mulai Produksi AI atau hubungi kami via WhatsApp untuk mengirimkan brief produk & gaya visual yang diinginkan."
-        }
-      ]
-    }
-  ]
-};
 
 import { useState, useEffect } from "react";
 
@@ -157,19 +74,7 @@ const aiMediaFeatureConfig: Record<string, { icon: React.ElementType; color: str
 };
 
 export default function AIMediaLabPage() {
-  const [service, setService] = useState<any>(defaultService);
-
-  useEffect(() => {
-    fetch("/api/services")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          const match = data.find((s) => s.slug === "ai-media-lab" || s.id === "ai-media-lab" || s.id === 2);
-          if (match) setService(match);
-        }
-      })
-      .catch((err) => console.error("Error fetching ai-media-lab service:", err));
-  }, []);
+  const service = SERVICES.find((s) => s.slug === "ai-media-lab") || SERVICES[1] || SERVICES[0];
   return (
     <div className="relative min-h-screen">
       {/* Hero */}
@@ -461,7 +366,7 @@ export default function AIMediaLabPage() {
 
       {/* FAQ SECTION */}
       <section className="relative py-12 sm:py-20 border-t border-white/5 overflow-hidden">
-        <FaqSection data={aiMediaLabFaqData} />
+        <FaqSection data={AI_MEDIA_LAB_FAQ} />
       </section>
     </div>
   );

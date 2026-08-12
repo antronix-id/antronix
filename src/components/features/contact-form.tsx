@@ -41,35 +41,16 @@ export function ContactForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setStatus("loading");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: `${formData.whatsapp.replace(/\D/g, "")}@whatsapp.user`,
-          phone: formData.whatsapp,
-          subject: formData.service,
-          message: formData.details || `Konsultasi layanan: ${formData.service}`,
-        }),
-      });
-
-      if (res.ok) {
-        setStatus("success");
-      } else {
-        alert("Gagal mengirim pesan. Silakan coba lagi.");
-        setStatus("idle");
-      }
-    } catch (err) {
-      console.error("Contact submit error:", err);
-      alert("Terjadi kesalahan koneksi.");
-      setStatus("idle");
-    }
+    const message = encodeURIComponent(
+      `Halo ${AGENCY.name}! 👋\n\nNama: ${formData.name}\nWhatsApp: ${formData.whatsapp}\nLayanan: ${formData.service}\n\nDetail:\n${formData.details || "Mohon info lebih lanjut."}`
+    );
+    window.open(`https://wa.me/${AGENCY.whatsapp}?text=${message}`, "_blank");
+    setStatus("success");
   };
 
   if (status === "success") {

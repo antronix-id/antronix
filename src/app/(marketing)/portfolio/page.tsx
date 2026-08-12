@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
@@ -22,23 +22,11 @@ const FILTERS = [
 export default function PortfolioPage() {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [lightboxItem, setLightboxItem] = useState<PortfolioItem | null>(null);
-  const [items, setItems] = useState<PortfolioItem[]>(PORTFOLIO);
-
-  useEffect(() => {
-    fetch("/api/portfolio")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setItems(data);
-        }
-      })
-      .catch(() => {});
-  }, []);
 
   const filteredPortfolio =
     activeFilter === "all"
-      ? items
-      : items.filter((item) => item.category === activeFilter);
+      ? PORTFOLIO
+      : PORTFOLIO.filter((item) => item.category === activeFilter);
 
   return (
     <>

@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Globe, Sparkles, Cpu, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { handleSectionNavigation } from "@/hooks/use-hash-scroll";
@@ -24,32 +24,15 @@ export interface GooeyNavItem {
 
 interface GooeyNavProps {
   items: GooeyNavItem[];
-  animationTime?: number;
-  particleCount?: number;
-  particleDistances?: [number, number];
-  particleR?: number;
-  timeVariance?: number;
-  colors?: number[];
   initialActiveIndex?: number;
   className?: string;
 }
 
 export function GooeyNav({
   items,
-  animationTime = 600,
-  particleCount = 15,
-  particleDistances = [90, 10],
-  particleR = 100,
-  timeVariance = 300,
-  colors = [1, 2, 3, 1, 2, 3, 1, 4],
   initialActiveIndex = 0,
   className,
 }: GooeyNavProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const navRef = useRef<HTMLUListElement>(null);
-  const filterRef = useRef<HTMLSpanElement>(null);
-  const textRef = useRef<HTMLSpanElement>(null);
-
   const pathname = usePathname();
   const router = useRouter();
 
@@ -77,131 +60,17 @@ export function GooeyNav({
     setActiveIndex(getActiveIndex());
   }
 
-  const makeParticles = (element: HTMLElement) => {
-    const noise = (n = 1) => n / 2 - Math.random() * n;
-
-    const getXY = (distance: number, pointIndex: number, totalPoints: number) => {
-      const angle = ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
-      return [distance * Math.cos(angle), distance * Math.sin(angle)];
-    };
-
-    const createParticle = (i: number, t: number, d: [number, number], r: number) => {
-      const rotate = noise(r / 10);
-      return {
-        start: getXY(d[0], particleCount - i, particleCount),
-        end: getXY(d[1] + noise(7), particleCount - i, particleCount),
-        time: t,
-        scale: 1 + noise(0.2),
-        color: colors[Math.floor(Math.random() * colors.length)],
-        rotate: rotate > 0 ? (rotate + r / 20) * 10 : (rotate - r / 20) * 10,
-      };
-    };
-
-    const d = particleDistances;
-    const r = particleR;
-    const bubbleTime = animationTime * 2 + timeVariance;
-    element.style.setProperty("--time", `${bubbleTime}ms`);
-
-    for (let i = 0; i < particleCount; i++) {
-      const t = animationTime * 2 + noise(timeVariance * 2);
-      const p = createParticle(i, t, d, r);
-      element.classList.remove("active");
-
-      setTimeout(() => {
-        const particle = document.createElement("span");
-        const point = document.createElement("span");
-        particle.classList.add("particle");
-        particle.style.setProperty("--start-x", `${p.start[0]}px`);
-        particle.style.setProperty("--start-y", `${p.start[1]}px`);
-        particle.style.setProperty("--end-x", `${p.end[0]}px`);
-        particle.style.setProperty("--end-y", `${p.end[1]}px`);
-        particle.style.setProperty("--time", `${p.time}ms`);
-        particle.style.setProperty("--scale", `${p.scale}`);
-        particle.style.setProperty("--color", `var(--color-${p.color}, white)`);
-
-        point.classList.add("point");
-        point.style.setProperty("--rotate", `${p.rotate}deg`);
-
-        particle.appendChild(point);
-        element.appendChild(particle);
-
-        if (i === particleCount - 1) {
-          element.classList.add("active");
-        }
-
-        setTimeout(() => {
-          particle.remove();
-        }, p.time);
-      }, i * 20);
-    }
-  };
-
-  const updateEffectPosition = useCallback((element: HTMLElement) => {
-    if (!containerRef.current || !filterRef.current || !textRef.current) return;
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const pos = element.getBoundingClientRect();
-
-    const styles = {
-      left: `${pos.x - containerRect.x}px`,
-      top: `${pos.y - containerRect.y}px`,
-      width: `${pos.width}px`,
-      height: `${pos.height}px`,
-    };
-    Object.assign(filterRef.current.style, styles);
-    Object.assign(textRef.current.style, styles);
-    textRef.current.innerText = element.innerText;
-  }, []);
-
   const handleClick = (e: React.MouseEvent<HTMLElement>, index: number, href?: string) => {
-    const liEl = e.currentTarget.closest("li");
-    if (!liEl) return;
-
     setActiveIndex(index);
-    updateEffectPosition(liEl as HTMLElement);
-
-    if (filterRef.current) {
-      const particles = filterRef.current.querySelectorAll(".particle");
-      particles.forEach((p) => filterRef.current?.removeChild(p));
-    }
-
-    if (textRef.current) {
-      textRef.current.classList.remove("active");
-      void textRef.current.offsetWidth;
-      textRef.current.classList.add("active");
-    }
-
-    if (filterRef.current) {
-      makeParticles(filterRef.current);
-    }
-
     if (href) {
       handleSectionNavigation(e, href, pathname, router);
     }
   };
 
-  useEffect(() => {
-    if (!navRef.current || !containerRef.current) return;
-    const activeLi = navRef.current.querySelectorAll("li")[activeIndex];
-    if (activeLi) {
-      updateEffectPosition(activeLi as HTMLElement);
-      textRef.current?.classList.add("active");
-    }
-
-    const resizeObserver = new ResizeObserver(() => {
-      const currentActiveLi = navRef.current?.querySelectorAll("li")[activeIndex];
-      if (currentActiveLi) {
-        updateEffectPosition(currentActiveLi as HTMLElement);
-      }
-    });
-
-    resizeObserver.observe(containerRef.current);
-    return () => resizeObserver.disconnect();
-  }, [activeIndex, updateEffectPosition]);
-
   return (
-    <div className={cn("gooey-nav-container", className)} ref={containerRef}>
+    <div className={cn("gooey-nav-container", className)}>
       <nav>
-        <ul ref={navRef}>
+        <ul>
           {items.map((item, index) => {
             const isParentActive = item.children
               ? item.children.some((c) => pathname.startsWith(c.href))
@@ -211,7 +80,7 @@ export function GooeyNav({
             return (
               <li
                 key={item.label}
-                className={cn("relative", isActive ? "active" : "")}
+                className="relative"
                 onMouseEnter={() =>
                   item.children ? setActiveDropdown(item.label) : null
                 }
@@ -220,7 +89,12 @@ export function GooeyNav({
                 {item.children ? (
                   <button
                     type="button"
-                    className="relative z-30 transition-colors flex items-center gap-1.5 px-4 py-2 text-sm font-semibold"
+                    className={cn(
+                      "relative z-30 flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200",
+                      isActive
+                        ? "bg-white text-black shadow-md"
+                        : "text-zinc-300 hover:text-white hover:bg-white/10"
+                    )}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -228,10 +102,10 @@ export function GooeyNav({
                       handleClick(e, index, item.href);
                     }}
                   >
-                    <span className="font-semibold relative z-30">{item.label}</span>
+                    <span>{item.label}</span>
                     <ChevronDown
                       className={cn(
-                        "h-3.5 w-3.5 transition-transform duration-200 relative z-30",
+                        "h-3.5 w-3.5 transition-transform duration-200",
                         activeDropdown === item.label && "rotate-180"
                       )}
                     />
@@ -239,7 +113,12 @@ export function GooeyNav({
                 ) : (
                   <Link
                     href={item.href}
-                    className="relative z-30 transition-colors inline-block px-4 py-2 text-sm font-semibold"
+                    className={cn(
+                      "relative z-30 inline-block px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200",
+                      isActive
+                        ? "bg-white text-black shadow-md"
+                        : "text-zinc-300 hover:text-white hover:bg-white/10"
+                    )}
                     onClick={(e) => handleClick(e, index, item.href)}
                   >
                     <span>{item.label}</span>
@@ -254,7 +133,7 @@ export function GooeyNav({
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ duration: 0.15, ease: "easeOut" }}
-                      className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-72 overflow-hidden rounded-2xl gooey-dropdown-menu backdrop-blur-2xl p-2 z-[100] shadow-2xl border border-white/10"
+                      className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-72 overflow-hidden rounded-2xl gooey-dropdown-menu backdrop-blur-2xl p-2 z-[100] shadow-2xl border border-white/10 bg-black/80"
                     >
                       <div className="flex flex-col gap-1">
                         {item.children.map((child) => {
@@ -302,8 +181,6 @@ export function GooeyNav({
           })}
         </ul>
       </nav>
-      <span className="effect filter" ref={filterRef} />
-      <span className="effect text" ref={textRef} />
     </div>
   );
 }

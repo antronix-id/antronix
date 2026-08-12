@@ -26,92 +26,9 @@ import { SectionHeader } from "@/components/shared/section-header";
 import { PortfolioCard } from "@/components/features/portfolio-card";
 import { ProblemSolutionSection } from "@/components/features/problem-solution-section";
 import { TargetAudienceSection } from "@/components/features/target-audience-section";
-import { FaqSection, FaqData } from "@/components/features/faq-scroller";
-import { SERVICES, PORTFOLIO, AGENCY } from "@/lib/constants";
+import { FaqSection } from "@/components/features/faq-scroller";
+import { SERVICES, PORTFOLIO, AGENCY, WEB_STUDIO_FAQ } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-
-const webStudioFaqData: FaqData = {
-  mainTitle: "Pertanyaan Umum Web Studio",
-  mainSubtitle:
-    "Segala hal yang perlu Anda ketahui tentang layanan pembuatan website modern & landing page performa tinggi kami.",
-  rows: [
-    {
-      id: "ws-row1",
-      speed: "24s",
-      direction: "left",
-      faqItems: [
-        {
-          id: "ws-q1",
-          question: "Berapa lama proses pembuatan website hingga siap diakses?",
-          answer:
-            "Landing page dan website bisnis standar selesai dalam 3–7 hari kerja. Aplikasi web custom membutuhkan 2–3 minggu."
-        },
-        {
-          id: "ws-q2",
-          question: "Apakah website sudah dioptimasi untuk perangkat HP / Mobile?",
-          answer:
-            "100% responsif. Website dirancang presisi untuk semua ukuran layar (Mobile, Tablet, Desktop) dengan tampilan modern."
-        },
-        {
-          id: "ws-q3",
-          question: "Apakah sudah termasuk Domain, Hosting, dan SSL Gratis?",
-          answer:
-            "Ya! Semua paket Web Studio sudah termasuk gratis domain .com/.id, hosting cloud ultra-cepat, dan enkripsi SSL HTTPS."
-        }
-      ]
-    },
-    {
-      id: "ws-row2",
-      speed: "18s",
-      direction: "right",
-      faqItems: [
-        {
-          id: "ws-q4",
-          question: "Apakah website menggunakan arsitektur Next.js 16 terbaru?",
-          answer:
-            "Ya, kami membangun website menggunakan Next.js 16 Server Components & TypeScript untuk performa skor Lighthouse 95-100."
-        },
-        {
-          id: "ws-q5",
-          question: "Bagaimana jika saya ingin menambah halaman/fitur di kemudian hari?",
-          answer:
-            "Struktur koding berarsitektur modular kami memudahkan penambahan fitur baru atau upgrade paket kapan saja tanpa bongkar ulang."
-        },
-        {
-          id: "ws-q6",
-          question: "Apakah saya bisa mengelola isi konten dan gambar sendiri?",
-          answer:
-            "Tentu. Setiap website dilengkapi CMS Admin intuitif agar Anda dapat memperbarui produk, berita, dan promo mandiri."
-        }
-      ]
-    },
-    {
-      id: "ws-row3",
-      speed: "28s",
-      direction: "left",
-      faqItems: [
-        {
-          id: "ws-q7",
-          question: "Apakah ada garansi jika timbul masalah/bug pada website?",
-          answer:
-            "Kami memberikan garansi pemeliharaan teknis & perbaikan bug gratis selama 30 hingga 90 hari pasca peluncuran."
-        },
-        {
-          id: "ws-q8",
-          question: "Apakah terintegrasi dengan Meta Pixel, Google Analytics & WA?",
-          answer:
-            "Sudah terpasang integrasi lengkap untuk tombol WhatsApp langsung, Meta Pixel, Google Tag Manager, dan Analytics."
-        },
-        {
-          id: "ws-q9",
-          question: "Bagaimana cara melakukan pemesanan paket Web Studio?",
-          answer:
-            "Klik tombol Pilih Paket atau Hubungi Kami via WhatsApp. Tim teknis kami akan langsung memproses konsultasi kebutuhan Anda."
-        }
-      ]
-    }
-  ]
-};
 
 import { useState, useEffect } from "react";
 
@@ -158,19 +75,7 @@ const webStudioFeatureConfig: Record<string, { icon: React.ElementType; color: s
 };
 
 export default function WebStudioPage() {
-  const [service, setService] = useState<any>(defaultService);
-
-  useEffect(() => {
-    fetch("/api/services")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          const match = data.find((s) => s.slug === "web-studio" || s.id === "web-studio" || s.id === 1);
-          if (match) setService(match);
-        }
-      })
-      .catch((err) => console.error("Error fetching web-studio service:", err));
-  }, []);
+  const service = SERVICES.find((s) => s.slug === "web-studio") || SERVICES[0];
   return (
     <div className="relative min-h-screen">
       {/* HERO SECTION */}
@@ -469,7 +374,7 @@ export default function WebStudioPage() {
 
       {/* FAQ SECTION */}
       <section className="relative py-12 sm:py-20 border-t border-white/5 overflow-hidden">
-        <FaqSection data={webStudioFaqData} />
+        <FaqSection data={WEB_STUDIO_FAQ} />
       </section>
     </div>
   );

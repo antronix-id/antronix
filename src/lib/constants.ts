@@ -18,12 +18,4 @@ export type {
   WhyChooseUsItem,
 } from "@/types/agency";
 
-export {
-  AGENCY,
-  NAV_LINKS,
-  STATS,
-  SERVICES,
-  PORTFOLIO,
-  TESTIMONIALS,
-  WHY_CHOOSE_US,
-} from "@/data";
+export * from "@/data";
