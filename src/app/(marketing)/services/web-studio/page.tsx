@@ -18,17 +18,13 @@ import {
   Gauge,
   Sparkles
 } from "lucide-react";
-import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BorderGlow } from "@/components/animations/border-glow";
+import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/shared/section-header";
 import { PortfolioCard } from "@/components/features/portfolio-card";
 import { ProblemSolutionSection } from "@/components/features/problem-solution-section";
-import { TargetAudienceSection } from "@/components/features/target-audience-section";
 import { FaqSection } from "@/components/features/faq-scroller";
+import { CosmicParallaxBg } from "@/components/ui/parallax-cosmic-background";
 import { SERVICES, PORTFOLIO, AGENCY, WEB_STUDIO_FAQ } from "@/lib/constants";
-import { cn } from "@/lib/utils";
 
 import { useState, useEffect } from "react";
 
@@ -79,103 +75,12 @@ export default function WebStudioPage() {
   return (
     <div className="relative min-h-screen">
       {/* HERO SECTION */}
-      <section className="relative pt-20 pb-16 sm:py-24 lg:py-32 overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
-            {/* Left Content */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-tight text-white">
-                Website Performance Tinggi &{" "}
-                <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-                  Konversi Maksimal
-                </span>
-              </h1>
-
-              {/* Subtitle */}
-              <p className="mt-6 text-base sm:text-lg leading-relaxed text-muted-foreground max-w-2xl">
-                Kami merancang website modern, cepat, SEO-optimized, dan landing page performa tinggi yang tidak hanya tampil memukau, tapi secara terukur meningkatkan trust dan konversi bisnis Anda.
-              </p>
-
-              {/* CTA Action Buttons */}
-              <div className="mt-10 flex flex-wrap items-center gap-4">
-                <Link href={AGENCY.socials.whatsapp} target="_blank">
-                  <LiquidMetalButton>
-                    <MessageCircle className="h-4 w-4 text-emerald-400" />
-                    <span>Mulai Proyek Web</span>
-                  </LiquidMetalButton>
-                </Link>
-
-                <Link href="#pricing">
-                  <LiquidMetalButton>
-                    <span>Lihat Paket & Harga</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </LiquidMetalButton>
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Right Interactive Visual Graphic Showcase */}
-            <div className="lg:col-span-1 relative mt-6 lg:mt-0">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="relative"
-              >
-                {/* Visual Card Glass Frame */}
-                <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full">
-                  <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full p-4 sm:p-5 flex flex-col justify-between">
-                    {/* Background ambient lighting & animated effects */}
-                    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                      <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/10 via-transparent to-white/5 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
-                      <div className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-slate-300/20 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce" />
-                      <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-slate-300/15 blur-xl animate-ping" />
-                      <div className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative z-10">
-                      {/* Browser Window Header Bar */}
-                      <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 px-2">
-                        <div className="flex items-center gap-1.5">
-                          <div className="h-3 w-3 rounded-full bg-slate-400/80" />
-                          <div className="h-3 w-3 rounded-full bg-zinc-400/80" />
-                          <div className="h-3 w-3 rounded-full bg-slate-300/80" />
-                        </div>
-                        <div className="flex items-center gap-2 rounded-full border border-slate-400/30 bg-slate-400/10 px-3 py-1 text-[11px] text-zinc-300 w-3/5 justify-center">
-                          <Lock className="h-3 w-3 text-slate-300" />
-                          <span className="truncate">client-website.com</span>
-                        </div>
-                        <div className="w-8" />
-                      </div>
-
-                      {/* Browser Content Video Showcase */}
-                      <div className="relative overflow-hidden rounded-xl border border-slate-400/20 bg-slate-900 aspect-video flex items-center justify-center">
-                        <video
-                          src="/bc.mp4"
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          className="w-full h-full object-cover rounded-xl"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Decorative Glass Corners */}
-                    <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-slate-300/20 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                    <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-slate-300/20 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
+      <section className="relative w-full overflow-hidden -mt-16 sm:-mt-20">
+        <CosmicParallaxBg 
+          head="Web Studio"
+          text="Website Performance Tinggi, Konversi Maksimal, Modern, Cepat, SEO Optimized"
+          className="w-full min-h-[500px] sm:min-h-[600px]"
+        />
       </section>
 
       {/* PROBLEM & SOLUTION SECTION */}
@@ -184,15 +89,6 @@ export default function WebStudioPage() {
           problemsAndSolutions={service.problemsAndSolutions}
           serviceTitle={service.title}
           glowColor="#06b6d4"
-        />
-      )}
-
-      {/* TARGET AUDIENCE SECTION */}
-      {service.targetAudience && (
-        <TargetAudienceSection 
-          targetAudience={service.targetAudience}
-          serviceTitle={service.title}
-          glowColor="#3b82f6"
         />
       )}
 
@@ -347,17 +243,18 @@ export default function WebStudioPage() {
                           </ul>
                         </div>
                         <div className="w-full flex justify-center pt-4 border-t border-white/10">
-                          <LiquidMetalButton
+                          <Button
                             onClick={() => {
                               const message = encodeURIComponent(
                                 `Halo ${AGENCY.name}! 👋\n\nSaya berminat dengan *Web Studio* - Paket *${tier.name}*.\n\nBisa dibantu untuk konsultasi detail?`
                               );
                               window.open(`https://wa.me/${AGENCY.whatsapp}?text=${message}`, "_blank");
                             }}
+                            className="w-full"
                           >
                             <span>Pilih Paket {tier.name}</span>
                             <ArrowRight className="ml-2 h-4 w-4" />
-                          </LiquidMetalButton>
+                          </Button>
                         </div>
                       </div>
 

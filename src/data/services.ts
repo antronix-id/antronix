@@ -8,6 +8,6 @@ import { SYSTEM_LAB_SERVICE } from "./system-lab";
  */
 export const SERVICES: Service[] = [
   WEB_STUDIO_SERVICE,
-  MEDIA_LAB_SERVICE,
   SYSTEM_LAB_SERVICE,
+  MEDIA_LAB_SERVICE,
 ];

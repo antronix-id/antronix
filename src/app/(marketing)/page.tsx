@@ -15,15 +15,13 @@ import {
   Users,
   Eye,
 } from "lucide-react";
-import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
+import { Button } from "@/components/ui/button";
 import { BorderGlow } from "@/components/animations/border-glow";
 import { SectionHeader } from "@/components/shared/section-header";
 import { ServiceCard } from "@/components/features/service-card";
+import { HomeTargetClientsSection } from "@/components/features/target-clients-section";
 import { PortfolioCard } from "@/components/features/portfolio-card";
 import { TestimonialsSection } from "@/components/features/testimonial-v2";
-import { PricingCalculator } from "@/components/features/pricing-calculator";
-import { ContactForm } from "@/components/features/contact-form";
-import { LocationMap } from "@/components/mockups/location-map";
 import { SplitText, GradientText } from "@/components/animations/animated-text";
 import { SERVICES, PORTFOLIO, TESTIMONIALS, AGENCY, PortfolioItem } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -67,15 +65,19 @@ export default function HomePage() {
                 className="mt-8 sm:mt-10 flex flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-4 w-full max-w-md mx-auto lg:mx-0"
               >
                 <div className="flex justify-center shrink-0">
-                  <LiquidMetalButton href="#pricing">
-                    <span className="text-xs sm:text-sm whitespace-nowrap">Mulai Proyek</span>
-                    <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  </LiquidMetalButton>
+                  <Link href="/kontak">
+                    <Button size="lg">
+                      <span className="text-xs sm:text-sm whitespace-nowrap">Mulai Proyek</span>
+                      <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    </Button>
+                  </Link>
                 </div>
                 <div className="flex justify-center shrink-0">
-                  <LiquidMetalButton href="#services">
-                    <span className="text-xs sm:text-sm whitespace-nowrap">Lihat Layanan</span>
-                  </LiquidMetalButton>
+                  <Link href="#services">
+                    <Button variant="outline" size="lg">
+                      <span className="text-xs sm:text-sm whitespace-nowrap">Lihat Layanan</span>
+                    </Button>
+                  </Link>
                 </div>
               </motion.div>
             </div>
@@ -91,6 +93,27 @@ export default function HomePage() {
                 {/* Hero Image Container */}
                 <div className="relative w-full flex justify-center lg:justify-end">
                   <div className="relative w-full overflow-hidden">
+                    {/* Video inside laptop screen */}
+                    <div
+                      className="absolute z-0 overflow-hidden bg-black rounded-t-[4px]"
+                      style={{
+                        top: "8.6%",
+                        left: "23.35%",
+                        width: "53.0%",
+                        height: "47.5%",
+                      }}
+                    >
+                      <video
+                        src="/h.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
                     {/* Laptop Frame Image */}
                     <Image
                       src="/tangan-leptop.avif"
@@ -135,6 +158,11 @@ export default function HomePage() {
       </section>
 
       {/* ============================================ */}
+      {/* TARGET CLIENTS & AUDIENCE SECTION */}
+      {/* ============================================ */}
+      <HomeTargetClientsSection />
+
+      {/* ============================================ */}
       {/* PORTFOLIO SECTION */}
       {/* ============================================ */}
       <section id="portfolio" className="relative py-24 sm:py-32">
@@ -160,10 +188,12 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="mt-12 text-center"
           >
-            <LiquidMetalButton href="/portfolio">
-              <span>Lihat Semua Portofolio</span>
-              <ChevronRight className="h-4 w-4" />
-            </LiquidMetalButton>
+            <Link href="/portfolio">
+              <Button size="lg">
+                <span>Lihat Semua Portofolio</span>
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -172,80 +202,6 @@ export default function HomePage() {
       {/* TESTIMONIALS SECTION */}
       {/* ============================================ */}
       <TestimonialsSection />
-
-      {/* ============================================ */}
-      {/* PRICING CALCULATOR SECTION */}
-      {/* ============================================ */}
-      <section id="pricing" className="relative py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <SectionHeader
-            title="Estimasi Paket"
-            titleHighlight="Investasi Digital"
-            description="Pilih pilar layanan dan paket yang paling sesuai dengan kebutuhan dan anggaran bisnis Anda."
-          />
-          <PricingCalculator />
-        </div>
-      </section>
-
-      {/* ============================================ */}
-      {/* CONTACT / CTA SECTION */}
-      {/* ============================================ */}
-      <section id="contact" className="relative py-16 sm:py-24">
-        {/* Background effect */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute left-1/4 top-0 h-96 w-96 rounded-full bg-[oklch(0.5_0.18_270)] opacity-5 blur-[120px]" />
-          <div className="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-[oklch(0.5_0.2_310)] opacity-5 blur-[120px]" />
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-          {/* Centered Section Header */}
-          <SectionHeader
-            title="Siap Memulai Proyek"
-            titleHighlight="Digital Anda?"
-            description="Diskusikan kebutuhan proyek Anda dengan tim spesialis kami. Kami siap memberikan solusi teknologi terbaik untuk akselerasi pertumbuhan bisnis Anda."
-          />
-
-          {/* 2-Column Grid: Contact Form & Location Map */}
-          <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-2 max-w-7xl mx-auto items-stretch">
-            {/* Contact Form Card */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="flex flex-col h-full"
-            >
-              <ContactForm />
-            </motion.div>
-
-            {/* Location Map Card (Full Bleed Reference Design) */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="relative flex flex-col h-full min-h-[320px] sm:min-h-[480px] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl"
-            >
-              <LocationMap
-                center={[104.7565, -2.9845]}
-                zoom={12.8}
-                pitch={0}
-                bearing={0}
-                markers={[
-                  {
-                    lng: 104.7565,
-                    lat: -2.9845,
-                    label: "Antronix",
-                    popupTitle: "Antronix",
-                    icon: "hq",
-                  },
-                ]}
-                className="min-h-[320px] sm:min-h-[480px]"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

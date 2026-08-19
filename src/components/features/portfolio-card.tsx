@@ -5,8 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import type { PortfolioItem } from "@/lib/constants";
 import { LaptopMockup } from "@/components/mockups/laptop-mockup";
-import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
-
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface PortfolioCardProps {
@@ -58,17 +57,17 @@ export function PortfolioCard({ item, index, className }: PortfolioCardProps) {
         </div>
 
         {/* Visit Web Button */}
-        <LiquidMetalButton
+        <Button
+          size="icon"
+          variant="outline"
           onClick={(e) => {
             e?.stopPropagation();
             window.open(targetUrl, "_blank", "noopener,noreferrer");
           }}
-          viewMode="icon"
-          className="shrink-0"
           aria-label="Kunjungi website"
         >
-          <ArrowUpRight className="h-4 w-4 text-slate-200" />
-        </LiquidMetalButton>
+          <ArrowUpRight className="h-4 w-4" />
+        </Button>
       </div>
     </motion.div>
   );

@@ -138,7 +138,7 @@ export function ProblemSolutionSection({
 
                       <div className="relative h-24 w-24 sm:h-28 sm:w-28 shrink-0 self-center sm:self-auto">
                         <Image
-                          src="/image/masalah.avif"
+                          src="/tantangan.avif"
                           alt="Tantangan Bisnis"
                           width={112}
                           height={112}
@@ -198,7 +198,7 @@ export function ProblemSolutionSection({
 
                       <div className="relative h-24 w-24 sm:h-28 sm:w-28 shrink-0 self-center sm:self-auto">
                         <Image
-                          src="/image/solusi.avif"
+                          src="/solusi.avif"
                           alt="Solusi Kami"
                           width={112}
                           height={112}

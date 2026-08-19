@@ -20,7 +20,7 @@ import {
   BarChart2,
   ChevronRight
 } from "lucide-react";
-import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
+import { Button } from "@/components/ui/button";
 import { BorderGlow } from "@/components/animations/border-glow";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Badge } from "@/components/ui/badge";
@@ -153,10 +153,10 @@ export default function ServicesPage() {
                       {/* Header CTA Action */}
                       <div className="lg:col-span-4 flex lg:justify-end gap-3">
                         <Link href={`/services/${service.slug}`}>
-                          <LiquidMetalButton>
+                          <Button>
                             <span>Detail & Paket Harga</span>
                             <ArrowRight className="h-4 w-4" />
-                          </LiquidMetalButton>
+                          </Button>
                         </Link>
                       </div>
                     </div>
@@ -278,11 +278,11 @@ export default function ServicesPage() {
               </p>
               <div className="mt-8 flex justify-center">
                 <Link href={AGENCY.socials.whatsapp} target="_blank">
-                  <LiquidMetalButton>
-                    <MessageCircle className="h-5 w-5 text-emerald-400" />
+                  <Button size="lg">
+                    <MessageCircle className="h-4 w-4" />
                     <span>Konsultasi Langsung via WhatsApp</span>
                     <ArrowRight className="h-4 w-4" />
-                  </LiquidMetalButton>
+                  </Button>
                 </Link>
               </div>
             </div>

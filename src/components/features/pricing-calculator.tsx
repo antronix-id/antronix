@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
 import { Badge } from "@/components/ui/badge";
 import { BorderGlow } from "@/components/animations/border-glow";
 import { Check, MessageCircle, Zap } from "lucide-react";
@@ -49,6 +48,7 @@ export function PricingCalculator() {
         {SERVICES.map((service, index) => {
           const serviceKey = String(service.id || service.slug);
           const logoSrc = service.logo || divisionLogos[serviceKey] || divisionLogos[service.slug] || "/Web-Studio.avif";
+          const isSelected = activeService.slug === service.slug || activeService.id === service.id;
 
           return (
             <div
@@ -58,19 +58,20 @@ export function PricingCalculator() {
                 index === 2 ? "col-span-2 justify-center" : "col-span-1"
               )}
             >
-              <LiquidMetalButton
+              <Button
+                variant={isSelected ? "default" : "outline"}
                 onClick={() => setSelectedServiceId(serviceKey)}
-                className="w-full sm:w-auto justify-center"
+                className="w-full sm:w-auto"
               >
                 <Image
                   src={logoSrc}
                   alt={service.title}
-                  width={20}
-                  height={20}
-                  className="h-5 w-5 object-contain filter drop-shadow-sm shrink-0"
+                  width={16}
+                  height={16}
+                  className="h-4 w-4 object-contain shrink-0"
                 />
-                <span className="whitespace-nowrap text-xs sm:text-sm">{service.shortTitle || service.title}</span>
-              </LiquidMetalButton>
+                <span className="whitespace-nowrap">{service.shortTitle || service.title}</span>
+              </Button>
             </div>
           );
         })}
@@ -160,12 +161,13 @@ export function PricingCalculator() {
 
                     {/* CTA Button */}
                     <div className="w-full flex justify-center pt-4 border-t border-white/10">
-                      <LiquidMetalButton
+                      <Button
                         onClick={() => handleWhatsApp(tier.name)}
+                        className="w-full"
                       >
-                        <MessageCircle className="h-4 w-4 text-slate-300" />
+                        <MessageCircle className="h-4 w-4" />
                         <span>Pilih Paket {tier.name}</span>
-                      </LiquidMetalButton>
+                      </Button>
                     </div>
                   </div>
 

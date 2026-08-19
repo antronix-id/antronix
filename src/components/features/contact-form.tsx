@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { LiquidMetalButton } from "@/components/animations/liquid-metal-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -61,8 +60,8 @@ export function ContactForm() {
           animate={{ opacity: 1, scale: 1 }}
           className="flex flex-col items-center justify-center py-12 text-center"
         >
-          <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
-            <CheckCircle2 className="h-10 w-10 text-primary" />
+          <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500/10">
+            <CheckCircle2 className="h-10 w-10 text-emerald-400" />
           </div>
           <h3 className="mb-2 text-2xl font-bold">Terima Kasih! 🎉</h3>
           <p className="mb-6 max-w-md text-muted-foreground">
@@ -71,7 +70,6 @@ export function ContactForm() {
           </p>
           <Button
             variant="outline"
-            className="rounded-full px-6"
             onClick={() => {
               setStatus("idle");
               setFormData({ name: "", whatsapp: "", service: "", details: "" });
@@ -190,22 +188,24 @@ export function ContactForm() {
 
             {/* Submit */}
             <div className="w-full flex justify-center">
-              <LiquidMetalButton
+              <Button
                 type="submit"
+                size="lg"
                 disabled={status === "loading"}
+                className="w-full sm:w-auto min-w-[200px]"
               >
                 {status === "loading" ? (
                   <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Mengirim...
                   </>
                 ) : (
                   <>
-                    <Send className="mr-2 h-5 w-5" />
+                    <Send className="mr-2 h-4 w-4" />
                     Kirim Pesan
                   </>
                 )}
-              </LiquidMetalButton>
+              </Button>
             </div>
           </form>
         </div>
