@@ -54,7 +54,7 @@ export default function HomePage() {
               {/* Sub-headline */}
               <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-relaxed text-muted-foreground max-w-xl mx-auto lg:mx-0">
                 Antronix hadir membantu Anda mengubah tantangan bisnis menjadi peluang dengan
-                layanan Web Studio dan System Lab terbaik.
+                layanan Web Studio dan System Lab terbaik
               </p>
 
               {/* CTA Buttons */}
