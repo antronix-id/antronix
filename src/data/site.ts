@@ -29,7 +29,6 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Beranda", href: "/" },
   { label: "Web Studio", href: "/services/web-studio" },
   { label: "System Lab", href: "/services/system-lab" },
-  { label: "AI Media Lab", href: "/services/ai-media-lab" },
   { label: "Kontak", href: "/kontak" },
 ];
 

@@ -31,7 +31,6 @@ import { cn } from "@/lib/utils";
 
 const logoMap: Record<string, string> = {
   "web-studio": "/Web-Studio.avif",
-  "ai-media-lab": "/Media-Lab.avif",
   "system-lab": "/System-Lab.avif",
 };
 
@@ -66,7 +65,7 @@ export default function ServicesPage() {
               </span>
             </h1>
             <p className="mt-6 text-base sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Kami menyatukan 3 kekuatan pilar teknologi — **Web Studio**, **AI Media Lab**, dan **System Lab** — untuk menyelesaikan tantangan operasional, meningkatkan trust brand, dan mendongkrak omset penjualan Anda.
+              Kami menyatukan 2 kekuatan pilar teknologi — **Web Studio** dan **System Lab** — untuk menyelesaikan tantangan operasional, meningkatkan trust brand, dan mendongkrak omset penjualan Anda.
             </p>
           </motion.div>
 
@@ -86,7 +85,7 @@ export default function ServicesPage() {
                   : "bg-slate-900/60 text-muted-foreground border-white/10 hover:border-white/20"
               )}
             >
-              Semua Layanan (3 Pilar)
+              Semua Layanan (2 Pilar)
             </button>
             {SERVICES.map((s) => {
               const tabKey = String(s.id || s.slug);

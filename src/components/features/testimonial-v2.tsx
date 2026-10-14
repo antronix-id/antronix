@@ -26,10 +26,10 @@ const testimonials: Testimonial[] = [
     role: "Direktur Pemasaran, FashionHub",
   },
   {
-    text: "Layanan AI Media Lab mereka luar biasa. Kami bisa memproduksi 10x lebih banyak konten promosi dengan anggaran yang sama!",
+    text: "Integrasi website dan sistem otomatisasi yang dibangun Antronix sangat luar biasa. Operasional bisnis kami berjalan jauh lebih cepat dan efisien!",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150",
     name: "Budi Santoso",
-    role: "Pendiri, ContentFirst",
+    role: "Pendiri, RetailHub",
   },
   {
     text: "Dasbor pemantauan yang dibangun sangat mudah digunakan dan akurat secara real-time. Tim kami kini dapat memantau seluruh armada dari satu layar.",

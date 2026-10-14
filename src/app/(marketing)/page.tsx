@@ -54,7 +54,7 @@ export default function HomePage() {
               {/* Sub-headline */}
               <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-relaxed text-muted-foreground max-w-xl mx-auto lg:mx-0">
                 Antronix hadir membantu Anda mengubah tantangan bisnis menjadi peluang dengan
-                layanan Web Studio, AI Media Lab, dan System Lab terbaik.
+                layanan Web Studio dan System Lab terbaik.
               </p>
 
               {/* CTA Buttons */}
@@ -147,9 +147,9 @@ export default function HomePage() {
           <SectionHeader
             title="Solusi Unggulan Untuk"
             titleHighlight="Setiap Kebutuhan"
-            description="Kami menyediakan tiga divisi utama yang siap merealisasikan visi digital perusahaan Anda."
+            description="Kami menyediakan dua pilar divisi utama yang siap merealisasikan visi digital perusahaan Anda."
           />
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 max-w-5xl mx-auto">
             {SERVICES.map((service, index) => (
               <ServiceCard key={service.id} service={service} index={index} />
             ))}

@@ -37,7 +37,7 @@ export function Footer() {
     <footer className="bg-[#0F0F11]/40 backdrop-blur-xl relative h-fit rounded-t-3xl overflow-hidden w-full border-t border-white/10 shadow-2xl">
       {/* Moving Marquee Banner */}
       <div className="py-5 border-b border-white/10 bg-black/20 relative z-40">
-        <Marquee text="Web Studio • AI Media Lab • System Lab" fontSize="lg" />
+        <Marquee text="Web Studio • System Lab • Web Studio • System Lab" fontSize="lg" />
       </div>
 
       <div className="w-full px-6 sm:px-12 lg:px-16 py-10 sm:py-14 z-50 relative pointer-events-auto">

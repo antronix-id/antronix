@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils";
 const FILTERS = [
   { id: "all", label: "Semua Proyek" },
   { id: "web-studio", label: "Web Studio" },
-  { id: "ai-media-lab", label: "AI Media Lab" },
   { id: "system-lab", label: "System Lab" },
 ] as const;
 

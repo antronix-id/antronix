@@ -25,10 +25,10 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: "3",
     clientName: "Budi Santoso",
-    companyOrRole: "Pendiri, ContentFirst",
+    companyOrRole: "Pendiri, RetailHub",
     avatarUrl: "/testimonials/avatar-3.jpg",
     content:
-      "Layanan AI Media Lab mereka luar biasa. Kami bisa memproduksi 10x lebih banyak konten promosi dengan anggaran yang sama!",
+      "Integrasi website dan sistem otomatisasi yang dibangun Antronix sangat luar biasa. Operasional bisnis kami berjalan jauh lebih cepat dan efisien!",
     rating: 5,
   },
   {

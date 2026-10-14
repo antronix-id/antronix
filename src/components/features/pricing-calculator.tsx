@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 
 const divisionLogos: Record<string, string> = {
   "web-studio": "/Web-Studio.avif",
-  "ai-media-lab": "/Media-Lab.avif",
   "system-lab": "/System-Lab.avif",
 };
 
@@ -43,9 +42,9 @@ export function PricingCalculator() {
 
   return (
     <div className="w-full space-y-10">
-      {/* Service Division Tabs Selector - 2 Top (Left/Right) + 1 Bottom Centered on Mobile */}
-      <div className="grid grid-cols-2 sm:flex sm:flex-row items-center justify-center gap-2.5 sm:gap-3 w-full max-w-sm sm:max-w-none mx-auto px-2">
-        {SERVICES.map((service, index) => {
+      {/* Service Division Tabs Selector */}
+      <div className="flex flex-row items-center justify-center gap-2.5 sm:gap-3 w-full max-w-sm sm:max-w-none mx-auto px-2">
+        {SERVICES.map((service) => {
           const serviceKey = String(service.id || service.slug);
           const logoSrc = service.logo || divisionLogos[serviceKey] || divisionLogos[service.slug] || "/Web-Studio.avif";
           const isSelected = activeService.slug === service.slug || activeService.id === service.id;
@@ -53,10 +52,7 @@ export function PricingCalculator() {
           return (
             <div
               key={serviceKey}
-              className={cn(
-                "flex justify-center sm:w-auto",
-                index === 2 ? "col-span-2 justify-center" : "col-span-1"
-              )}
+              className="flex justify-center w-full sm:w-auto"
             >
               <Button
                 variant={isSelected ? "default" : "outline"}

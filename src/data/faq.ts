@@ -83,89 +83,6 @@ export const WEB_STUDIO_FAQ: FaqData = {
   ],
 };
 
-export const AI_MEDIA_LAB_FAQ: FaqData = {
-  mainTitle: "Pertanyaan Umum AI Media Lab",
-  mainSubtitle:
-    "Semua informasi mengenai efisiensi produksi media visual 4K, video sintetis, dan avatar AI bertaraf sinematik.",
-  rows: [
-    {
-      id: "ai-row1",
-      speed: "24s",
-      direction: "left",
-      faqItems: [
-        {
-          id: "ai-q1",
-          question: "Berapa lama proses pembuatan video iklan dengan AI?",
-          answer:
-            "Video iklan dan konten visual siap rilis diproduksi hanya dalam 24–48 jam, jauh lebih cepat daripada syuting studio konvensional.",
-        },
-        {
-          id: "ai-q2",
-          question: "Apakah konten gambar & video beresolusi tinggi 4K?",
-          answer:
-            "Ya! Semua hasil rendering gambar 4K ultra-photorealistic dan video sinematik dirancang untuk tampilan layar besar & promosi sosial media.",
-        },
-        {
-          id: "ai-q3",
-          question: "Apakah hak cipta konten 100% menjadi milik saya?",
-          answer:
-            "Tentu saja. Lisensi penuh hak cipta komersial diserahkan 100% kepada Anda untuk iklan TikTok, Meta Ads, YouTube, dan website.",
-        },
-      ],
-    },
-    {
-      id: "ai-row2",
-      speed: "18s",
-      direction: "right",
-      faqItems: [
-        {
-          id: "ai-q4",
-          question: "Bagaimana cara membuat avatar AI khusus untuk brand kami?",
-          answer:
-            "Kami melakukan kloning visual avatar dan sampel suara emosional hiper-realistis untuk menjadi juru bicara resmi produk Anda.",
-        },
-        {
-          id: "ai-q5",
-          question: "Berapa penghematan biaya dibanding produksi studio tradisional?",
-          answer:
-            "Menggunakan AI Media Lab memangkas biaya produksi hingga 70% karena tidak memerlukan sewa studio, kamera, talent, dan kru lapangan.",
-        },
-        {
-          id: "ai-q6",
-          question: "Apakah bisa request narasi/voiceover dalam berbagai bahasa?",
-          answer:
-            "Bisa! Voiceover AI mendukung puluhan bahasa dan dialek lokal (Bahasa Indonesia, Inggris, Mandarin, dll.) dengan artikulasi alami.",
-        },
-      ],
-    },
-    {
-      id: "ai-row3",
-      speed: "28s",
-      direction: "left",
-      faqItems: [
-        {
-          id: "ai-q7",
-          question: "Apakah ada revisi jika visual belum sesuai dengan keinginan?",
-          answer:
-            "Setiap paket sudah termasuk kuota revisi penyesuaian gaya visual, narasi, dan hook untuk memastikan hasil sesuai ekspektasi.",
-        },
-        {
-          id: "ai-q8",
-          question: "Format file apa yang akan saya dapatkan?",
-          answer:
-            "Aset dikirim dalam format siap tayang: MP4 4K (16:9 & 9:16 untuk Reels/TikTok) dan image WebP/PNG ultra HD.",
-        },
-        {
-          id: "ai-q9",
-          question: "Bagaimana cara memesan paket AI Media Lab?",
-          answer:
-            "Klik tombol Mulai Produksi AI atau hubungi kami via WhatsApp untuk mengirimkan brief produk & gaya visual yang diinginkan.",
-        },
-      ],
-    },
-  ],
-};
-
 export const SYSTEM_LAB_FAQ: FaqData = {
   mainTitle: "Pertanyaan Umum System Lab",
   mainSubtitle:
@@ -252,7 +169,7 @@ export const SYSTEM_LAB_FAQ: FaqData = {
 export const SERVICES_FAQ: FaqData = {
   mainTitle: "Frequently Asked Questions",
   mainSubtitle:
-    "Punya pertanyaan seputar layanan Web Studio, AI Media Lab, atau System Lab? Temukan jawaban lengkapnya di bawah ini.",
+    "Punya pertanyaan seputar layanan Web Studio atau System Lab? Temukan jawaban lengkapnya di bawah ini.",
   rows: [
     {
       id: "row1",
@@ -286,21 +203,21 @@ export const SERVICES_FAQ: FaqData = {
       faqItems: [
         {
           id: "q4",
-          question: "Apakah aset visual & video AI Media Lab bebas hak cipta?",
+          question: "Apakah sistem kasir/POS dapat diintegrasikan dengan website e-commerce?",
           answer:
-            "100% lisensi komersial penuh milik Anda. Semua konten gambar 4K, video promo, dan avatar AI bebas digunakan untuk promosi & iklan komersial.",
+            "Tentu saja. Kami dapat menghubungkan sistem inventory, transaksi, dan database POS fisik langsung dengan katalog online website Anda.",
         },
         {
           id: "q5",
-          question: "Berapa persen penghematan biaya menggunakan AI Media Lab?",
+          question: "Apakah website dan sistem dilengkapi perlindungan keamanan data?",
           answer:
-            "Produksi media dengan AI menghemat biaya hingga 70% dibanding biaya sewa studio, kru produksi, talent, dan video editor profesional.",
+            "Setiap sistem yang kami bangun dilengkapi enkripsi SSL standar perbankan, perlindungan firewall anti-DDoS, dan backup otomatis berkala.",
         },
         {
           id: "q6",
-          question: "Apakah bisa membuat avatar AI yang mirip wajah owner/brand?",
+          question: "Apakah tim kami akan mendapatkan pelatihan penggunaan sistem?",
           answer:
-            "Tentu. Kami dapat melakukan kloning visual avatar dan sampel suara hiper-realistis untuk menjadi presenter resmi brand Anda.",
+            "Ya! Kami menyediakan sesi training langsung serta dokumentasi panduan operasional (SOP) agar staf Anda dapat mengoperasikan sistem dengan lancar.",
         },
       ],
     },

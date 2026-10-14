@@ -18,18 +18,6 @@ export const PORTFOLIO: PortfolioItem[] = [
     isFeatured: true,
   },
   {
-    id: "2",
-    title: "Pembuat Video Iklan AI Otomatis",
-    slug: "ai-product-video",
-    category: "ai-media-lab",
-    description:
-      "Alat AI yang mengubah foto produk menjadi video promosi profesional dalam hitungan menit. Telah digunakan oleh 50+ brand ternama.",
-    thumbnailUrl: "/portfolio/ai-product-video.jpg",
-    videoUrl: "/bc.mp4",
-    techStack: ["Python", "Stable Diffusion", "FFmpeg", "React"],
-    isFeatured: true,
-  },
-  {
     id: "3",
     title: "Sistem Manajemen Restoran & Kasir",
     slug: "restaurant-system",
@@ -52,18 +40,6 @@ export const PORTFOLIO: PortfolioItem[] = [
     videoUrl: "https://knsvwymkmdjyxtmzgtvb.supabase.co/storage/v1/object/public/agency-assets/vidio/website-aureo-coffe.mp4",
     liveUrl: "https://energy-drink-five.vercel.app/",
     techStack: ["Next.js", "Framer Motion", "Tailwind CSS", "TypeScript"],
-    isFeatured: true,
-  },
-  {
-    id: "5",
-    title: "Mesin Produksi Konten Media Sosial AI",
-    slug: "social-media-engine",
-    category: "ai-media-lab",
-    description:
-      "Alur otomatisasi konten media sosial — dari naskah, desain visual, hingga render video akhir. Memproduksi 100+ konten per bulan.",
-    thumbnailUrl: "/portfolio/social-media-engine.jpg",
-    videoUrl: "/bc.mp4",
-    techStack: ["GPT-4", "Runway ML", "Python", "Next.js"],
     isFeatured: true,
   },
   {

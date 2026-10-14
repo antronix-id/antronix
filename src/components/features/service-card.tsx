@@ -10,16 +10,13 @@ import { cn } from "@/lib/utils";
 
 const logoMap: Record<string, string> = {
   "web-studio": "/Web-Studio.avif",
-  "ai-media-lab": "/Media-Lab.avif",
   "system-lab": "/System-Lab.avif",
   globe: "/Web-Studio.avif",
-  sparkles: "/Media-Lab.avif",
   cpu: "/System-Lab.avif",
 };
 
 const bgMap: Record<string, string> = {
   "web-studio": "/web.avif",
-  "ai-media-lab": "/ai-ads.avif",
   "system-lab": "/system.avif",
 };
 

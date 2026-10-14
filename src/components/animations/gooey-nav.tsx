@@ -12,7 +12,6 @@ import "@/components/styles/gooey-nav.css";
 
 const logoMap: Record<string, string> = {
   globe: "/Web-Studio.avif",
-  sparkles: "/Media-Lab.avif",
   cpu: "/System-Lab.avif",
 };
 

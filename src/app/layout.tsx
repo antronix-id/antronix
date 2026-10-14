@@ -14,14 +14,12 @@ export const metadata: Metadata = {
     template: "%s | Antronix",
   },
   description:
-    "Agency digital terdepan yang mengakselerasi pertumbuhan bisnis Anda melalui kreativitas AI & sistem full-stack terintegrasi.",
+    "Agency digital terdepan yang mengakselerasi pertumbuhan bisnis Anda melalui website modern & sistem full-stack terintegrasi.",
   keywords: [
     "digital agency",
     "web studio",
-    "AI media lab",
     "system lab",
     "custom web",
-    "AI video ads",
     "POS",
     "SaaS",
     "DevOps",
@@ -41,7 +39,7 @@ export const metadata: Metadata = {
     siteName: "Antronix",
     title: "Antronix — Mempercepat Pertumbuhan melalui Kreativitas dan Sistem Full-Stack",
     description:
-      "Agency digital terdepan yang mengakselerasi pertumbuhan bisnis Anda melalui kreativitas AI & sistem full-stack terintegrasi.",
+      "Agency digital terdepan yang mengakselerasi pertumbuhan bisnis Anda melalui website modern & sistem full-stack terintegrasi.",
   },
 };
 
