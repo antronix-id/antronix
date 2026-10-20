@@ -1,4 +1,4 @@
-import type { FaqData } from "@/components/features/faq-scroller";
+import type { FaqData, ServiceSlug } from "@/types";
 
 export const WEB_STUDIO_FAQ: FaqData = {
   mainTitle: "Pertanyaan Umum Web Studio",
@@ -164,6 +164,16 @@ export const SYSTEM_LAB_FAQ: FaqData = {
       ],
     },
   ],
+};
+
+/**
+ * FAQ PER DIVISI LAYANAN — dipakai halaman /services/[slug].
+ * Record-nya wajib lengkap, jadi divisi baru tanpa entri FAQ akan terlihat
+ * sebagai error TypeScript saat dikompilasi.
+ */
+export const SERVICE_FAQ: Record<ServiceSlug, FaqData> = {
+  "web-studio": WEB_STUDIO_FAQ,
+  "system-lab": SYSTEM_LAB_FAQ,
 };
 
 export const SERVICES_FAQ: FaqData = {

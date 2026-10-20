@@ -1,142 +1,28 @@
-"use client";
-
-import { useState } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import {
-  MessageCircle,
-  ChevronRight,
-  Zap,
-  Shield,
-  Clock,
-  Headphones,
-  TrendingUp,
-  Users,
-  Eye,
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { BorderGlow } from "@/components/animations/border-glow";
-import { SectionHeader } from "@/components/shared/section-header";
-import { ServiceCard } from "@/components/features/service-card";
-import { HomeTargetClientsSection } from "@/components/features/target-clients-section";
-import { PortfolioCard } from "@/components/features/portfolio-card";
-import { TestimonialsSection } from "@/components/features/testimonial-v2";
-import { SplitText, GradientText } from "@/components/animations/animated-text";
-import { SERVICES, PORTFOLIO, TESTIMONIALS, AGENCY, PortfolioItem } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { BorderGlow } from "@/components/effects/border-glow";
+import { SectionHeader } from "@/components/layout/section-header";
+import { HomeHero } from "@/components/sections/home-hero";
+import { ServiceCard } from "@/components/sections/service-card";
+import { TargetClientsSection } from "@/components/sections/target-clients";
+import { TestimonialsSection } from "@/components/sections/testimonial-marquee";
+import { SERVICES } from "@/data";
+import { SITE } from "@/config/site";
+import { createMetadata } from "@/lib/metadata";
+
+export function generateMetadata(): Metadata {
+  return createMetadata({ description: SITE.description, path: "/" });
+}
 
 export default function HomePage() {
-  const featuredPortfolio = PORTFOLIO.filter((p) => p.isFeatured).slice(0, 6);
-
   return (
     <>
       {/* ============================================ */}
       {/* HERO SECTION */}
       {/* ============================================ */}
-      <section id="hero" className="relative flex min-h-screen items-center overflow-hidden -mt-16 sm:-mt-20 pt-20 sm:pt-32 lg:pt-52 pb-36 sm:pb-48 lg:pb-64">
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-12 lg:items-center mt-0 sm:mt-8">
-            {/* Left Content */}
-            <div className="order-2 lg:order-1 lg:col-span-6 xl:col-span-6 text-center lg:text-left z-10 -mt-10 sm:-mt-14 lg:mt-0">
-              {/* Headline */}
-              <h1 className="text-3xl font-bold tracking-tight sm:text-5xl lg:text-6xl leading-tight sm:leading-none">
-                <SplitText text="Solusi Digital" delay={0.3} />
-                <br />
-                <SplitText text="Terdepan Untuk" delay={0.5} />
-                <br />
-                <GradientText
-                  text="Akselerasi Bisnis"
-                  className="text-3xl sm:text-5xl lg:text-6xl font-bold"
-                />
-              </h1>
-
-              {/* Sub-headline */}
-              <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-relaxed text-muted-foreground max-w-xl mx-auto lg:mx-0">
-                Antronix hadir membantu Anda mengubah tantangan bisnis menjadi peluang dengan
-                layanan Web Studio dan System Lab terbaik
-              </p>
-
-              {/* CTA Buttons */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="mt-8 sm:mt-10 flex flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-4 w-full max-w-md mx-auto lg:mx-0"
-              >
-                <div className="flex justify-center shrink-0">
-                  <Link href="/kontak">
-                    <Button size="lg">
-                      <span className="text-xs sm:text-sm whitespace-nowrap">Mulai Proyek</span>
-                      <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                    </Button>
-                  </Link>
-                </div>
-                <div className="flex justify-center shrink-0">
-                  <Link href="#services">
-                    <Button variant="outline" size="lg">
-                      <span className="text-xs sm:text-sm whitespace-nowrap">Lihat Layanan</span>
-                    </Button>
-                  </Link>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Right Hero Image Showcase */}
-            <div className="order-1 lg:order-2 lg:col-span-6 xl:col-span-6 relative mt-0 lg:mt-0 flex justify-center lg:justify-end items-end">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
-                className="relative w-full max-w-md sm:max-w-xl lg:max-w-3xl xl:max-w-4xl mx-auto transform translate-x-0 lg:translate-x-20 xl:translate-x-28 translate-y-0 lg:translate-y-8 lg:scale-110 xl:scale-125 origin-center lg:origin-bottom-right"
-              >
-                {/* Hero Image Container */}
-                <div className="relative w-full flex justify-center lg:justify-end">
-                  <div className="relative w-full overflow-hidden">
-                    {/* Video inside laptop screen */}
-                    <div
-                      className="absolute z-0 overflow-hidden bg-black rounded-t-[4px]"
-                      style={{
-                        top: "8.6%",
-                        left: "23.35%",
-                        width: "53.0%",
-                        height: "47.5%",
-                      }}
-                    >
-                      <video
-                        src="/h.mp4"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="auto"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-
-                    {/* Laptop Frame Image */}
-                    <Image
-                      src="/tangan-leptop.avif"
-                      alt="Antronix Laptop Showcase"
-                      width={1100}
-                      height={850}
-                      priority
-                      className="relative z-10 w-full h-auto object-contain pointer-events-none"
-                      style={{
-                        maskImage: "linear-gradient(to bottom, black 40%, transparent 95%)",
-                        WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 95%)"
-                      }}
-                    />
-
-                    {/* Bottom Shadow Fade Gradient Overlay */}
-                    <div className="pointer-events-none absolute bottom-0 inset-x-0 h-1/3 bg-gradient-to-t from-background via-background/90 to-transparent z-20" />
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeHero />
 
       {/* ============================================ */}
       {/* SERVICES SECTION */}
@@ -160,41 +46,31 @@ export default function HomePage() {
       {/* ============================================ */}
       {/* TARGET CLIENTS & AUDIENCE SECTION */}
       {/* ============================================ */}
-      <HomeTargetClientsSection />
+      <TargetClientsSection />
 
       {/* ============================================ */}
-      {/* PORTFOLIO SECTION */}
+      {/* PORTFOLIO SHOWCASE TEASER SECTION */}
       {/* ============================================ */}
-      <section id="portfolio" className="relative py-24 sm:py-32">
-        <div className="relative mx-auto max-w-[1536px] px-4 sm:px-6 lg:px-10">
-          <SectionHeader
-            title="Karya Terbaik"
-            titleHighlight="Yang Telah Kami Bangun"
-            description="Lihat bagaimana kami membantu berbagai perusahaan mencapai hasil terbaik melalui teknologi dan desain."
-          />
-          <div className="grid grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
-            {featuredPortfolio.map((item, index) => (
-              <PortfolioCard
-                key={item.id}
-                item={item}
-                index={index}
-                className={index >= 3 ? "hidden md:block" : undefined}
+      <section className="relative py-20 sm:py-28 overflow-hidden">
+        <div className="relative mx-auto max-w-5xl px-6 lg:px-8">
+          <BorderGlow glowColor="#3b82f6">
+            <div className="rounded-3xl bg-slate-950/90 p-8 sm:p-14 text-center border border-white/10 backdrop-blur-2xl relative overflow-hidden">
+              <SectionHeader
+                badge="Portofolio & Studi Kasus"
+                title="Karya Digital Terbaik"
+                titleHighlight="Yang Telah Kami Bangun"
+                description="Jelajahi rekam jejak solusi website interaktif dan arsitektur sistem full-stack yang telah kami selesaikan untuk berbagai brand dan enterprise di seluruh Indonesia."
               />
-            ))}
-          </div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-12 text-center"
-          >
-            <Link href="/portfolio">
-              <Button size="lg">
-                <span>Lihat Semua Portofolio</span>
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </Link>
-          </motion.div>
+              <div className="mt-8 flex justify-center">
+                <Link href="/portfolio">
+                  <Button size="lg">
+                    <span>Lihat Semua Portofolio</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </BorderGlow>
         </div>
       </section>
 

@@ -1,7 +1,5 @@
-import { Suspense } from "react";
-import { Navbar } from "@/components/shared/navbar";
-import { Footer } from "@/components/shared/footer";
-import { PreloaderWrapper } from "@/components/providers/preloader-wrapper";
+import { SiteHeader } from "@/components/layout/site-header";
+import { Footer } from "@/components/layout/site-footer";
 import { PageTransitionProvider } from "@/components/providers/page-transition-provider";
 
 export default function MarketingLayout({
@@ -10,19 +8,13 @@ export default function MarketingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <PreloaderWrapper>
-      <Suspense fallback={null}>
-        <PageTransitionProvider>
-          <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <main className="flex-1 relative z-10">{children}</main>
+    <PageTransitionProvider>
+      <div className="min-h-screen flex flex-col">
+        <SiteHeader />
+        <main className="flex-1 relative z-10">{children}</main>
 
-            <Footer />
-          </div>
-        </PageTransitionProvider>
-      </Suspense>
-    </PreloaderWrapper>
+        <Footer />
+      </div>
+    </PageTransitionProvider>
   );
 }
-
-

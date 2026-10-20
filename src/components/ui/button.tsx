@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { RetroButton } from "./retro-button";
+import { RetroButton, type RetroButtonProps } from "./retro-button";
 
 const buttonVariants = cva("", {
   variants: {
@@ -53,7 +53,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const retroVariant =
+    const retroVariant: NonNullable<RetroButtonProps["variant"]> =
       variant === "outline"
         ? "outline"
         : variant === "destructive"
@@ -72,8 +72,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <RetroButton
         ref={ref}
         className={className}
-        variant={retroVariant as any}
-        size={size as any}
+        variant={retroVariant}
+        size={size}
         onClick={onClick}
         disabled={disabled}
         type={type}

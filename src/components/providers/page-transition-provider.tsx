@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { RipplePulseLoader } from "@/components/animations/ripple-pulse-loader";
+import { usePathname } from "next/navigation";
+import { RipplePulseLoader } from "@/components/effects/ripple-pulse-loader";
 
 export function PageTransitionProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const loadingStartTimeRef = useRef<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -38,7 +37,7 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
       currentPathRef.current = pathname;
       triggerExactLoading(1000);
     }
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   // Click listener for different page route navigation
   useEffect(() => {

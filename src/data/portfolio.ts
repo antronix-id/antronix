@@ -1,9 +1,14 @@
-import type { PortfolioItem } from "@/types/agency";
+import type { PortfolioItem } from "@/types";
+import { PORTFOLIO_THUMBS, VIDEOS } from "./assets";
 
 /**
  * DAFTAR PORTOFOLIO / HASIL KARYA PROYEK ANTRONIX
+ * Sampul gambar tidak dituliskan di sini — ia diambil dari PORTFOLIO_THUMBS
+ * (data/assets.ts) lewat `slug`, sehingga path file hanya ada di satu tempat.
+ * Menambah proyek baru = tambah slug pada tipe PortfolioSlug + satu entri di
+ * PORTFOLIO_THUMBS, lalu tambahkan objek di bawah.
  */
-export const PORTFOLIO: PortfolioItem[] = [
+const PORTFOLIO_ITEMS: Array<Omit<PortfolioItem, "thumbnailUrl">> = [
   {
     id: "1",
     title: "Website Perumahan Modern",
@@ -11,7 +16,6 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "web-studio",
     description:
       "Platform website perumahan modern dengan tampilan visual interaktif, galeri tipe unit, dan integrasi pemesanan WhatsApp.",
-    thumbnailUrl: "/portfolio/ecommerce-fashion.jpg",
     videoUrl: "https://knsvwymkmdjyxtmzgtvb.supabase.co/storage/v1/object/public/agency-assets/vidio/website--perumahan.mp4",
     liveUrl: "https://website-perumahan-nu.vercel.app/",
     techStack: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
@@ -24,8 +28,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "system-lab",
     description:
       "Sistem manajemen restoran terpadu — kasir POS, stok bahan baku, layar dapur, dan laporan keuangan terintegrasi online.",
-    thumbnailUrl: "/portfolio/restaurant-system.jpg",
-    videoUrl: "/bc.mp4",
+    videoUrl: VIDEOS.ambient,
     techStack: ["Next.js", "PostgreSQL", "Node.js", "WebSocket"],
     isFeatured: true,
   },
@@ -36,7 +39,6 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "web-studio",
     description:
       "Landing page & website brand Aureo Coffee dengan desain visual modern, animasi interaktif, dan performa tinggi.",
-    thumbnailUrl: "/portfolio/corporate-redesign.jpg",
     videoUrl: "https://knsvwymkmdjyxtmzgtvb.supabase.co/storage/v1/object/public/agency-assets/vidio/website-aureo-coffe.mp4",
     liveUrl: "https://energy-drink-five.vercel.app/",
     techStack: ["Next.js", "Framer Motion", "Tailwind CSS", "TypeScript"],
@@ -49,8 +51,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "system-lab",
     description:
       "Dasbor pemantauan kurir real-time, manajemen armada pengiriman, dan peta interaktif analitik kinerja logistik.",
-    thumbnailUrl: "/portfolio/logistics-dashboard.jpg",
-    videoUrl: "/bc.mp4",
+    videoUrl: VIDEOS.ambient,
     techStack: ["React", "MapboxGL", "Node.js", "PostgreSQL"],
     isFeatured: true,
   },
@@ -61,7 +62,6 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "web-studio",
     description:
       "Platform website rental & sewa mobil modern dengan sistem katalog kendaraan, reservasi armada, dan integrasi pemesanan WhatsApp.",
-    thumbnailUrl: "/portfolio/startup-landing.jpg",
     videoUrl: "https://knsvwymkmdjyxtmzgtvb.supabase.co/storage/v1/object/public/agency-assets/vidio/website-rental-mobil.mp4",
     liveUrl: "https://rental-mobil-kappa.vercel.app/",
     techStack: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
@@ -74,8 +74,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "system-lab",
     description:
       "Sistem kepegawaian terpadu — absensi online, penggajian otomatis, penilaian kinerja, dan perekrutan karyawan perusahaan.",
-    thumbnailUrl: "/portfolio/hr-management.jpg",
-    videoUrl: "/bc.mp4",
+    videoUrl: VIDEOS.ambient,
     techStack: ["Next.js", "PostgreSQL", "Drizzle ORM", "Redis"],
     isFeatured: false,
   },
@@ -86,7 +85,6 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "web-studio",
     description:
       "Platform website e-commerce & marketplace skincare modern dengan desain visual anggun, katalog produk interaktif, dan integrasi pemesanan WhatsApp.",
-    thumbnailUrl: "/portfolio/ecommerce-fashion.jpg",
     videoUrl: "https://knsvwymkmdjyxtmzgtvb.supabase.co/storage/v1/object/public/agency-assets/vidio/marketplace-skincare.mp4",
     liveUrl: "https://skincare-lime-zeta.vercel.app/",
     techStack: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
@@ -99,7 +97,6 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "web-studio",
     description:
       "Platform website resmi Fakultas Hukum Universitas Palembang dengan desain modern, struktur informasi akademik, serta aksesibilitas tinggi.",
-    thumbnailUrl: "/website-fhunpal.avif",
     liveUrl: "https://fhunpal.id/",
     techStack: ["Next.js", "Tailwind CSS", "TypeScript"],
     isFeatured: true,
@@ -111,7 +108,6 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "web-studio",
     description:
       "Platform website resmi Universitas Sjakhyakirti dengan desain intuitif, informasi akademik terpadu, serta tampilan responsif.",
-    thumbnailUrl: "/website-univ-sjakhyakirti.avif",
     liveUrl: "https://web-univ-eight.vercel.app/",
     techStack: ["Next.js", "Tailwind CSS", "TypeScript"],
     isFeatured: true,
@@ -123,10 +119,14 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "system-lab",
     description:
       "Aplikasi sistem pemesanan online & kasir cafe interaktif dengan alur pemesanan efisien, dasbor manajemen menu, dan integrasi transaksi real-time.",
-    thumbnailUrl: "/portfolio/restaurant-system.jpg",
-    videoUrl: "/sistem-pemesan-caffe.mp4",
+    videoUrl: VIDEOS.posDemo,
     liveUrl: "https://caffe-app-woad.vercel.app/",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL"],
     isFeatured: true,
   },
 ];
+
+export const PORTFOLIO: PortfolioItem[] = PORTFOLIO_ITEMS.map((item) => ({
+  ...item,
+  thumbnailUrl: PORTFOLIO_THUMBS[item.slug],
+}));

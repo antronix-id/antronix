@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { SITE } from "@/config/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,38 +9,33 @@ const inter = Inter({
   display: "swap",
 });
 
+/**
+ * Metadata global: kerangka saja (template judul, keywords, metadataBase).
+ * Judul & deskripsi per halaman ada di `generateMetadata` tiap route, lewat
+ * helper `lib/metadata.ts`. Gambar og disuplai file convention
+ * `app/opengraph-image.tsx` sehingga tidak perlu ditulis di sini (menghindari
+ * tag `og:image` ganda).
+ */
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
   title: {
-    default: "Antronix Mempercepat Pertumbuhan melalui Kreativitas dan Sistem Full-Stack",
-    template: "%s | Antronix",
+    default: SITE.defaultTitle,
+    template: SITE.titleTemplate,
   },
-  description:
-    "Agency digital terdepan yang mengakselerasi pertumbuhan bisnis Anda melalui website modern & sistem full-stack terintegrasi.",
-  keywords: [
-    "digital agency",
-    "web studio",
-    "system lab",
-    "custom web",
-    "POS",
-    "SaaS",
-    "DevOps",
-    "Indonesia",
-    "Jakarta",
-  ],
-  authors: [{ name: "Antronix" }],
-  icons: {
-    icon: "/logo-agency.webp",
-    shortcut: "/logo-agency.webp",
-    apple: "/logo-agency.webp",
-  },
+  description: SITE.description,
+  // SITE memakai `as const` (readonly); metadata menuntut array mutable.
+  keywords: [...SITE.keywords],
+  authors: [{ name: SITE.name }],
+  // Favicon & apple-icon diambil dari file convention src/app/icon.png dan
+  // src/app/apple-icon.png (dibuat dari public/logo1.avif), jadi tidak perlu
+  // didefinisikan ulang lewat metadata.
   openGraph: {
     type: "website",
-    locale: "id_ID",
-    url: "https://antronix.com",
-    siteName: "Antronix",
-    title: "Antronix — Mempercepat Pertumbuhan melalui Kreativitas dan Sistem Full-Stack",
-    description:
-      "Agency digital terdepan yang mengakselerasi pertumbuhan bisnis Anda melalui website modern & sistem full-stack terintegrasi.",
+    locale: SITE.locale,
+    url: SITE.url,
+    siteName: SITE.name,
+    title: SITE.ogTitle,
+    description: SITE.description,
   },
 };
 

@@ -10,6 +10,7 @@ import {
   Plus,
   Copy,
 } from "lucide-react";
+import { IMAGES } from "@/data";
 
 export interface LaptopMockupProps extends React.HTMLAttributes<HTMLDivElement> {
   url?: string;
@@ -67,7 +68,7 @@ export function LaptopMockup({
     >
       {/* Laptop Hardware Frame Overlay */}
       <img
-        src="/border-leptop.avif"
+        src={IMAGES.laptopFrame}
         alt="Laptop Frame"
         className="pointer-events-none relative z-20 w-full h-auto object-contain filter drop-shadow-2xl"
       />

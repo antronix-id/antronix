@@ -1,9 +1,16 @@
-"use client";
+import type { Metadata } from "next";
+import { SectionHeader } from "@/components/layout/section-header";
+import { ContactGrid } from "@/components/sections/contact-grid";
+import { createMetadata } from "@/lib/metadata";
 
-import { motion } from "framer-motion";
-import { SectionHeader } from "@/components/shared/section-header";
-import { ContactForm } from "@/components/features/contact-form";
-import { LocationMap } from "@/components/mockups/location-map";
+export function generateMetadata(): Metadata {
+  return createMetadata({
+    title: "Kontak",
+    description:
+      "Diskusikan kebutuhan proyek Anda dengan tim spesialis kami. Kami siap memberikan solusi teknologi terbaik untuk akselerasi pertumbuhan bisnis Anda.",
+    path: "/kontak",
+  });
+}
 
 export default function ContactPage() {
   return (
@@ -24,42 +31,7 @@ export default function ContactPage() {
           />
 
           {/* 2-Column Grid: Contact Form & Location Map */}
-          <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-2 max-w-7xl mx-auto items-stretch">
-            {/* Contact Form Card */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="flex flex-col h-full"
-            >
-              <ContactForm />
-            </motion.div>
-
-            {/* Location Map Card */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="relative flex flex-col h-full min-h-[320px] sm:min-h-[480px] rounded-3xl overflow-hidden border border-white/10 bg-slate-950 shadow-2xl"
-            >
-              <LocationMap
-                center={[104.7565, -2.9845]}
-                zoom={12.8}
-                pitch={0}
-                bearing={0}
-                markers={[
-                  {
-                    lng: 104.7565,
-                    lat: -2.9845,
-                    label: "Antronix",
-                    popupTitle: "Antronix",
-                    icon: "hq",
-                  },
-                ]}
-                className="min-h-[320px] sm:min-h-[480px]"
-              />
-            </motion.div>
-          </div>
+          <ContactGrid />
         </div>
       </section>
     </div>
