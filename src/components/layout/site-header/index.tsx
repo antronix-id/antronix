@@ -60,7 +60,7 @@ export function SiteHeader() {
 
           {/* Desktop Action CTA */}
           <div className="hidden items-center gap-2 md:flex">
-            <Link href="/kontak" onClick={navigate("/kontak")}>
+            <Link href="/tentang-kami#contact" onClick={navigate("/tentang-kami#contact")}>
               <Button size="sm">
                 <MessageCircle className="h-4 w-4" />
                 <span>Hubungi Kami</span>

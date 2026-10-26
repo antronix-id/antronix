@@ -51,6 +51,8 @@ is a one-line change instead of a repo-wide grep.
 ```
 public/
 ├─ brand/          mark.avif, wordmark.avif
+├─ clients/        <client-slug>.avif — reserved for real client logos; empty
+│                  until one is handed over (see wordmark note below)
 ├─ icons/          <industry-slug>.avif — the 12 target-client segments
 ├─ imagery/        tantangan, solusi, web, system, tangan-leptop, border-leptop
 ├─ media/          bc.mp4 (ambient loop), h.mp4 (hero loop)
@@ -77,9 +79,23 @@ public/
   renders only its video instead of requesting a `poster` that does not exist.
   Adding cover art = drop the file in `public/`, add one line to
   `PORTFOLIO_THUMBS`. Inventing placeholder imagery is not allowed.
+- **The client logo strip has no files at all.** `data/clients.ts` supplies
+  display names, sectors and brand accents, and
+  `components/sections/client-logos.tsx` renders them as text wordmarks — no
+  client handed over a logo file, and a literal path to one would fail
+  `npm run check:assets`. When real logos arrive: `public/clients/<slug>.avif`,
+  one full literal per file in `data/assets.ts`, then swap the wordmark for
+  `<Image />` in the tile.
 - **External URLs stay out of the registry** (Supabase video files, Unsplash
   testimonial avatars, the Google Maps embed). They belong to the data module
-  that uses them and are not verifiable from the filesystem.
+  that uses them and are not verifiable from the filesystem. The partner strip
+  (`data/partners.ts`, keyed by slug in `PARTNER_STRIPS`) is the same case:
+  third-party tech-brand logo URLs rendered by
+  `components/sections/logo-carousel.tsx`. It deliberately sits outside the
+  `Service` object — the home page ships `SERVICES` to a client card, so a
+  field there would send every logo URL to routes that never render them. Move
+  them local by dropping SVGs in `public/tech-logos/`, registering each full
+  literal in `data/assets.ts`, then pointing `src` at `"/..."`.
 
 ## Why routes stay server components
 
@@ -97,7 +113,8 @@ side rendering.
 - Cross-cutting CSS goes in `src/styles/{tokens,base,utilities}.css`.
 - Anything owned by a single component sits next to it and is imported by that
   component: `effects/parallax-cosmic.css`, `effects/border-glow/border-glow.css`,
-  `effects/ripple-pulse-loader.css`, `sections/faq-scroller.css`. Next ships
+  `effects/ripple-pulse-loader.css`, `sections/faq-scroller.css`,
+  `sections/client-logos.css`, `sections/logo-carousel.css`. Next ships
   these only to the routes that import the component, which is why moving rules
   out of the global sheet also shrinks every page's stylesheet.
 - Hand-written rules stay **unlayered** (except the `@layer utilities` block),

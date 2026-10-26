@@ -1,4 +1,5 @@
 export type {
+  ClientLogo,
   CosmicGlowColor,
   FaqData,
   FaqItem,
@@ -6,6 +7,8 @@ export type {
   IndustrySegment,
   IndustrySlug,
   KeyBenefit,
+  LogoItem,
+  PartnerStrip,
   PortfolioItem,
   PortfolioSlug,
   PricingTier,

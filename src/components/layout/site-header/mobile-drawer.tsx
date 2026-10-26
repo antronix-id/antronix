@@ -133,8 +133,8 @@ export function MobileDrawer({ menu }: { menu: SiteMenu }) {
         {/* Mobile CTA */}
         <div className="pt-6 border-t border-white/10 w-full max-w-xs flex justify-center shrink-0">
           <Link
-            href="/kontak"
-            onClick={navigate("/kontak", closeMobile)}
+            href="/tentang-kami#contact"
+            onClick={navigate("/tentang-kami#contact", closeMobile)}
             className="w-full flex justify-center"
           >
             <Button className="w-full">

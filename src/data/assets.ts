@@ -11,6 +11,9 @@
  *
  * Layout `public/` per domain:
  *   brand/                 logo mark & wordmark
+ *   clients/               logo klien strip beranda — belum ada filenya, jadi
+ *                          wordmark dirender sebagai teks (docs/ARCHITECTURE.md);
+ *                          daftarkan path di sini saat file resmi diterima
  *   icons/<slug>.avif      ikon segmen industri (slug = IndustrySlug)
  *   imagery/               foto lintas halaman (tantangan, solusi, hero divisi)
  *   media/                 video loop latar & hero

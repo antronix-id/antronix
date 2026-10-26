@@ -24,5 +24,5 @@ export const NAV_LINKS: NavLink[] = [
   },
   { label: "Portofolio", href: "/portfolio" },
   { label: "Harga", href: "/pricing" },
-  { label: "Kontak", href: "/kontak" },
+  { label: "Tentang Kami", href: "/tentang-kami" },
 ];

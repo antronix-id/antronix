@@ -1,0 +1,49 @@
+/* Owned by components/sections/logo-carousel.tsx — the auto-scrolling logo
+   strip below a division hero. Two identical rows sit side by side, so one row
+   is exactly half the track; shifting the track by -50% lands on an identical
+   frame and the loop is seamless. Speed comes from --logo-duration. Kept
+   unlayered on purpose (see docs/ARCHITECTURE.md) so these rules outrank
+   Tailwind's layered utilities. */
+@keyframes logo-carousel-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.logo-carousel-rail {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+}
+
+.logo-carousel-track {
+  animation: logo-carousel-scroll var(--logo-duration, 60s) linear infinite;
+}
+
+/* Hover/focus freezes the rail so a visitor can read a specific logo. */
+.logo-carousel-rail:hover .logo-carousel-track,
+.logo-carousel-rail:focus-within .logo-carousel-track {
+  animation-play-state: paused;
+}
+
+/* Mirror the testimonial/FAQ rails: stop the loop under reduced-motion without
+   hiding any logo. */
+@media (prefers-reduced-motion: reduce) {
+  .logo-carousel-track {
+    animation: none;
+  }
+}

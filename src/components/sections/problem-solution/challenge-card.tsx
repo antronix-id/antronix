@@ -3,18 +3,29 @@
 import Image from "next/image";
 import { AlertCircle } from "lucide-react";
 import { IMAGES } from "@/data";
-import type { ProblemSolution } from "@/types";
+import { cn } from "@/lib/utils";
 
-/** Kartu kiri slider: tantangan (masalah) klien saat ini */
+export interface ChallengeItem {
+  problemTitle: string;
+  problemDescription: string;
+  category?: string;
+}
+
+/** Kartu tantangan (masalah) bisnis klien */
 export function ChallengeCard({
   item,
   index,
+  category,
 }: {
-  item: ProblemSolution;
+  item: ChallengeItem;
   index: number;
+  category?: string;
 }) {
+  const itemCategory = category || item.category;
+  const isWeb = itemCategory?.toLowerCase().includes("web");
+
   return (
-    <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1 h-full w-full">
+    <div className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-0.5 h-full w-full">
       <div className="text-white rounded-3xl border border-slate-400/30 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl relative backdrop-blur-xl overflow-hidden hover:border-slate-200/60 hover:shadow-slate-300/10 hover:shadow-3xl w-full h-full flex flex-col justify-between p-5 sm:p-8">
         {/* Background ambient lighting & animated effects */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -26,14 +37,35 @@ export function ChallengeCard({
         </div>
 
         {/* Card Content */}
-        <div className="relative z-10">
-          <div className="flex items-center gap-2.5 mb-6">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-400/15 border border-slate-300/40 text-slate-200 shadow-md">
-              <AlertCircle className="h-4 w-4" />
+        <div className="relative z-10 flex flex-col h-full justify-between">
+          <div className="flex items-center justify-between gap-2.5 mb-6">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-400/15 border border-slate-300/40 text-slate-200 shadow-md">
+                <AlertCircle className="h-4 w-4" />
+              </div>
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                Tantangan #{index + 1}
+              </span>
             </div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Tantangan #{index + 1}
-            </span>
+
+            {itemCategory && (
+              <span
+                className={cn(
+                  "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border backdrop-blur-md",
+                  isWeb
+                    ? "bg-blue-500/15 text-blue-300 border-blue-500/30"
+                    : "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
+                )}
+              >
+                <span
+                  className={cn(
+                    "h-1.5 w-1.5 rounded-full",
+                    isWeb ? "bg-blue-400 animate-pulse" : "bg-emerald-400 animate-pulse"
+                  )}
+                />
+                {itemCategory}
+              </span>
+            )}
           </div>
 
           <div className="flex flex-col-reverse sm:flex-row items-start sm:items-center justify-between gap-6">
@@ -49,7 +81,7 @@ export function ChallengeCard({
             <div className="relative h-24 w-24 sm:h-28 sm:w-28 shrink-0 self-center sm:self-auto">
               <Image
                 src={IMAGES.challenge}
-                alt="Tantangan Bisnis"
+                alt={item.problemTitle}
                 width={112}
                 height={112}
                 className="h-full w-full object-contain filter drop-shadow-xl transition-transform duration-300 group-hover:scale-105"

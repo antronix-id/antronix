@@ -75,6 +75,47 @@ export type IndustrySlug =
 export type CosmicGlowColor = "cyan" | "pink" | "green";
 
 /**
+ * Satu logo pada strip teknologi / partnership.
+ * `src` untuk saat ini adalah URL eksternal (logo brand teknologi) sehingga
+ * tidak didaftarkan di data/assets.ts — sama seperti avatar testimoni.
+ */
+export interface LogoItem {
+  src: string;
+  alt: string;
+}
+
+/**
+ * Strip logo yang dirender tepat di bawah hero halaman divisi
+ * (components/sections/logo-carousel.tsx). Dipegang registry PARTNER_STRIPS
+ * di data/partners.ts — BUKAN bagian Service, supaya URL-nya tidak ikut
+ * ter-serialize ke beranda yang menampilkan SERVICES.
+ */
+export interface PartnerStrip {
+  /** Label aksesibel section; tidak ada teks yang dirender */
+  title?: string;
+  logos: LogoItem[];
+}
+
+/**
+ * LOGO KLIEN / PARTNERSHIP (strip di bawah hero beranda)
+ * `name` dirender sebagai wordmark teks — tidak ada file gambarnya, sehingga
+ * `npm run check:assets` tetap hijau. `portfolioSlug` hanyalah kunci terkait
+ * proyek portofolio: saat logo asli (AVIF/PNG) diserahkan, pindahkan path-nya
+ * ke registri di data/assets.ts lalu ganti wordmark dengan <Image />.
+ */
+export interface ClientLogo {
+  id: string;
+  /** Wordmark — tulis apa adanya dengan huruf kapital */
+  name: string;
+  /** Sektor industri — metadata konten; tidak dirender di strip beranda */
+  sector: string;
+  /** HEX aksen brand yang muncul saat hover */
+  accent: string;
+  /** Proyek portofolio terkait, bila ada */
+  portfolioSlug?: PortfolioSlug;
+}
+
+/**
  * SALINAN HALAMAN DIVISI (/services/[slug])
  * Semua teks dan aksen yang dulu hardcoded di masing-masing halaman layanan
  * pindah ke sini, sehingga divisi baru hanya perlu menambah file data.

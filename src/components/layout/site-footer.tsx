@@ -130,11 +130,20 @@ export function Footer() {
                   Harga & Paket
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/tentang-kami"
+                  className="text-sm text-zinc-400 hover:text-white transition-colors"
+                  onClick={(e) => handleSectionNavigation(e, "/tentang-kami", pathname, router)}
+                >
+                  Tentang Kami
+                </Link>
+              </li>
               <li className="relative">
                 <Link
-                  href="/kontak"
+                  href="/tentang-kami#contact"
                   className="text-sm text-zinc-400 hover:text-white transition-colors"
-                  onClick={(e) => handleSectionNavigation(e, "/kontak", pathname, router)}
+                  onClick={(e) => handleSectionNavigation(e, "/tentang-kami#contact", pathname, router)}
                 >
                   Hubungi Kami
                 </Link>

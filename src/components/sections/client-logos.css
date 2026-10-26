@@ -1,0 +1,46 @@
+/* Owned by components/sections/client-logos.tsx — the seamless client/partner
+   logo rail below the home hero. One copy of the track is exactly half the
+   rail's width, so shifting by -50% lands on an identical frame. Speed comes
+   from --scroll-duration; hovering keeps it readable. */
+@keyframes client-logo-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.client-logo-rail {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+
+.client-logo-track {
+  animation: client-logo-scroll var(--scroll-duration, 45s) linear infinite;
+}
+
+.client-logo-rail:hover .client-logo-track,
+.client-logo-rail:focus-within .client-logo-track {
+  animation-play-state: paused;
+}
+
+/* Same escape hatch as the testimonial/FAQ rails: stop the loop for visitors
+   who asked the OS to reduce motion, without hiding any logo. */
+@media (prefers-reduced-motion: reduce) {
+  .client-logo-track {
+    animation: none;
+  }
+}

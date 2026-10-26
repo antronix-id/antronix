@@ -44,21 +44,6 @@ export function HomeHero() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mt-8 sm:mt-10 flex flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-4 w-full max-w-md mx-auto lg:mx-0"
             >
-              <div className="flex justify-center shrink-0">
-                <Link href="/kontak">
-                  <Button size="lg">
-                    <span className="text-xs sm:text-sm whitespace-nowrap">Mulai Proyek</span>
-                    <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  </Button>
-                </Link>
-              </div>
-              <div className="flex justify-center shrink-0">
-                <Link href="#services">
-                  <Button variant="outline" size="lg">
-                    <span className="text-xs sm:text-sm whitespace-nowrap">Lihat Layanan</span>
-                  </Button>
-                </Link>
-              </div>
             </motion.div>
           </div>
 

@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import { ParallaxCosmic } from "@/components/effects/parallax-cosmic";
 import { SectionHeader } from "@/components/layout/section-header";
 import { PortfolioCard } from "@/components/sections/portfolio-card";
-import { ProblemSolutionSection } from "@/components/sections/problem-solution";
+import { LogoCarousel } from "@/components/sections/logo-carousel";
 import { FaqSection } from "@/components/sections/faq-scroller";
-import { PORTFOLIO, SERVICES, SERVICE_FAQ, getService } from "@/data";
+import { PORTFOLIO, SERVICES, SERVICE_FAQ, PARTNER_STRIPS, getService } from "@/data";
 import { createMetadata } from "@/lib/metadata";
 import { ServiceFeatureGrid } from "./sections/feature-grid";
 import { ServicePricingTiers } from "./sections/pricing-tiers";
@@ -51,6 +51,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
   if (!service) notFound();
 
   const { page } = service;
+  const partnerStrip = PARTNER_STRIPS[service.slug];
   const relatedPortfolio = PORTFOLIO.filter(
     (item) => item.category === service.slug
   );
@@ -71,14 +72,8 @@ export default async function ServicePage({ params }: ServicePageProps) {
         />
       </section>
 
-      {/* PROBLEM & SOLUTION SECTION */}
-      {service.problemsAndSolutions && (
-        <ProblemSolutionSection
-          problemsAndSolutions={service.problemsAndSolutions}
-          serviceTitle={service.title}
-          glowColor={page.accentColor}
-        />
-      )}
+      {/* PARTNER / TECH LOGO STRIP (hanya divisi yang punya entri) */}
+      {partnerStrip && <LogoCarousel {...partnerStrip} />}
 
       {/* Related Portfolio */}
       {portfolioItems.length > 0 && (
